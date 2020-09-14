@@ -5,8 +5,10 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/Test/users/users" : {
+        "/auth/users" : {
             "get": {
+                "summary" : "Get All users",
+                "tags" : ["Authorization"],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -21,9 +23,10 @@
                 }
             }
         },
-        "/Test/users/users_all": {
+        "/auth/users_all": {
             "get": {
                 "summary": "Get All Users",
+                "tags" : ["Authorization"],
                 "description": "Get All Users",
                 "responses": {
                     "default": {
