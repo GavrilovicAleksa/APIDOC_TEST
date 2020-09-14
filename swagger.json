@@ -5,10 +5,8 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/users/${user-email}": {
+        "/users/users" : {
             "get": {
-                "operationId": "App\\Controller\\TestController::index",
-                "tags" : ["users"],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -23,11 +21,10 @@
                 }
             }
         },
-        "/users": {
+        "/users/users_all": {
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
-                "tags" : ["users"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
