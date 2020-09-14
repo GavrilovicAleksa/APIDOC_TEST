@@ -5,13 +5,13 @@
         "version": "1.0.0"
     },
     "paths": {
-        "\/users/${user-email}": {
+        "/auth/users/${user-email}": {
             "get": {
                 "operationId": "App\\Controller\\TestController::index",
+                "tags" : ["auth"],
                 "responses": {
                     "200": {
                         "description": "Get",
-                        "tags" : ["auth"],
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -23,7 +23,7 @@
                 }
             }
         },
-        "\/users": {
+        "/auth/users": {
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
