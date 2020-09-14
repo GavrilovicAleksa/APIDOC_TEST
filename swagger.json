@@ -5,12 +5,12 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/resource.json": {
+        "/users/${user-email}": {
             "get": {
                 "operationId": "App\\Controller\\TestController::index",
                 "responses": {
                     "200": {
-                        "description": "An example resource",
+                        "description": "Get",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -22,9 +22,9 @@
                 }
             }
         },
-        "/": {
+        "/users": {
             "get": {
-                "description": "Home page",
+                "description": "Get All Users",
                 "responses": {
                     "default": {
                         "description": "Welcome page"
