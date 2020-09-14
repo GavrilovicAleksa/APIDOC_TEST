@@ -5,9 +5,10 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/users/${user-email}": {
+        "/auth/users" : {
             "get": {
-                "tags" : ["auth"],
+                "summary" : "Get All the users",
+                "tags" : ["Bla"],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -22,11 +23,11 @@
                 }
             }
         },
-        "/users": {
+        "/auth/users_all": {
             "get": {
                 "summary": "Get All Users",
+                "tags" : ["Bla"],
                 "description": "Get All Users",
-                "tags" : ["auth"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
