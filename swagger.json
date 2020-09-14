@@ -8,6 +8,7 @@
         "/users/${user-email}": {
             "get": {
                 "operationId": "App\\Controller\\TestController::index",
+                "tags" : ["users"],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -24,9 +25,9 @@
         },
         "/users": {
             "get": {
-                "method" : "Blabla",
                 "summary": "Get All Users",
                 "description": "Get All Users",
+                "tags" : ["users"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
