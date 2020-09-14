@@ -8,7 +8,7 @@
         "/auth/users" : {
             "get": {
                 "summary" : "Get All users",
-                "tags" : ["Authorization"],
+                "tags" : ["Bla"],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -26,7 +26,7 @@
         "/auth/users_all": {
             "get": {
                 "summary": "Get All Users",
-                "tags" : ["Authorization"],
+                "tags" : ["Bla"],
                 "description": "Get All Users",
                 "responses": {
                     "default": {
