@@ -26,6 +26,7 @@
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
+                "tags" : ["Folder"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
