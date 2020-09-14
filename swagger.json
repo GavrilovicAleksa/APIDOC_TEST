@@ -24,6 +24,7 @@
         },
         "/users": {
             "get": {
+                "method" : "Blabla",
                 "summary": "Get All Users",
                 "description": "Get All Users",
                 "responses": {
