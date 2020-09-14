@@ -11,6 +11,7 @@
                 "responses": {
                     "200": {
                         "description": "Get",
+                        "tags" : ["auth"],
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -26,7 +27,7 @@
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
-                "tags" : ["Folder"],
+                "tags" : ["auth"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
