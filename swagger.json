@@ -1,13 +1,23 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Test API",
+        "title": "Search API",
         "version": "1.0.0"
     },
     "paths": {
-        "users/users": {
+        "users/${user-email}": {
             "get": {
-                "tags" : ["auth"],
+                "operationId": "App\\Controller\\TestController::index",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Get",
@@ -22,23 +32,10 @@
                 }
             }
         },
-        "users/singleuser": {
+        "users": {
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
-                "tags" : ["auth"],
-                "responses": {
-                    "default": {
-                        "description": "Welcome page"
-                    }
-                }
-            }
-        },
-        "users/singleuser-email": {
-            "get": {
-                "summary": "Get All Users",
-                "description": "Get All Users",
-                "tags" : ["folder2"],
                 "responses": {
                     "default": {
                         "description": "Welcome page"
