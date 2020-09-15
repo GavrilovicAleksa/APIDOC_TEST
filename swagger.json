@@ -61,7 +61,7 @@
                 }
             }
         },
-        "users": {
+        "/users": {
             "get": {
                 "summary": "Get All Users",
                 "description": "Get All Users",
