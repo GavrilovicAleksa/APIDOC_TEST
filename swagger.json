@@ -33,6 +33,18 @@
                     }
                 }
             }
+        },
+        "users/singleuser-email": {
+            "get": {
+                "summary": "Get All Users",
+                "description": "Get All Users",
+                "tags" : ["folder2"],
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
         }
     },
     "components": {
