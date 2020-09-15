@@ -11,7 +11,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "body",
                         "required": true,
                         "schema": {
                             "type": "integer"
