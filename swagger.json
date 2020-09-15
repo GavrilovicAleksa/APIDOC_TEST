@@ -10,7 +10,7 @@
     }
     ],
     "paths": {
-        "users/${user-email}": {
+        "/users/${user-email}": {
             "get": {
                 "operationId": "App\\Controller\\TestController::index",
                 "parameters": [
