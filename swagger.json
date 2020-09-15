@@ -36,7 +36,6 @@
             "post": {
                 "operationId": "App\\Controller\\TestController::insertUser",
                 "requestBody": {
-                    "request": "UserArray",
                     "description": "List of user object",
                     "required": true,
                     "content": {
