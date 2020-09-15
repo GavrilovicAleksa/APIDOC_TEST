@@ -6,8 +6,13 @@
     },
     "servers": [
     {
-      "url": "http://api.wildfitter.com"
+      "url": "https://api.wildfitter.com"
     }
+    ],
+    "tags" : [
+        {
+            "name" : "auth"
+        }
     ],
     "paths": {
         "/users/${user-email}": {
