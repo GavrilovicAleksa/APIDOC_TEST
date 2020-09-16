@@ -5,17 +5,13 @@
         "version": "1.0.0"
     },
     "servers": [
-    {
-      "url": "https://api.wildfitter.com"
-    }
-    ],
-    "tags" : [
         {
-            "name" : "auth"
+            "url": "https://api.wildfitter.com",
+            "description": "WildFitter Api"
         }
     ],
     "paths": {
-        "/users/${user-email}": {
+        "/users": {
             "get": {
                 "operationId": "App\\Controller\\TestController::index",
                 "parameters": [
@@ -40,39 +36,17 @@
                         }
                     }
                 }
-            }
-        },
-        "/users": {
+            },
             "post": {
                 "operationId": "App\\Controller\\TestController::insertUser",
                 "requestBody": {
+                    "request": "UserArray",
                     "description": "List of user object",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "items": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
-                    }
+                    "required": true
                 },
                 "responses": {
                     "200": {
                         "description": "Ovo je opis"
-                    }
-                }
-            }
-        },
-        "/users": {
-            "get": {
-                "summary": "Get All Users",
-                "description": "Get All Users",
-                "responses": {
-                    "default": {
-                        "description": "Welcome page"
                     }
                 }
             }
