@@ -21,6 +21,7 @@
     "paths": {
         "/users": {
             "get": {
+                "summary": "Get Users",
                 "operationId": "App\\Controller\\User\\UserController::getUsersAction",
                 "parameters": [
                     {
@@ -56,6 +57,7 @@
         },
         "/users/name": {
             "get": {
+                "summary": "Get Single User",
                 "parameters": [
                     {
                         "name": "name",
