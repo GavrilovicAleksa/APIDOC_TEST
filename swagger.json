@@ -1,62 +1,65 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Search API",
-        "version": "1.0.0"
+        "title": "Wildfitter",
+        "description": "This is the new wildfitter api",
+        "contact": {
+            "email": "aleksa.gavrilovic@guidefitter.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "2.0.0"
     },
     "servers": [
         {
-            "url": "https://api.wildfitter.com",
-            "description": "WildFitter Api"
+            "url": "https://aleksa-new-api.wildfitter.com/",
+            "description": "Wildfitter doc test server"
         }
     ],
     "paths": {
         "/users": {
             "get": {
-                "operationId": "App\\Controller\\TestController::index",
+                "operationId": "App\\Controller\\User\\UserController::getUsersAction",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "$ref": "#/components/parameters/"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Get",
                         "content": {
-                            "application/json": {
+                            "application/octet-stream": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "type": "string",
+                                    "format": "binary"
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "post": {
-                "operationId": "App\\Controller\\TestController::insertUser",
-                "requestBody": {
-                    "description": "List of user object",
-                    "required": true,
-                    "content" : {}
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ovo je opis"
                     }
                 }
             }
         }
     },
     "components": {
-        "schemas": {
-            "User": {
-                "description": "This is just a user.",
-                "type": "string"
+        "parameters": {
+            "has-profile-photo": {
+                "name": "has-profile-photo",
+                "in": "query",
+                "required": false,
+                "schema": {
+                    "type": "boolean"
+                }
             }
         }
     }
