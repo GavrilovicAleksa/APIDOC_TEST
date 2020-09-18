@@ -28,7 +28,8 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 0
                         }
                     },
                     {
@@ -61,7 +62,8 @@
                 "in": "query",
                 "required": false,
                 "schema": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                 }
             },
             "has-claim": {
@@ -69,7 +71,8 @@
                 "in": "query",
                 "required": false,
                 "schema": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "default": false
                 }
             }
         }
