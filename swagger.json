@@ -25,14 +25,17 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     },
                     {
-                        "$ref": "#/components/parameters/"
+                        "$ref": "#/components/parameters/has-profile-photo"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-claim"
                     }
                 ],
                 "responses": {
@@ -55,7 +58,15 @@
         "parameters": {
             "has-profile-photo": {
                 "name": "has-profile-photo",
-                "in": "path",
+                "in": "query",
+                "required": false,
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "has-claim": {
+                "name": "has-claim",
+                "in": "query",
                 "required": false,
                 "schema": {
                     "type": "boolean"
