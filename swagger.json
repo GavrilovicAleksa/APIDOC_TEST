@@ -39,6 +39,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/has-claim"
+                    },
+                    {
+                        "$ref": "#/components/parameters/insider-category"
                     }
                 ],
                 "responses": {
