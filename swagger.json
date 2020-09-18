@@ -151,7 +151,8 @@
             "has-profile-photo": {
                 "name": "has-profile-photo",
                 "in": "query",
-                "required": true,
+                "description": "Filter users who have a profile photo",
+                "required": false,
                 "schema": {
                     "type": "boolean",
                     "default": false
@@ -160,10 +161,23 @@
             "has-claim": {
                 "name": "has-claim",
                 "in": "query",
-                "required": true,
+                "description": "Filter users who claimed a business profile",
+                "required": false,
                 "schema": {
                     "type": "boolean",
                     "default": false
+                }
+            },
+            "insider-category": {
+                "name": "insider-category",
+                "in": "query",
+                "description": "Filters users based on insider category (0=NONE, 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO)",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         }
