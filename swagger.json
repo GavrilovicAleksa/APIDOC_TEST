@@ -116,6 +116,7 @@
                     {
                         "name": "email",
                         "in": "path",
+                        "description": "The email to search by",
                         "required": true,
                         "schema": {
                             "type": "string",
