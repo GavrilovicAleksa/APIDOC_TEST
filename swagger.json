@@ -182,6 +182,58 @@
                         "type": "integer"
                     }
                 }
+            },
+            "phylum": {
+                "name": "phylum",
+                "in": "query",
+                "description": "Filter on phylum from active insider verification",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "is-verified-insider": {
+                "name": "is-verified-insider",
+                "in": "query",
+                "description": "Insider status. If TRUE filter only verified insiders, if FALSE only the flagged insiders.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "is-dod-verified": {
+                "name": "is-dod-verified",
+                "in": "query",
+                "description": "If TRUE filter users with active verification verified through the DoD service.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "profile-verification": {
+                "name": "profile-verification",
+                "in": "query",
+                "description": "Filters users based on profile verification status\n     *      (none=99,\n     *      pending=1,\n     *      accepted=2,\n     *      refused=3,\n     *      in progress=4,\n     *      not yet in progress=5,\n     *      expiring=6,\n     *      expired=7,\n     *      in grace period=8,\n     *      out of grace period=9,\n     *      in limbo=10,\n     *      incomplete=11).",
+                "required": false,
+                "schema": {
+                    "type": "integer",
+                    "default": false
+                }
+            },
+            "profile-verification-before": {
+                "name": "profile-verification-before",
+                "in": "query",
+                "description": "If TRUE filter users with active verification verified through the DoD service.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
             }
         }
     }
