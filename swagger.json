@@ -141,11 +141,17 @@
         }
     },
     "components": {
+        "schemas": {
+            "User": {
+                "description": "This is just a user.",
+                "type": "string"
+            }
+        },
         "parameters": {
             "has-profile-photo": {
                 "name": "has-profile-photo",
                 "in": "query",
-                "required": false,
+                "required": true,
                 "schema": {
                     "type": "boolean",
                     "default": false
@@ -154,7 +160,7 @@
             "has-claim": {
                 "name": "has-claim",
                 "in": "query",
-                "required": false,
+                "required": true,
                 "schema": {
                     "type": "boolean",
                     "default": false
