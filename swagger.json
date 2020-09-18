@@ -32,7 +32,7 @@
                         }
                     },
                     {
-                        "$ref": "#/components/parameters/"
+                        "$ref": "#/components/parameters/has-profile-photo"
                     }
                 ],
                 "responses": {
