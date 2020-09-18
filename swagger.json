@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "https://aleksa-new-api.wildfitter.com/",
+            "url": "https://aleksa-new-api.wildfitter.com",
             "description": "Wildfitter doc test server"
         }
     ],
