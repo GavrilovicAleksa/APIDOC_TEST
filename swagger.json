@@ -56,7 +56,7 @@
             "has-profile-photo": {
                 "name": "has-profile-photo",
                 "in": "path",
-                "required" : false,
+                "required": false,
                 "schema": {
                     "type": "boolean"
                 }
