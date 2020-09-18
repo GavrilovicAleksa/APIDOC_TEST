@@ -53,6 +53,34 @@
                     }
                 }
             }
+        },
+        "/users/name": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get",
+                        "content": {
+                            "application/octet-stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
