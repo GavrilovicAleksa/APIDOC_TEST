@@ -25,14 +25,14 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "integer"
                         }
                     },
                     {
-                        "$ref": "#/components/parameters/has-profile-photo"
+                        "$ref": "#/components/parameters/"
                     }
                 ],
                 "responses": {
@@ -55,8 +55,8 @@
         "parameters": {
             "has-profile-photo": {
                 "name": "has-profile-photo",
-                "in": "query",
-                "required": false,
+                "in": "path",
+                "required" : false,
                 "schema": {
                     "type": "boolean"
                 }
