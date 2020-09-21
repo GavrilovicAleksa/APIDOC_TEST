@@ -1,496 +1,364 @@
-{
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Wildfitter",
-        "description": "This is the new wildfitter api",
-        "contact": {
-            "email": "aleksa.gavrilovic@guidefitter.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "2.0.0"
-    },
-    "servers": [
-        {
-            "url": "https://aleksa-new-api.wildfitter.com",
-            "description": "Wildfitter doc test server"
-        }
-    ],
-    "paths": {
-        "/users": {
-            "get": {
-                "summary": "Get Users",
-                "operationId": "App\\Controller\\User\\UserController::getUsersAction",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "default": 0,
-                            "minimum": 0
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-profile-photo"
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-claim"
-                    },
-                    {
-                        "$ref": "#/components/parameters/insider-category"
-                    },
-                    {
-                        "$ref": "#/components/parameters/phylum"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-verified-insider"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-dod-verified"
-                    },
-                    {
-                        "$ref": "#/components/parameters/profile-verification"
-                    },
-                    {
-                        "$ref": "#/components/parameters/profile-verification-before"
-                    },
-                    {
-                        "$ref": "#/components/parameters/profile-verification-after"
-                    },
-                    {
-                        "$ref": "#/components/parameters/subscriptions"
-                    },
-                    {
-                        "$ref": "#/components/parameters/orders"
-                    },
-                    {
-                        "$ref": "#/components/parameters/brands"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-manager"
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-pending-document"
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-experience"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-email-verified"
-                    },
-                    {
-                        "$ref": "#/components/parameters/brag-app"
-                    },
-                    {
-                        "$ref": "#/components/parameters/business-app"
-                    },
-                    {
-                        "$ref": "#/components/parameters/notifications"
-                    },
-                    {
-                        "$ref": "#/components/parameters/following"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-admin"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-prostaff"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-activated-insider"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-ghost"
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-review"
-                    },
-                    {
-                        "$ref": "#/components/parameters/has-names"
-                    },
-                    {
-                        "name": "with",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "description": "The extra fields you want in the returned JSON.",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get"
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create User",
-                "requestBody": {
-                    "description": "Pet object that needs to be added to the store",
-                    "required": true,
-                    "content": {
-                        "application/xml": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User created"
-                    }
-                }
-            }
-        },
-        "/users/name": {
-            "get": {
-                "summary": "Get Single User - Name",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "default": "name"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get",
-                        "content": {
-                            "application/octet-stream": {
-                                "schema": {
-                                    "type": "string",
-                                    "format": "binary"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/email": {
-            "get": {
-                "summary": "Get Single User - Email",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "path",
-                        "description": "The email to search by",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "default": "name"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get",
-                        "content": {
-                            "application/octet-stream": {
-                                "schema": {
-                                    "type": "string",
-                                    "format": "binary"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "User": {
-                "description": "This is just a user.",
-                "type": "string"
-            }
-        },
-        "parameters": {
-            "has-profile-photo": {
-                "name": "has-profile-photo",
-                "in": "query",
-                "description": "Filter users who have a profile photo",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "has-claim": {
-                "name": "has-claim",
-                "in": "query",
-                "description": "Filter users who claimed a business profile",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "insider-category": {
-                "name": "insider-category",
-                "in": "query",
-                "description": "Filters users based on insider category (0=NONE, 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO)",
-                "required": false,
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "phylum": {
-                "name": "phylum",
-                "in": "query",
-                "description": "Filter on phylum from active insider verification",
-                "required": false,
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "is-verified-insider": {
-                "name": "is-verified-insider",
-                "in": "query",
-                "description": "Insider status. If TRUE filter only verified insiders, if FALSE only the flagged insiders.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "is-dod-verified": {
-                "name": "is-dod-verified",
-                "in": "query",
-                "description": "If TRUE filter users with active verification verified through the DoD service.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "profile-verification": {
-                "name": "profile-verification",
-                "in": "query",
-                "description": "Filters users based on profile verification status\n     *      (none=99,\n     *      pending=1,\n     *      accepted=2,\n     *      refused=3,\n     *      in progress=4,\n     *      not yet in progress=5,\n     *      expiring=6,\n     *      expired=7,\n     *      in grace period=8,\n     *      out of grace period=9,\n     *      in limbo=10,\n     *      incomplete=11).",
-                "required": false,
-                "schema": {
-                    "type": "integer",
-                    "default": false
-                }
-            },
-            "profile-verification-before": {
-                "name": "profile-verification-before",
-                "in": "query",
-                "description": "Filter profile verification BEFORE that date (which date depends of profile-verification filter)",
-                "required": false,
-                "schema": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            },
-            "profile-verification-after": {
-                "name": "profile-verification-after",
-                "in": "query",
-                "description": "If TRUE filter users with active verification verified through the DoD service.",
-                "required": false,
-                "schema": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            },
-            "subscriptions": {
-                "name": "subscriptions",
-                "in": "query",
-                "description": "Filter users based on their subscriptions to Insider Programs ('none', 'one', 'few', 'lots', 'pending')",
-                "required": false,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            "orders": {
-                "name": "orders",
-                "in": "query",
-                "description": "Filter users based on the number of orders ('none', 'one', 'few', 'lots')",
-                "required": false,
-                "schema": {
-                    "type": "string"
-                }
-            },
-            "brands": {
-                "name": "brands",
-                "in": "query",
-                "description": "Filter users that are members of those brand programs.",
-                "required": false,
-                "schema": {
-                    "description": "List of brand IDs separated by commas",
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "is-manager": {
-                "name": "is-manager",
-                "in": "query",
-                "description": "Filter users that manages a business or vendor profile",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "has-pending-document": {
-                "name": "has-pending-document",
-                "in": "query",
-                "description": "Filter users who have a Profile Verification document not yet verified by admins",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "has-experience": {
-                "name": "has-experience",
-                "in": "query",
-                "description": "Filter users who have or haven't a work experience",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "is-email-verified": {
-                "name": "is-email-verified",
-                "in": "query",
-                "description": "Filter users who have their PERSONAL email verified or not (TRUE=verified, FALSE=unverified, NULL=ignored)",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "brag-app": {
-                "name": "brag-app",
-                "in": "query",
-                "description": "Filter users that have installed the brag app (0=not brag app user, 1=brag app user, 11=iOS user, 12=Android user)",
-                "required": false,
-                "schema": {
-                    "type": "integer",
-                    "default": 0
-                }
-            },
-            "business-app": {
-                "name": "business-app",
-                "in": "query",
-                "description": "Filter users that have installed the business app (0=not business app user, 1=business app user, 11=iOS user, 12=Android user)",
-                "required": false,
-                "schema": {
-                    "type": "integer",
-                    "default": 0
-                }
-            },
-            "notifications": {
-                "name": "notifications",
-                "in": "query",
-                "description": "Filter users that are subscribed to any of the given notifications.",
-                "required": false,
-                "schema": {
-                    "description": "List of notificaton IDs separated by commas",
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "following": {
-                "name": "following",
-                "in": "query",
-                "description": "Filter users that are following these profiles.",
-                "required": false,
-                "schema": {
-                    "description": "List of profile IDs separated by commas",
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                }
-            },
-            "is-admin": {
-                "name": "is-admin",
-                "in": "query",
-                "description": "Filter users who are GF admins or not (TRUE=admin, FALSE=not admin, NULL=ignored).",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "is-prostaff": {
-                "name": "is-prostaff",
-                "in": "query",
-                "description": "Filter users that are in pro staff of at least 1 brand.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "is-activated-insider": {
-                "name": "is-activated-insider",
-                "in": "query",
-                "description": "Filter users that are activated insider for at least 1 brand.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "has-review": {
-                "name": "has-review",
-                "in": "query",
-                "description": "Filter users that are author of at least 1 review (published or not).",
-                "required": false,
-                "schema": {
-                    "type": "boolean"
-                }
-            },
-            "is-ghost": {
-                "name": "is-ghost",
-                "in": "query",
-                "description": "Filter users that are ghosts.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            },
-            "has-names": {
-                "name": "has-names",
-                "in": "query",
-                "description": "Filter users depending if they have both first and last names.",
-                "required": false,
-                "schema": {
-                    "type": "boolean",
-                    "default": false
-                }
-            }
-        }
-    }
-}
+openapi: 3.0.0
+info:
+  title: Wildfitter
+  description: 'This is the new wildfitter api'
+  contact:
+    email: aleksa.gavrilovic@guidefitter.com
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 2.0.0
+servers:
+  -
+    url: 'https://aleksa-new-api.wildfitter.com'
+    description: 'Wildfitter doc test server'
+paths:
+  /users:
+    get:
+      summary: 'Get Users'
+      operationId: 'App\Controller\User\UserController::getUsersAction'
+      parameters:
+        -
+          name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        -
+          $ref: '#/components/parameters/has-profile-photo'
+        -
+          $ref: '#/components/parameters/has-claim'
+        -
+          $ref: '#/components/parameters/insider-category'
+        -
+          $ref: '#/components/parameters/phylum'
+        -
+          $ref: '#/components/parameters/is-verified-insider'
+        -
+          $ref: '#/components/parameters/is-dod-verified'
+        -
+          $ref: '#/components/parameters/profile-verification'
+        -
+          $ref: '#/components/parameters/profile-verification-before'
+        -
+          $ref: '#/components/parameters/profile-verification-after'
+        -
+          $ref: '#/components/parameters/subscriptions'
+        -
+          $ref: '#/components/parameters/orders'
+        -
+          $ref: '#/components/parameters/brands'
+        -
+          $ref: '#/components/parameters/is-manager'
+        -
+          $ref: '#/components/parameters/has-pending-document'
+        -
+          $ref: '#/components/parameters/has-experience'
+        -
+          $ref: '#/components/parameters/is-email-verified'
+        -
+          $ref: '#/components/parameters/brag-app'
+        -
+          $ref: '#/components/parameters/business-app'
+        -
+          $ref: '#/components/parameters/notifications'
+        -
+          $ref: '#/components/parameters/following'
+        -
+          $ref: '#/components/parameters/is-admin'
+        -
+          $ref: '#/components/parameters/is-prostaff'
+        -
+          $ref: '#/components/parameters/is-activated-insider'
+        -
+          $ref: '#/components/parameters/is-ghost'
+        -
+          $ref: '#/components/parameters/has-review'
+        -
+          $ref: '#/components/parameters/has-names'
+        -
+          name: with
+          in: query
+          required: false
+          schema:
+            description: 'The extra fields you want in the returned JSON.'
+            type: string
+      responses:
+        '200':
+          description: Get
+    post:
+      summary: 'Create User'
+      requestBody:
+        description: 'Pet object that needs to be added to the store'
+        required: true
+        content:
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: 'User created'
+  /users/name:
+    get:
+      summary: 'Get Single User - Name'
+      parameters:
+        -
+          name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            default: name
+      responses:
+        '200':
+          description: Get
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /users/email:
+    get:
+      summary: 'Get Single User - Email'
+      parameters:
+        -
+          name: email
+          in: path
+          description: 'The email to search by'
+          required: true
+          schema:
+            type: string
+            default: name
+      responses:
+        '200':
+          description: Get
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    User:
+      description: 'This is just a user.'
+      type: string
+  parameters:
+    has-profile-photo:
+      name: has-profile-photo
+      in: query
+      description: 'Filter users who have a profile photo'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    has-claim:
+      name: has-claim
+      in: query
+      description: 'Filter users who claimed a business profile'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    insider-category:
+      name: insider-category
+      in: query
+      description: 'Filters users based on insider category (0=NONE, 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO)'
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+    phylum:
+      name: phylum
+      in: query
+      description: 'Filter on phylum from active insider verification'
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+    is-verified-insider:
+      name: is-verified-insider
+      in: query
+      description: 'Insider status. If TRUE filter only verified insiders, if FALSE only the flagged insiders.'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    is-dod-verified:
+      name: is-dod-verified
+      in: query
+      description: 'If TRUE filter users with active verification verified through the DoD service.'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    profile-verification:
+      name: profile-verification
+      in: query
+      description: "Filters users based on profile verification status\n     *      (none=99,\n     *      pending=1,\n     *      accepted=2,\n     *      refused=3,\n     *      in progress=4,\n     *      not yet in progress=5,\n     *      expiring=6,\n     *      expired=7,\n     *      in grace period=8,\n     *      out of grace period=9,\n     *      in limbo=10,\n     *      incomplete=11)."
+      required: false
+      schema:
+        type: integer
+        default: false
+    profile-verification-before:
+      name: profile-verification-before
+      in: query
+      description: 'Filter profile verification BEFORE that date (which date depends of profile-verification filter)'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    profile-verification-after:
+      name: profile-verification-after
+      in: query
+      description: 'If TRUE filter users with active verification verified through the DoD service.'
+      required: false
+      schema:
+        type: string
+        format: date-time
+    subscriptions:
+      name: subscriptions
+      in: query
+      description: 'Filter users based on their subscriptions to Insider Programs (''none'', ''one'', ''few'', ''lots'', ''pending'')'
+      required: false
+      schema:
+        type: string
+    orders:
+      name: orders
+      in: query
+      description: 'Filter users based on the number of orders (''none'', ''one'', ''few'', ''lots'')'
+      required: false
+      schema:
+        type: string
+    brands:
+      name: brands
+      in: query
+      description: 'Filter users that are members of those brand programs.'
+      required: false
+      schema:
+        description: 'List of brand IDs separated by commas'
+        type: array
+        items:
+          type: integer
+    is-manager:
+      name: is-manager
+      in: query
+      description: 'Filter users that manages a business or vendor profile'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    has-pending-document:
+      name: has-pending-document
+      in: query
+      description: 'Filter users who have a Profile Verification document not yet verified by admins'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    has-experience:
+      name: has-experience
+      in: query
+      description: 'Filter users who have or haven''t a work experience'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    is-email-verified:
+      name: is-email-verified
+      in: query
+      description: 'Filter users who have their PERSONAL email verified or not (TRUE=verified, FALSE=unverified, NULL=ignored)'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    brag-app:
+      name: brag-app
+      in: query
+      description: 'Filter users that have installed the brag app (0=not brag app user, 1=brag app user, 11=iOS user, 12=Android user)'
+      required: false
+      schema:
+        type: integer
+        default: 0
+    business-app:
+      name: business-app
+      in: query
+      description: 'Filter users that have installed the business app (0=not business app user, 1=business app user, 11=iOS user, 12=Android user)'
+      required: false
+      schema:
+        type: integer
+        default: 0
+    notifications:
+      name: notifications
+      in: query
+      description: 'Filter users that are subscribed to any of the given notifications.'
+      required: false
+      schema:
+        description: 'List of notificaton IDs separated by commas'
+        type: array
+        items:
+          type: integer
+    following:
+      name: following
+      in: query
+      description: 'Filter users that are following these profiles.'
+      required: false
+      schema:
+        description: 'List of profile IDs separated by commas'
+        type: array
+        items:
+          type: integer
+    is-admin:
+      name: is-admin
+      in: query
+      description: 'Filter users who are GF admins or not (TRUE=admin, FALSE=not admin, NULL=ignored).'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    is-prostaff:
+      name: is-prostaff
+      in: query
+      description: 'Filter users that are in pro staff of at least 1 brand.'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    is-activated-insider:
+      name: is-activated-insider
+      in: query
+      description: 'Filter users that are activated insider for at least 1 brand.'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    has-review:
+      name: has-review
+      in: query
+      description: 'Filter users that are author of at least 1 review (published or not).'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    is-ghost:
+      name: is-ghost
+      in: query
+      description: 'Filter users that are ghosts.'
+      required: false
+      schema:
+        type: boolean
+        default: false
+    has-names:
+      name: has-names
+      in: query
+      description: 'Filter users depending if they have both first and last names.'
+      required: false
+      schema:
+        type: boolean
+        default: false
