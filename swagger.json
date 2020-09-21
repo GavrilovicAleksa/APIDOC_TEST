@@ -135,14 +135,9 @@
                     "description": "Pet object that needs to be added to the store",
                     "required": true,
                     "content": {
-                        "application/xml": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        },
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/user"
                             }
                         }
                     }
@@ -215,10 +210,6 @@
     },
     "components": {
         "schemas": {
-            "User": {
-                "description": "This is just a user.",
-                "type": "string"
-            },
             "user": {
                 "properties": {
                     "id": {
