@@ -69,19 +69,62 @@
                     },
                     {
                         "$ref": "#/components/parameters/brands"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-manager"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-pending-document"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-experience"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-email-verified"
+                    },
+                    {
+                        "$ref": "#/components/parameters/brag-app"
+                    },
+                    {
+                        "$ref": "#/components/parameters/business-app"
+                    },
+                    {
+                        "$ref": "#/components/parameters/notifications"
+                    },
+                    {
+                        "$ref": "#/components/parameters/following"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-admin"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-prostaff"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-activated-insider"
+                    },
+                    {
+                        "$ref": "#/components/parameters/is-ghost"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-review"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-names"
+                    },
+                    {
+                        "name": "with",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "The extra fields you want in the returned JSON.",
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get",
-                        "content": {
-                            "application/octet-stream": {
-                                "schema": {
-                                    "type": "string",
-                                    "format": "binary"
-                                }
-                            }
-                        }
+                        "description": "Get"
                     }
                 }
             },
@@ -303,8 +346,8 @@
                     }
                 }
             },
-            "isManager": {
-                "name": "isManager",
+            "is-manager": {
+                "name": "is-manager",
                 "in": "query",
                 "description": "Filter users that manages a business or vendor profile",
                 "required": false,
@@ -346,7 +389,7 @@
             "brag-app": {
                 "name": "brag-app",
                 "in": "query",
-                "description": "Filter users who have their PERSONAL email verified or not (TRUE=verified, FALSE=unverified, NULL=ignored)",
+                "description": "Filter users that have installed the brag app (0=not brag app user, 1=brag app user, 11=iOS user, 12=Android user)",
                 "required": false,
                 "schema": {
                     "type": "integer",
@@ -356,7 +399,7 @@
             "business-app": {
                 "name": "business-app",
                 "in": "query",
-                "description": "Filter users who have their PERSONAL email verified or not (TRUE=verified, FALSE=unverified, NULL=ignored)",
+                "description": "Filter users that have installed the business app (0=not business app user, 1=business app user, 11=iOS user, 12=Android user)",
                 "required": false,
                 "schema": {
                     "type": "integer",
@@ -366,7 +409,7 @@
             "notifications": {
                 "name": "notifications",
                 "in": "query",
-                "description": "Filter users that are members of those brand programs.",
+                "description": "Filter users that are subscribed to any of the given notifications.",
                 "required": false,
                 "schema": {
                     "description": "List of notificaton IDs separated by commas",
@@ -379,7 +422,7 @@
             "following": {
                 "name": "following",
                 "in": "query",
-                "description": "Filter users that are members of those brand programs.",
+                "description": "Filter users that are following these profiles.",
                 "required": false,
                 "schema": {
                     "description": "List of profile IDs separated by commas",
@@ -387,6 +430,66 @@
                     "items": {
                         "type": "integer"
                     }
+                }
+            },
+            "is-admin": {
+                "name": "is-admin",
+                "in": "query",
+                "description": "Filter users who are GF admins or not (TRUE=admin, FALSE=not admin, NULL=ignored).",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "is-prostaff": {
+                "name": "is-prostaff",
+                "in": "query",
+                "description": "Filter users that are in pro staff of at least 1 brand.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "is-activated-insider": {
+                "name": "is-activated-insider",
+                "in": "query",
+                "description": "Filter users that are activated insider for at least 1 brand.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "has-review": {
+                "name": "has-review",
+                "in": "query",
+                "description": "Filter users that are author of at least 1 review (published or not).",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "is-ghost": {
+                "name": "is-ghost",
+                "in": "query",
+                "description": "Filter users that are ghosts.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "has-names": {
+                "name": "has-names",
+                "in": "query",
+                "description": "Filter users depending if they have both first and last names.",
+                "required": false,
+                "schema": {
+                    "type": "boolean",
+                    "default": false
                 }
             }
         }
