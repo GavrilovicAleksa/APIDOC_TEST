@@ -468,8 +468,7 @@
                 "description": "Filter users that are author of at least 1 review (published or not).",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-ghost": {
