@@ -246,7 +246,7 @@
                 }
             }
         },
-        "/users/email={email}": {
+        "/users/email=email": {
             "get": {
                 "summary": "Get Single User - Email",
                 "parameters": [
