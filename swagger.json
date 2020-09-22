@@ -26,16 +26,6 @@
                 "operationId": "App\\Controller\\User\\UserController::getUsersAction",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "default": 0,
-                            "minimum": 0
-                        }
-                    },
-                    {
                         "$ref": "#/components/parameters/has-profile-photo"
                     },
                     {
@@ -126,6 +116,94 @@
                 "responses": {
                     "200": {
                         "description": "Get"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update User",
+                "description": "",
+                "requestBody": {
+                    "description": "The user object that will be updated.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "(Required) The user's Profile name (that'll be his Guidefitter URL)",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "(Required) User's email address",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "(Required) The password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password2": {
+                                        "description": "(Required) The password confirmation",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "first_name": {
+                                        "description": "The user's first name",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "The user's last name",
+                                        "type": "string"
+                                    },
+                                    "guidefitter": {
+                                        "description": "The ID of an outfitter if the lead token comes from an outfitter claiming a business to answer the lead",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "An invitation token. User creating account comes form an invite.",
+                                        "type": "string"
+                                    },
+                                    "insider_category": {
+                                        "description": "Flag a member as a potential Insider",
+                                        "type": "integer"
+                                    },
+                                    "city": {
+                                        "description": "User's address city (AddressJson)",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "User's address state (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "country": {
+                                        "description": "User's address country (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "street1": {
+                                        "description": "User's address line 1",
+                                        "type": "string"
+                                    },
+                                    "street2": {
+                                        "description": "User's address line 2",
+                                        "type": "string"
+                                    },
+                                    "zip": {
+                                        "description": "User's address ZIP code",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
                     }
                 }
             },
@@ -256,7 +334,7 @@
                         "description": "The Profile Id to search by",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -368,7 +446,7 @@
                         "description": "The userId to search by",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -392,17 +470,21 @@
             "user": {
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "integer",
+                        "default": 0
                     },
                     "firstName": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "FirstName"
                     },
                     "lastName": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "LastName"
                     },
                     "profile": {},
                     "isGhost": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": false
                     }
                 },
                 "type": "object"
@@ -438,7 +520,10 @@
                     "type": "array",
                     "items": {
                         "type": "integer"
-                    }
+                    },
+                    "default": [
+                        0
+                    ]
                 }
             },
             "phylum": {
