@@ -246,7 +246,7 @@
                 }
             }
         },
-        "/users/email": {
+        "/users/email={email}": {
             "get": {
                 "summary": "Get Single User - Email",
                 "parameters": [
@@ -265,10 +265,9 @@
                     "200": {
                         "description": "Get",
                         "content": {
-                            "application/octet-stream": {
+                            "application/json": {
                                 "schema": {
-                                    "type": "string",
-                                    "format": "binary"
+                                    "$ref": "#/components/schemas/user"
                                 }
                             }
                         }
