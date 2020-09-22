@@ -534,7 +534,8 @@
                 "schema": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "integer",
+                        "default": []
                     }
                 }
             },
@@ -615,7 +616,8 @@
                     "description": "List of brand IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "integer",
+                        "default": []
                     }
                 }
             },
