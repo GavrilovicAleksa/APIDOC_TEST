@@ -22,7 +22,7 @@
         "/users": {
             "get": {
                 "summary": "Get Users",
-                "description": "You can use /users endpoint to retrieve a list of users, you can also use parameters to filter the list. Sort order is ignored when the q parameter is set, and instead results are sorted by match relevance.",
+                "description": "You can use `/users` endpoint to retrieve a list of users, you can also use parameters to filter the list. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance.",
                 "operationId": "App\\Controller\\User\\UserController::getUsersAction",
                 "parameters": [
                     {
@@ -225,10 +225,38 @@
                     {
                         "name": "name",
                         "in": "path",
+                        "description": "The username to search by",
                         "required": true,
                         "schema": {
-                            "type": "string",
-                            "default": "name"
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/profile=profileId": {
+            "get": {
+                "summary": "Get Single User - Profile",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The Profile Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
@@ -256,8 +284,91 @@
                         "description": "The email to search by",
                         "required": true,
                         "schema": {
-                            "type": "string",
-                            "default": "name"
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/fbid=fbid": {
+            "get": {
+                "summary": "Get Single User - Facebook",
+                "parameters": [
+                    {
+                        "name": "fbid",
+                        "in": "path",
+                        "description": "The Facebook Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/magento=magentoId": {
+            "get": {
+                "summary": "Get Single User - Magento",
+                "parameters": [
+                    {
+                        "name": "magentoId",
+                        "in": "path",
+                        "description": "The Magento Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/userId": {
+            "get": {
+                "summary": "Get Single User - UserId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "The userId to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],
