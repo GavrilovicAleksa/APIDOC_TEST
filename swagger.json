@@ -122,6 +122,17 @@
             "put": {
                 "summary": "Update User",
                 "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "The user object that will be updated.",
                     "required": true,
@@ -294,6 +305,35 @@
                         "description": "User created"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Delete User",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hard",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "To hard-delete the user and all its related entities",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted."
+                    }
+                }
             }
         },
         "/users/name": {
@@ -463,6 +503,57 @@
                     }
                 }
             }
+        },
+        "/me": {
+            "put": {
+                "summary": "Update User - Magento",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "The user's email.",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "The user's first name.",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "The user's last name.",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "with",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "The extra fields you want in the returned JSON",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated"
+                    },
+                    "204": {
+                        "description": "Nothing to update"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -520,9 +611,7 @@
                     "type": "array",
                     "items": {
                         "type": "integer",
-                        "default": [
-                            0
-                        ]
+                        "default": []
                     }
                 }
             },
@@ -690,7 +779,8 @@
                     "description": "List of notificaton IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "integer",
+                        "default": []
                     }
                 }
             },
@@ -703,7 +793,8 @@
                     "description": "List of profile IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "integer",
+                        "default": []
                     }
                 }
             },
