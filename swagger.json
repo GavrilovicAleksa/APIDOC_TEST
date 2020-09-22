@@ -131,14 +131,13 @@
             },
             "post": {
                 "summary": "Create User",
+                "description": "",
                 "requestBody": {
-                    "description": "Pet object that needs to be added to the store",
+                    "description": "The user object that will be added.",
                     "required": true,
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/user"
-                            }
+                            "schema": {}
                         }
                     }
                 },
