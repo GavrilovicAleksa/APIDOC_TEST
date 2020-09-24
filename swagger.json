@@ -520,6 +520,37 @@
                 }
             }
         },
+        "/brand/{brandId}": {
+            "delete": {
+                "summary": "Delete Brand",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "Id of the brand",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hard",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "To hard-delete the brand and all its related entities",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted."
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "summary": "Get Users",
@@ -1084,7 +1115,7 @@
                         "description": "Brand slogan",
                         "type": "string"
                     },
-                    "gop": {
+                    "profile": {
                         "$ref": "#/components/schemas/profile"
                     },
                     "email": {
