@@ -168,7 +168,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get"
+                        "description": "Get",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -207,7 +214,308 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Brand created"
+                        "description": "Brand created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing data"
+                    }
+                }
+            }
+        },
+        "/brands/name": {
+            "get": {
+                "summary": "Get Single Brand - Name",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The name to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/brands/profileId": {
+            "get": {
+                "summary": "Get Single Brand - Profile",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The profile Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/brands/brandId": {
+            "get": {
+                "summary": "Get Single Brand - Profile",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "The brand Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "The brand Id to search by",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The brand object that will be updated.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "brand_name": {
+                                        "description": "The name of the brand",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "An email address",
+                                        "type": "string"
+                                    },
+                                    "slogan": {
+                                        "description": "The brand's slogan",
+                                        "type": "string"
+                                    },
+                                    "join_message": {
+                                        "description": "The message displayed on the brand's employees signup page",
+                                        "type": "string"
+                                    },
+                                    "insider_message": {
+                                        "description": "The message displayed on the brand's insiders signup page",
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "description": "Brand website URL (not GOP, general public URL)",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "Brand's address city (AddressJson)",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "Brand's address state (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "country": {
+                                        "description": "Brand's address country (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "street1": {
+                                        "description": "Brand address line 1",
+                                        "type": "string"
+                                    },
+                                    "street2": {
+                                        "description": "Brand address line 2",
+                                        "type": "string"
+                                    },
+                                    "zip": {
+                                        "description": "Brand address ZIP code",
+                                        "type": "string"
+                                    },
+                                    "corporate_domains": {
+                                        "description": "List of email domains for the brand (including @) (admins only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "corporate_domains_regex": {
+                                        "description": "A regexp to catch all variations of corporate domains (including @) (admins only)",
+                                        "type": "string"
+                                    },
+                                    "gear_categories": {
+                                        "description": "An array of Gear Category IDs (admins only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "parent_brand": {
+                                        "description": "The Brand ID of the parent brand (admins only)",
+                                        "type": "integer"
+                                    },
+                                    "account_manager": {
+                                        "description": "The Profile ID of the GF admin that's managing this account (admins only)",
+                                        "type": "string",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "anniversary": {
+                                        "description": "The ISO date of the brand's Grid anniversary (admins only)",
+                                        "type": "string",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "grid_agreement": {
+                                        "description": "The file name of the Grid Agreement template already uploaded on guidefitterconfidential S3 bucket (admins only)",
+                                        "type": "string",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "prostaff_status": {
+                                        "description": "Set status of the Pro Staff Program, 0=locked, 1=closed, 2=opened",
+                                        "type": "integer"
+                                    },
+                                    "prostaff_shop_status": {
+                                        "description": "Set magento shop status for the Pro Staff, 1=created, 2=opened (admins only)",
+                                        "type": "integer"
+                                    },
+                                    "prostaff_duration": {
+                                        "description": "Set status of the Pro Staff membership default duration, null=everlasting, 1=6m, 2=1y",
+                                        "type": "string"
+                                    },
+                                    "prostaff_agreement": {
+                                        "description": "The file name of the Pro Staff Agreement template already uploaded on guidefitterconfidential S3 bucket",
+                                        "type": "string"
+                                    },
+                                    "aim_status": {
+                                        "description": "Set status of the AIM Program, 0=locked, 1=closed, 2=opened",
+                                        "type": "integer"
+                                    },
+                                    "aim_shop_status": {
+                                        "description": "Set magento shop status for AIM, 1=created, 2=opened (admins only)",
+                                        "type": "string",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "price_date": {
+                                        "description": "The date when pricing was last updated. If NULL it'll default to current date/time",
+                                        "type": "string"
+                                    },
+                                    "inventory_date": {
+                                        "description": "The date when inventory was last updated. If NULL it'll default to current date/time.",
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "description": "The Brand Profile name (that'll be his Guidefitter URL)",
+                                        "type": "string"
+                                    },
+                                    "avatar": {
+                                        "description": "The ID of the photo to use as profile avatar",
+                                        "type": "integer"
+                                    },
+                                    "cover": {
+                                        "description": "The ID of the photo to use as profile cover",
+                                        "type": "integer"
+                                    },
+                                    "notifications": {
+                                        "description": "The list of notifications IDs the brand is subscribed to",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "active": {
+                                        "description": "Enable/disable the profile (only admins)",
+                                        "type": "boolean"
+                                    },
+                                    "grid_enabled": {
+                                        "description": "Enable/disable the grid capabilities of that brand + show programs in cockpit (only admins)",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "undelete": {
+                                        "description": "Un-delete the brand (only admins)",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/brand"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nothing to update"
+                    },
+                    "404": {
+                        "description": "Brand not found"
                     }
                 }
             }
