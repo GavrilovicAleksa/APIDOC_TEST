@@ -308,106 +308,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update User",
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "Id of the user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "description": "The user object that will be updated.",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "description": "(Required) The user's Profile name (that'll be his Guidefitter URL)",
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "description": "(Required) User's email address",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "(Required) The password",
-                                        "type": "string",
-                                        "format": "password"
-                                    },
-                                    "password2": {
-                                        "description": "(Required) The password confirmation",
-                                        "type": "string",
-                                        "format": "password"
-                                    },
-                                    "first_name": {
-                                        "description": "The user's first name",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "The user's last name",
-                                        "type": "string"
-                                    },
-                                    "guidefitter": {
-                                        "description": "The ID of an outfitter if the lead token comes from an outfitter claiming a business to answer the lead",
-                                        "type": "integer"
-                                    },
-                                    "token": {
-                                        "description": "An invitation token. User creating account comes form an invite.",
-                                        "type": "string"
-                                    },
-                                    "insider_category": {
-                                        "description": "Flag a member as a potential Insider",
-                                        "type": "integer"
-                                    },
-                                    "city": {
-                                        "description": "User's address city (AddressJson)",
-                                        "type": "string"
-                                    },
-                                    "state": {
-                                        "description": "User's address state (geoname ID)",
-                                        "type": "integer"
-                                    },
-                                    "country": {
-                                        "description": "User's address country (geoname ID)",
-                                        "type": "integer"
-                                    },
-                                    "street1": {
-                                        "description": "User's address line 1",
-                                        "type": "string"
-                                    },
-                                    "street2": {
-                                        "description": "User's address line 2",
-                                        "type": "string"
-                                    },
-                                    "zip": {
-                                        "description": "User's address ZIP code",
-                                        "type": "string"
-                                    },
-                                    "with": {
-                                        "description": "The extra fields you want in the returned JSON",
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
+                        "description": "Get",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
                             }
                         }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User created"
                     }
                 }
             },
@@ -496,35 +404,6 @@
                 "responses": {
                     "201": {
                         "description": "User created"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete User",
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "description": "Id of the user",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "hard",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "description": "To hard-delete the user and all its related entities",
-                            "type": "boolean",
-                            "default": false
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "User deleted."
                     }
                 }
             }
@@ -695,6 +574,134 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "summary": "Update User",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "The user object that will be updated.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "(Required) The user's Profile name (that'll be his Guidefitter URL)",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "(Required) User's email address",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "(Required) The password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password2": {
+                                        "description": "(Required) The password confirmation",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "first_name": {
+                                        "description": "The user's first name",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "The user's last name",
+                                        "type": "string"
+                                    },
+                                    "guidefitter": {
+                                        "description": "The ID of an outfitter if the lead token comes from an outfitter claiming a business to answer the lead",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "An invitation token. User creating account comes form an invite.",
+                                        "type": "string"
+                                    },
+                                    "insider_category": {
+                                        "description": "Flag a member as a potential Insider",
+                                        "type": "integer"
+                                    },
+                                    "city": {
+                                        "description": "User's address city (AddressJson)",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "User's address state (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "country": {
+                                        "description": "User's address country (geoname ID)",
+                                        "type": "integer"
+                                    },
+                                    "street1": {
+                                        "description": "User's address line 1",
+                                        "type": "string"
+                                    },
+                                    "street2": {
+                                        "description": "User's address line 2",
+                                        "type": "string"
+                                    },
+                                    "zip": {
+                                        "description": "User's address ZIP code",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete User",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hard",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "description": "To hard-delete the user and all its related entities",
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted."
+                    }
+                }
             }
         },
         "/me": {
@@ -751,6 +758,127 @@
     },
     "components": {
         "schemas": {
+            "brand": {
+                "properties": {
+                    "type": {
+                        "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Brand ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Business name",
+                        "type": "string"
+                    },
+                    "slogan": {
+                        "description": "Brand slogan",
+                        "type": "string"
+                    },
+                    "gop": {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    "email": {
+                        "description": "Brand email address\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "corporateDomains": {
+                        "description": "The list of the brand's corporate email addresses domains",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [
+                            "coroprate-email@email.com"
+                        ]
+                    },
+                    "isGridEnabled": {
+                        "description": "If TRUE, it means brand has Programs allowed to be enabled on the grid",
+                        "type": "boolean"
+                    },
+                    "parentBrand": {
+                        "$ref": "#/components/schemas/brand"
+                    },
+                    "isEmailEnough": {
+                        "description": "If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded",
+                        "type": "boolean"
+                    },
+                    "insiderCategory": {
+                        "description": "The Insider Category opened by being an employee of that brand",
+                        "type": "integer"
+                    },
+                    "prostaffStatus": {
+                        "description": "Pro Staff status (0=locked, 1=closed, 2=opened)",
+                        "type": "integer"
+                    },
+                    "prostaffShopStatus": {
+                        "description": "Pro Staff Shop status (0=none, 1=created, 2=opened)",
+                        "type": "integer"
+                    },
+                    "prostaffDuration": {
+                        "description": "Pro Staff membership default duration (1=6 months, 2=1 year)\nACL_PRIVATE",
+                        "type": "integer"
+                    },
+                    "aimStatus": {
+                        "description": "AIM status (0=locked, 1=closed, 2=opened)",
+                        "type": "integer"
+                    },
+                    "aimShopStatus": {
+                        "description": "AIM Shop status (0=none, 1=created, 2=opened)",
+                        "type": "integer"
+                    },
+                    "shippingAverage": {
+                        "description": "Average number of days to ship an order",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "photo": {
+                "properties": {
+                    "id": {
+                        "description": "Photo ID",
+                        "type": "integer"
+                    },
+                    "hash": {
+                        "description": "Photo MD5 hash (to build path on CDN)",
+                        "type": "string"
+                    },
+                    "pro": {
+                        "description": "Processed: is the photo processed and available on CDN?",
+                        "type": "boolean"
+                    },
+                    "commentCount": {
+                        "description": "The number of comments on the photo",
+                        "type": "integer"
+                    },
+                    "likeCount": {
+                        "description": "LikesCount, the number of likes",
+                        "type": "integer"
+                    },
+                    "viewCount": {
+                        "description": "Total number of views\nACL_PRIVATE",
+                        "type": "integer"
+                    },
+                    "braggedOn": {
+                        "description": "ISO date when the photo was bragged",
+                        "type": "string"
+                    },
+                    "deletedOn": {
+                        "description": "The ISO date when the photo was soft deleted",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "description": "The hashtags for that photo",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "profile": {
                 "properties": {
                     "id": {
@@ -774,7 +902,7 @@
                         "type": "boolean"
                     },
                     "avatar": {
-                        "description": "Photo of the profile avatar"
+                        "$ref": "#/components/schemas/photo"
                     },
                     "updatedOn": {
                         "description": "ISO date of the last profile update",
@@ -788,7 +916,10 @@
                         "title": "notifications",
                         "description": "The list of notifications the profile is subscribed to\nACL_PRIVATE\n(with=REQ_PROFILE_NOTIFICATIONS)",
                         "type": "array",
-                        "default": "[]"
+                        "items": {
+                            "type": "object"
+                        },
+                        "default": []
                     },
                     "unreadCount": {
                         "description": "Get the number of thread messages (conversations) not read. Must be authenticated.",
