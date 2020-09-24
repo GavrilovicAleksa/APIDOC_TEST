@@ -19,6 +19,199 @@
         }
     ],
     "paths": {
+        "/brands": {
+            "get": {
+                "summary": "Get Brands",
+                "description": "You can use `/users` endpoint to retrieve a list of users, you can also use parameters to filter the list. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/gop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/gop-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/gop-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/gop-phylum"
+                    },
+                    {
+                        "$ref": "#/components/parameters/idp"
+                    },
+                    {
+                        "$ref": "#/components/parameters/idp-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/idp-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/cnp"
+                    },
+                    {
+                        "$ref": "#/components/parameters/cnp-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/cnp-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/oep"
+                    },
+                    {
+                        "$ref": "#/components/parameters/oep-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/oep-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/mip"
+                    },
+                    {
+                        "$ref": "#/components/parameters/mip-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/mip-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/mip-phylum"
+                    },
+                    {
+                        "$ref": "#/components/parameters/frp"
+                    },
+                    {
+                        "$ref": "#/components/parameters/frp-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/frp-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/frp-phylum"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ecp"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ecp-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ecp-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/ecp-phylum"
+                    },
+                    {
+                        "$ref": "#/components/parameters/rtp"
+                    },
+                    {
+                        "$ref": "#/components/parameters/rtp-channel"
+                    },
+                    {
+                        "$ref": "#/components/parameters/rtp-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/rtp-phylum"
+                    },
+                    {
+                        "$ref": "#/components/parameters/prostaff"
+                    },
+                    {
+                        "$ref": "#/components/parameters/prostaff-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/aim"
+                    },
+                    {
+                        "$ref": "#/components/parameters/aim-shop"
+                    },
+                    {
+                        "$ref": "#/components/parameters/categories"
+                    },
+                    {
+                        "$ref": "#/components/parameters/corporate-domain"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-domain"
+                    },
+                    {
+                        "$ref": "#/components/parameters/has-grid-access"
+                    },
+                    {
+                        "$ref": "#/components/parameters/parent"
+                    },
+                    {
+                        "name": "profile-status",
+                        "in": "query",
+                        "description": "The status of the profile (online/offline/any) (online by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "deleted",
+                        "in": "query",
+                        "description": "Include soft deleted profiles in the search (yes/no/any) (no by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create Brand",
+                "requestBody": {
+                    "description": "The user object that will be added.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The Guidefitter Profile name of the brand",
+                                        "type": "string"
+                                    },
+                                    "brand_name": {
+                                        "description": "The name of the brand",
+                                        "type": "string"
+                                    },
+                                    "grid_enabled": {
+                                        "description": "Enable/disable the grid capabilities of that brand + show programs in cockpit (only admins)",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Brand created"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "summary": "Get Users",
@@ -558,30 +751,470 @@
     },
     "components": {
         "schemas": {
-            "user": {
+            "profile": {
                 "properties": {
                     "id": {
-                        "type": "integer",
-                        "default": 0
+                        "description": "Profile ID",
+                        "type": "integer"
+                    },
+                    "isActive": {
+                        "description": "Profile is online/offline",
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "description": "Profile Type (1=ProfileStandard, 2=ProfileBusiness, 3=ProfileVendor)",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Profile name (the Guidefitter URL of the profile)",
+                        "type": "string"
+                    },
+                    "canRename": {
+                        "description": "Can that profile name be changed still?\nAdmin can rename as much as they want though.\nACL_PRIVATE",
+                        "type": "boolean"
+                    },
+                    "avatar": {
+                        "description": "Photo of the profile avatar"
+                    },
+                    "updatedOn": {
+                        "description": "ISO date of the last profile update",
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "description": "ISO date when the profile was created",
+                        "type": "string"
+                    },
+                    "notifications": {
+                        "title": "notifications",
+                        "description": "The list of notifications the profile is subscribed to\nACL_PRIVATE\n(with=REQ_PROFILE_NOTIFICATIONS)",
+                        "type": "array",
+                        "default": "[]"
+                    },
+                    "unreadCount": {
+                        "description": "Get the number of thread messages (conversations) not read. Must be authenticated.",
+                        "type": "integer"
+                    },
+                    "deletedOn": {
+                        "description": "ISO date when the profile was soft-deleted\nACL_PRIVATE",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "user": {
+                "properties": {
+                    "type": {
+                        "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "User ID",
+                        "type": "integer"
+                    },
+                    "isGhost": {
+                        "description": "Ghost user (not registered to GF)",
+                        "type": "boolean"
                     },
                     "firstName": {
-                        "type": "string",
-                        "default": "FirstName"
+                        "description": "First Name",
+                        "type": "string"
                     },
                     "lastName": {
-                        "type": "string",
-                        "default": "LastName"
+                        "description": "Last Name",
+                        "type": "string"
                     },
-                    "profile": {},
-                    "isGhost": {
-                        "type": "boolean",
-                        "default": false
+                    "profile": {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    "unreadCount": {
+                        "description": "Get the number of thread messages (conversations) not read. Must be authenticated.",
+                        "type": "integer"
+                    },
+                    "email": {
+                        "description": "User email\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "isEmailVerified": {
+                        "description": "User email has been verified\nACL_PRIVATE",
+                        "type": "boolean"
+                    },
+                    "createdOn": {
+                        "description": "Account creation date",
+                        "type": "string"
+                    },
+                    "magentoId": {
+                        "description": "The magento ID of that user\nACL_PRIVATE",
+                        "type": "integer"
+                    },
+                    "zendeskId": {
+                        "description": "The Zendesk ID of that user\nACL_PRIVATE",
+                        "type": "string"
                     }
                 },
                 "type": "object"
             }
         },
         "parameters": {
+            "gop": {
+                "name": "gop",
+                "in": "query",
+                "description": "GOP filter: 0=offline, 1=coming soon, 2=online, 3=featured",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "gop-channel": {
+                "name": "gop-channel",
+                "in": "query",
+                "description": "GOP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "gop-shop": {
+                "name": "gop-shop",
+                "in": "query",
+                "description": "GOP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "gop-phylum": {
+                "name": "gop-phylum",
+                "in": "query",
+                "description": "Filter on GOP restriction phylum",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "idp": {
+                "name": "idp",
+                "in": "query",
+                "description": "IDP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "idp-channel": {
+                "name": "idp-channel",
+                "in": "query",
+                "description": "IDP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "idp-shop": {
+                "name": "idp-shop",
+                "in": "query",
+                "description": "IDP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "cnp": {
+                "name": "cnp",
+                "in": "query",
+                "description": "CNP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "cnp-channel": {
+                "name": "cnp-channel",
+                "in": "query",
+                "description": "CNP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "cnp-shop": {
+                "name": "cnp-shop",
+                "in": "query",
+                "description": "CNP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "oep": {
+                "name": "oep",
+                "in": "query",
+                "description": "OEP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "oep-channel": {
+                "name": "oep-channel",
+                "in": "query",
+                "description": "OEP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "oep-shop": {
+                "name": "oep-shop",
+                "in": "query",
+                "description": "OEP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "mip": {
+                "name": "mip",
+                "in": "query",
+                "description": "MIP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "mip-channel": {
+                "name": "mip-channel",
+                "in": "query",
+                "description": "MIP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "mip-shop": {
+                "name": "mip-shop",
+                "in": "query",
+                "description": "MIP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "mip-phylum": {
+                "name": "mip-phylum",
+                "in": "query",
+                "description": "Filter on MIP restriction phylum",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "frp": {
+                "name": "frp",
+                "in": "query",
+                "description": "FRP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "frp-channel": {
+                "name": "frp-channel",
+                "in": "query",
+                "description": "FRP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "frp-shop": {
+                "name": "frp-shop",
+                "in": "query",
+                "description": "RTP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "frp-phylum": {
+                "name": "frp-phylum",
+                "in": "query",
+                "description": "Filter on FRP restriction phylum",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "ecp": {
+                "name": "ecp",
+                "in": "query",
+                "description": "ECP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "ecp-channel": {
+                "name": "ecp-channel",
+                "in": "query",
+                "description": "ECP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "ecp-shop": {
+                "name": "ecp-shop",
+                "in": "query",
+                "description": "ECP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "ecp-phylum": {
+                "name": "ecp-phylum",
+                "in": "query",
+                "description": "Filter on ECP restriction phylum",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "rtp": {
+                "name": "rtp",
+                "in": "query",
+                "description": "RTP filter: 0=offline, 1=coming soon, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "rtp-channel": {
+                "name": "rtp-channel",
+                "in": "query",
+                "description": "RTP Channel filter: shop, code, dealer",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "rtp-shop": {
+                "name": "rtp-shop",
+                "in": "query",
+                "description": "RTP Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "rtp-phylum": {
+                "name": "rtp-phylum",
+                "in": "query",
+                "description": "Filter on RTP restriction phylum",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "prostaff": {
+                "name": "prostaff",
+                "in": "query",
+                "description": "Prostaff status filter: 0=locked, 1=closed, 2=opened",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "prostaff-shop": {
+                "name": "prostaff-shop",
+                "in": "query",
+                "description": "Prostaff Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "aim": {
+                "name": "aim",
+                "in": "query",
+                "description": "AIM status filter: 0=locked, 1=closed, 2=opened",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "aim-shop": {
+                "name": "aim-shop",
+                "in": "query",
+                "description": "AIM Shop filter: 0=none, 1=created, 2=online",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "categories": {
+                "name": "categories",
+                "in": "query",
+                "description": "Gear categories IDs separated by commas",
+                "required": false,
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "corporate-domain": {
+                "name": "corporate-domain",
+                "in": "query",
+                "description": "The email domain of the company (including @)",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "has-domain": {
+                "name": "has-domain",
+                "in": "query",
+                "description": "Filter brands depending if they have one or more corporate domains set",
+                "required": false,
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "has-grid-access": {
+                "name": "has-grid-access",
+                "in": "query",
+                "description": "Filter brands depending on their gris access status",
+                "required": false,
+                "schema": {
+                    "type": "boolean"
+                }
+            },
+            "parent": {
+                "name": "parent",
+                "in": "query",
+                "description": "Parent status: 1=is parent, 2=has parent",
+                "required": false,
+                "schema": {
+                    "type": "integer"
+                }
+            },
             "has-profile-photo": {
                 "name": "has-profile-photo",
                 "in": "query",
