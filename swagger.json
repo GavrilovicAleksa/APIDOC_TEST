@@ -1206,6 +1206,9 @@
         },
         "/associatons": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationsAction",
                 "parameters": [
@@ -1244,6 +1247,9 @@
         },
         "/associatons/name={name}": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get a Single Association - Name",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
                 "parameters": [
@@ -1276,6 +1282,9 @@
         },
         "/associatons/profile={profileId}": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get a Single Association - Profile",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
                 "parameters": [
@@ -1308,6 +1317,9 @@
         },
         "/associatons/{associationId}": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get a Single Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
                 "parameters": [
@@ -1340,6 +1352,9 @@
         },
         "/associations": {
             "post": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Create a Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::createAssociationAction",
                 "requestBody": {
@@ -1434,6 +1449,9 @@
         },
         "/associations/{associationId}": {
             "post": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Update an Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::updateAssociationAction",
                 "parameters": [
@@ -1587,6 +1605,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Delete a Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::deleteAssociationAction",
                 "parameters": [
@@ -1619,6 +1640,9 @@
         },
         "/associatons/{associationId}/siblings": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get a Single Association",
                 "operationId": "App\\Controller\\Association\\AssociationController::getSimilarAssociationsAction",
                 "parameters": [
@@ -1651,6 +1675,9 @@
         },
         "/associatons-memberships": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get Association Memberships",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipsAction",
                 "parameters": [
@@ -1692,6 +1719,9 @@
         },
         "/association-membershio.{_format}": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Export Association Memberships",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::exportAssociationMembershipsAction",
                 "responses": {
@@ -1703,6 +1733,9 @@
         },
         "/associaton-memberships/{membershipId}": {
             "get": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Get Articles",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipAction",
                 "parameters": [
@@ -1735,6 +1768,9 @@
         },
         "/association-memberships": {
             "post": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Create a Association Membership",
                 "requestBody": {},
                 "responses": {
@@ -1753,6 +1789,9 @@
         },
         "/association-memberships/{memberhipId}": {
             "put": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Create a Association Membership",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::updateAssociationMembershipAction",
                 "parameters": [
@@ -1786,6 +1825,9 @@
         },
         "/association-memberships/{membershipId}": {
             "delete": {
+                "tags": [
+                    "Association"
+                ],
                 "summary": "Delete an Association Membership",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::deleteAssociationMembershipAction",
                 "parameters": [
@@ -9875,6 +9917,9 @@
                 }
             },
             "put": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Update Photos",
                 "operationId": "App\\Controller\\Photo\\PhotoController::updatePhotosAction",
                 "requestBody": {
@@ -10026,6 +10071,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Add a Photo",
                 "operationId": "App\\Controller\\Photo\\PhotoController::createPhotoAction",
                 "requestBody": {
@@ -10112,6 +10160,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Remove Photos",
                 "operationId": "App\\Controller\\Photo\\PhotoController::deletePhotosAction",
                 "requestBody": {
@@ -10175,6 +10226,9 @@
                 }
             },
             "put": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Update a Photo",
                 "operationId": "App\\Controller\\Photo\\PhotoController::updatePhotosAction",
                 "requestBody": {
@@ -10326,6 +10380,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Remove a Photo",
                 "operationId": "App\\Controller\\Photo\\PhotoController::deletePhotosAction",
                 "parameters": [
@@ -10367,6 +10424,9 @@
         },
         "/photos/{photoId}/rotate": {
             "put": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Update a Photo",
                 "operationId": "App\\Controller\\Photo\\PhotoController::rotatePhotoAction",
                 "parameters": [
