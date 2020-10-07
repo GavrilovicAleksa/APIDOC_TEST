@@ -3298,6 +3298,9 @@
         },
         "/cnps/{cnpId}/subscriptions": {
             "get": {
+                "tags": [
+                    "Brand"
+                ],
                 "summary": "Get CNP subscriptions",
                 "parameters": [
                     {
@@ -12789,6 +12792,9 @@
         },
         "/profiles": {
             "get": {
+                "tags": [
+                    "Profile"
+                ],
                 "summary": "Get Profiles",
                 "description": "Pagination is triggered only when passing the parameter \"page\", otherwise only the first 8 results are returned.",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getProfilesAction",
@@ -12885,6 +12891,9 @@
         },
         "/profiles/most-active": {
             "get": {
+                "tags": [
+                    "Profile"
+                ],
                 "summary": "Get Most Active Profiles",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getActiveProfilesAction",
                 "parameters": [
@@ -12908,6 +12917,9 @@
         },
         "/profiles/recipients": {
             "get": {
+                "tags": [
+                    "Profile"
+                ],
                 "summary": "Get Most Active Profiles",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getRecipientProfilesAction",
                 "parameters": [
@@ -12955,6 +12967,9 @@
         },
         "/profiles/name={name}": {
             "get": {
+                "tags": [
+                    "Profile"
+                ],
                 "summary": "Get Most Active Profiles",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getProfileAction",
                 "parameters": [
@@ -12986,6 +13001,9 @@
         },
         "/profiles/{profileId}": {
             "get": {
+                "tags": [
+                    "Profile"
+                ],
                 "summary": "Get Most Active Profiles",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getProfileAction",
                 "parameters": [
