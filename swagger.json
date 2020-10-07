@@ -223,10 +223,22 @@
                         "$ref": "#/components/parameters/jurisdiction"
                     },
                     {
-                        "$ref": "#/components/parameters/profile-status"
+                        "name": "profile-status",
+                        "in": "query",
+                        "description": "The status of the profile (online/offline/any) (online by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
-                        "$ref": "#/components/parameters/deleted"
+                        "name": "deleted",
+                        "in": "query",
+                        "description": "Include soft deleted profiles in the search (yes/no/any) (no by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -6037,6 +6049,1079 @@
                 }
             }
         },
+        "/countries": {
+            "get": {
+                "tags": [
+                    "Referential"
+                ],
+                "summary": "Get Countries",
+                "parameters": [
+                    {
+                        "name": "has-states",
+                        "in": "query",
+                        "description": "If TRUE, will only return countries that have a 2nd level administative unit (state, province, region...etc). Ignored if FALSE.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Country Objects"
+                    }
+                }
+            }
+        },
+        "/claims": {
+            "get": {
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Get Claims",
+                "operationId": "App\\Controller\\Outfitter\\ClaimController::getClaimsAction",
+                "parameters": [
+                    {
+                        "name": "outfitter",
+                        "in": "query",
+                        "description": "The ID of the outfitter being claimed",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "profile",
+                        "in": "query",
+                        "description": "The profile ID of the user making claims",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of claim objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/claim"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Create a Claim",
+                "operationId": "App\\Controller\\Outfitter\\ClaimController::createClaimAction",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Created claim object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/claim"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/claims/{claimId}": {
+            "get": {
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Get a Single Claim",
+                "operationId": "App\\Controller\\Outfitter\\ClaimController::getClaimAction",
+                "parameters": [
+                    {
+                        "name": "claimId",
+                        "in": "path",
+                        "description": "The ID of the claim to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Claim object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/claim"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Update a Claim",
+                "operationId": "App\\Controller\\Outfitter\\ClaimController::updateClaimAction",
+                "parameters": [
+                    {
+                        "name": "claimId",
+                        "in": "path",
+                        "description": "The ID of the claim to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Updated claim object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/claim"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Update a Claim",
+                "operationId": "App\\Controller\\Outfitter\\ClaimController::deleteClaimAction",
+                "parameters": [
+                    {
+                        "name": "claimId",
+                        "in": "path",
+                        "description": "The ID of the claim to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Claim deleted"
+                    }
+                }
+            }
+        },
+        "/licenses": {
+            "get": {
+                "tags": [
+                    "License"
+                ],
+                "summary": "Get Licenses",
+                "operationId": "App\\Controller\\Outfitter\\LicenseController::getLicensesAction",
+                "parameters": [
+                    {
+                        "name": "outfitter",
+                        "in": "query",
+                        "description": "The outfitter ID to get licenses from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of license objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/license"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "License"
+                ],
+                "summary": "Create a License",
+                "operationId": "App\\Controller\\Outfitter\\LicenseController::createLicenseAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "outfitter": {
+                                        "description": "The ID of the outfitter enjoying the license",
+                                        "type": "integer"
+                                    },
+                                    "number": {
+                                        "description": "The license number",
+                                        "type": "string"
+                                    },
+                                    "licensee": {
+                                        "description": "The license holder: a GF member profile ID, or just a name",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "The geoname ID of the state/province of the license",
+                                        "type": "integer"
+                                    },
+                                    "expiry": {
+                                        "description": "The expiration date of the license",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "License object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/license"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/licenses/{licenseId}": {
+            "get": {
+                "tags": [
+                    "License"
+                ],
+                "summary": "Get Single License",
+                "operationId": "App\\Controller\\Outfitter\\LicenseController::getLicenseAction",
+                "parameters": [
+                    {
+                        "name": "licenseId",
+                        "in": "path",
+                        "description": "The license to fetch",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "License object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/license"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "License"
+                ],
+                "summary": "Update a License",
+                "operationId": "App\\Controller\\Outfitter\\LicenseController::updateLicenseAction",
+                "parameters": [
+                    {
+                        "name": "licenseId",
+                        "in": "path",
+                        "description": "The license to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "number": {
+                                        "description": "The license number",
+                                        "type": "string"
+                                    },
+                                    "licensee": {
+                                        "description": "The license holder: a GF member profile ID, or just a name",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "The geoname ID of the state/province of the license",
+                                        "type": "integer"
+                                    },
+                                    "expiry": {
+                                        "description": "The expiration date of the license",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "License object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/license"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nothing to update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "License"
+                ],
+                "summary": "Delete a License",
+                "operationId": "App\\Controller\\Outfitter\\LicenseController::deleteLicenseAction",
+                "parameters": [
+                    {
+                        "name": "licenseId",
+                        "in": "path",
+                        "description": "The license to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "License deleted"
+                    }
+                }
+            }
+        },
+        "/outfitters": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get Outfitters",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfittersAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of outfitter objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/name={name}": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get a Single Outfitter - Name",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "The name of the Outfitter to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/profile={profileId}": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get a Single Outfitter - Profile",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The profile ID to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/email={email}": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get a Single Outfitter - Email",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "The email of the Outfitter to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/{outfitterId}": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get a Single Outfitter",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "outfitterId",
+                        "in": "path",
+                        "description": "The outfitter ID to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Update a Outfitter",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::updateOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "outfitterId",
+                        "in": "path",
+                        "description": "The outfitter ID to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Updated Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "GDelete a Outfitter",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::deleteOutfitterAction",
+                "parameters": [
+                    {
+                        "name": "outfitterId",
+                        "in": "path",
+                        "description": "The outfitter ID to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Outfitter deleted"
+                    }
+                }
+            }
+        },
+        "/outfitters/": {
+            "post": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Create a Outfitter",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::createOutfitterAction",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/{outfitterId}/siblings": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get Similiar Outfitter",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getSimilarOutfittersAction",
+                "parameters": [
+                    {
+                        "name": "outfitterId",
+                        "in": "path",
+                        "description": "The outfitter ID to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/{outfitterId}/scores": {
+            "get": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Get Outfitter Scores",
+                "operationId": "App\\Controller\\Outfitter\\OutfitterController::getOutfitterScoresAction",
+                "parameters": [
+                    {
+                        "name": "outfitterId",
+                        "in": "path",
+                        "description": "The outfitter ID to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Outfitter object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/outfitter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/outfitters/{outfitterId}/price-list": {
+            "put": {
+                "tags": [
+                    "Outfitter"
+                ],
+                "summary": "Update a Price List",
+                "operationId": "App\\Controller\\Outfitter\\PriceListController::updatePriceListAction",
+                "requestBody": {},
+                "responses": {
+                    "204": {
+                        "description": "Update successful"
+                    }
+                }
+            }
+        },
+        "products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Products",
+                "operationId": "App\\Controller\\Outfitter\\ProductController::getProductsAction",
+                "parameters": [
+                    {
+                        "name": "outfitter",
+                        "in": "query",
+                        "description": "The ID of the outfitter the product belong to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "with-inactive",
+                        "in": "query",
+                        "description": "Also returns disabled products (you must be the outfitter manager or admin)",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of product objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "products/{productId}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Single Product",
+                "operationId": "App\\Controller\\Outfitter\\ProductController::getProductAction",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "The product to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of product objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/product"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a Product",
+                "operationId": "App\\Controller\\Outfitter\\ProductController::deleteProductAction",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "The product to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Array of product objects"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create a Product",
+                "operationId": "App\\Controller\\Outfitter\\ProductController::createProductAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "outfitter": {
+                                        "description": "The Outfitter ID owner of the product",
+                                        "type": "integer"
+                                    },
+                                    "outfitting_type": {
+                                        "description": "The category of the product (hunting/fishing)",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "The product name (75 chars max, no special char)",
+                                        "type": "string"
+                                    },
+                                    "animals": {
+                                        "description": "An array of animal IDs (AnimalGroup/AnimalSpecie/AnimalSubspecie)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "product_type": {
+                                        "description": "The hunting/fishing category of the product (big game...)",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creted product object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{productId}": {
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update a Product",
+                "operationId": "App\\Controller\\Outfitter\\ProductController::updateProductAction",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "The product to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The product name",
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "description": "Make the product public or not (searchable and indexed)",
+                                        "type": "boolean"
+                                    },
+                                    "description": {
+                                        "description": "Product description",
+                                        "type": "integer"
+                                    },
+                                    "product_type": {
+                                        "description": "For hunting only now, the type of product (Big Game, Waterfowl...etc)",
+                                        "type": "integer"
+                                    },
+                                    "start_date": {
+                                        "description": "ISO date when product availability starts",
+                                        "type": "string"
+                                    },
+                                    "end_date": {
+                                        "description": "ISO date when product availability ends",
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "description": "The geoname ID of the country",
+                                        "type": "integer"
+                                    },
+                                    "state": {
+                                        "description": "The geoname ID of the state",
+                                        "type": "integer"
+                                    },
+                                    "coordinates": {
+                                        "description": "An array with lon, lat and loc (longitude, latitude, name of location)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "airport": {
+                                        "description": "The ID of the airport",
+                                        "type": "integer"
+                                    },
+                                    "lodging": {
+                                        "description": "The ID of the accommodation type",
+                                        "type": "integer"
+                                    },
+                                    "accessible": {
+                                        "description": "Accommodate disable people or not (null for unknown)",
+                                        "type": "boolean"
+                                    },
+                                    "min_price": {
+                                        "description": "Min price of the product",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "max_price": {
+                                        "description": "Max price of the product",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "pricing": {
+                                        "description": "Pricing detailed description",
+                                        "type": "string"
+                                    },
+                                    "terms": {
+                                        "description": "Terms and conditions detailed description",
+                                        "type": "string"
+                                    },
+                                    "animals": {
+                                        "description": "An array of animal IDs (AnimalGroup/AnimalSpecie/AnimalSubspecie)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "land_type": {
+                                        "description": "Land type (1=private, 2=public) (hunting only)",
+                                        "type": "integer"
+                                    },
+                                    "weapons": {
+                                        "description": "An array of weapon IDs (hunting only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "dogs_provided": {
+                                        "description": "Does the outfitter provide the dogs (null for unkown) (hunting only)",
+                                        "type": "boolean"
+                                    },
+                                    "dogs_allowed": {
+                                        "description": "Does the outfitter allow personal dogs (null for unkown) (hunting only)",
+                                        "type": "boolean"
+                                    },
+                                    "processing": {
+                                        "description": "Does the outfitter process the animals (null for unkown) (hunting only)",
+                                        "type": "boolean"
+                                    },
+                                    "methods": {
+                                        "description": "An array of fishing method IDs (fishing only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "mobilities": {
+                                        "description": "An array of mobilities types IDs (fishing only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "waters": {
+                                        "description": "An array of water types IDs (fishing only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "trip_lengths": {
+                                        "description": "An array of trip lengths IDs (fishing only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "catch_release": {
+                                        "description": "Catch and release fishing (null for unkown) (fishing only)",
+                                        "type": "boolean"
+                                    },
+                                    "fly_in_out": {
+                                        "description": "Fly-in / Fly-out (null for unkown) (fishing only)",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated product object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/albums": {
             "get": {
                 "tags": [
@@ -6253,7 +7338,13 @@
                         "$ref": "#/components/parameters/ignore-blocks"
                     },
                     {
-                        "$ref": "#/components/parameters/is-folowing"
+                        "name": "is-following",
+                        "in": "query",
+                        "description": "If TRUE, will only return a Brag if I'm following its author",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -7056,7 +8147,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/schemas/components/affiliation"
+                                    "$ref": "#/components/schemas/affiliation"
                                 }
                             }
                         }
@@ -7133,7 +8224,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/schemas/components/vendor"
+                                    "$ref": "#/components/schemas/vendor"
                                 }
                             }
                         }
@@ -7409,7 +8500,7 @@
                         }
                     },
                     {
-                        "$ref": "#/components/parameters"
+                        "$ref": "#/components/parameters/with"
                     }
                 ],
                 "responses": {
@@ -7498,7 +8589,7 @@
                         }
                     },
                     {
-                        "$ref": "#/components/parameters"
+                        "$ref": "#/components/parameters/with"
                     }
                 ],
                 "responses": {
@@ -7971,12 +9062,12 @@
                 }
             }
         },
-        "/profiles/{profileId}/phones": {
+        "/profiles/{profileId}/notifications": {
             "get": {
                 "tags": [
                     "Phone"
                 ],
-                "summary": "Get Profile Phones",
+                "summary": "Get All Notifications",
                 "description": "The data returned is an array of ActivityJson.",
                 "operationId": "App\\Controller\\Profile\\NotificationController::getNotificationsAction",
                 "parameters": [
@@ -8043,7 +9134,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Array of Phone objects",
+                        "description": "Array of Notification objects",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8054,69 +9145,6 @@
                     }
                 }
             },
-            "post": {
-                "tags": [
-                    "Phone"
-                ],
-                "summary": "Create a  Phone",
-                "operationId": "App\\Controller\\Profile\\PhoneController::createPhoneAction",
-                "parameters": [
-                    {
-                        "name": "profileId",
-                        "in": "path",
-                        "description": "The ID of the profile to add phone to",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "number": {
-                                        "description": "The phone number as typed by the user",
-                                        "type": "string"
-                                    },
-                                    "country": {
-                                        "description": "The geoname ID of the country",
-                                        "type": "integer"
-                                    },
-                                    "is_public": {
-                                        "description": "Should the number be public (outfitters only)",
-                                        "type": "boolean"
-                                    },
-                                    "is_notified": {
-                                        "description": "Get leads by SMS (outfitters only with Guidefitter Business PRO subscription)",
-                                        "type": "boolean"
-                                    },
-                                    "with": {
-                                        "description": "The extra fields you want in the returned JSON",
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Created Phone object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/phone"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/profiles/{profileId}/notifications": {
             "put": {
                 "tags": [
                     "Phone"
@@ -8137,7 +9165,15 @@
                 "requestBody": {
                     "content": {
                         "application/json": {
-                            "schema": {}
+                            "schema": {
+                                "properties": {
+                                    "profileId": {
+                                        "description": "ID of the profile the notifications belong to",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
                         }
                     }
                 },
@@ -8210,6 +9246,112 @@
                 "responses": {
                     "201": {
                         "description": "Unsubscribed to a notification"
+                    }
+                }
+            }
+        },
+        "/profiles/{profileId}/phones": {
+            "get": {
+                "tags": [
+                    "Phone"
+                ],
+                "summary": "Get Profile Phones",
+                "description": "Only the phone numbers set as public will be returned, unless logged in user has access",
+                "operationId": "App\\Controller\\Profile\\PhoneController::getPhonesAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "ID of the profile to get phones from",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tracking",
+                        "in": "query",
+                        "description": "Track the request on getting an outfitter phon",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Phone objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/phone"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Phone"
+                ],
+                "summary": "Create a  Phone",
+                "operationId": "App\\Controller\\Profile\\PhoneController::createPhoneAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The ID of the profile to add phone to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "number": {
+                                        "description": "The phone number as typed by the user",
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "description": "The geoname ID of the country",
+                                        "type": "integer"
+                                    },
+                                    "is_public": {
+                                        "description": "Should the number be public (outfitters only)",
+                                        "type": "boolean"
+                                    },
+                                    "is_notified": {
+                                        "description": "Get leads by SMS (outfitters only with Guidefitter Business PRO subscription)",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created Phone object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/phone"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -8536,6 +9678,7 @@
                     "Profile"
                 ],
                 "summary": "Get Profile Verifications",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::getProfileVerificationsAction",
                 "parameters": [
                     {
                         "name": "profile",
@@ -8545,8 +9688,474 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
                     }
-                ]
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Profile Verifications",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::updateProfileVerificationAction",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Cretaed Profile Verification",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Create a Verification",
+                "description": "A renewal verification will not be set active by default, except if the current active verification is expired or in Grace Period.\n<br><br>\nThe <b>documents</b> attribute adapts to different scenarios:\n<ul>\n<li>When using MEDIA API upload (deprecated):\n<ul>\n<li>{\"documents\": [{\"files\": [2346, 3467], \"type\": 10}]}</li>\n<li>Pass File IDs returned when uploading documents throug the MEDIA API</li>\n</ul>\n</li>\n<li>When uploading directly to S3:\n<ul>\n<li>{\"documents\": [{\"file_s3\": \"xxxxxxx.xxx\", \"type\": 10}]}</li>\n<li>Pass the generated unique file name from <a href=\"#get--uploads-{profileId}-document\">api.uploads.get_upload_document_url</a> response</li>\n</ul>\n</li>\n</ul>",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::createProfileVerificationAction",
+                "requestBody": {},
+                "responses": {
+                    "201": {
+                        "description": "Created Profile Verification",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verifications/{verificationId}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get Single Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::getProfileVerificationAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification accessed",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Verification",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verifications/{{verificationId}}/accept": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Accept a Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::acceptProfileVerificationAction",
+                "parameters": [
+                    {
+                        "name": "verificationId",
+                        "in": "path",
+                        "description": "The verification to accept",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Profile Verification success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verifications/{{verificationId}}/refuse": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Refuse a Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::refuseProfileVerificationAction",
+                "parameters": [
+                    {
+                        "name": "verificationId",
+                        "in": "path",
+                        "description": "The verification to refuse",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Profile Verification refused",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verifications/{{verificationId}}": {
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete a Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::deleteProfileVerificationAction",
+                "parameters": [
+                    {
+                        "name": "verificationId",
+                        "in": "path",
+                        "description": "The verification to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Profile Verification deleted"
+                    }
+                }
+            }
+        },
+        "/verifications/process/{profileId}": {
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Procces a Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::processProfileVerificationsAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "Profile ID of the user to process",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profile Verification reprocessed"
+                    }
+                }
+            }
+        },
+        "/verifications/transfer/{profileId}": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Transfer a Verification",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationController::transferProfileVerificationAction",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Transfered Profile Verification",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/verifications/{verificationId}/documents": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get Profile Verifications",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::getProfileVerificationDocumentsAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification accessed",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Profile verification documents",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-document"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Verification Document",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::updateProfileVerificationDocumentAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification the document belong to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "description": "The document to verify",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Updated Profile verification document",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/verification-document"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nothing to update"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete Verification Document",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::deleteProfileVerificationDocumentAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification the document belong to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "description": "The document to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "204": {
+                        "description": "Document deleted"
+                    }
+                }
+            }
+        },
+        "/verifications/{verificationId}/documents/files/{fileId}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get Verification Document File",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::getProfileVerificationDocumentFileAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification the file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "description": "The document file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fileId",
+                        "in": "path",
+                        "description": "The Id of the file to download",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirection to the file located on S3 bucket"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Verification Document File",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::updateProfileVerificationDocumentFileAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification the file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "description": "The document file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fileId",
+                        "in": "path",
+                        "description": "The Id of the file to download",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "204": {
+                        "description": "Update success"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete Verification Document File",
+                "operationId": "App\\Controller\\Profile\\ProfileVerificationDocumentController::deleteProfileVerificationDocumentFileAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The verification the file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "documentId",
+                        "in": "path",
+                        "description": "The document file belongs to",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "fileId",
+                        "in": "path",
+                        "description": "The Id of the file to download",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Delete success"
+                    }
+                }
             }
         },
         "/users": {
@@ -9235,6 +10844,431 @@
                     }
                 }
             }
+        },
+        "/vendors": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get Vendors",
+                "operationId": "App\\Controller\\Vendor\\VendorController::getVendorsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The Type of vendor (e.g. 60 for Conservation Groups or 51 for Federal Government). Separated by commas if more than 1",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "insider-category",
+                        "in": "query",
+                        "description": "The Insider Category that's opened when user is an employee of the vendor",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "insider-type",
+                        "in": "query",
+                        "description": "The Insider Type that's opened when user is an employee of the vendor",
+                        "required": false,
+                        "schema": {
+                            "type": "integer    "
+                        }
+                    },
+                    {
+                        "name": "has-domain",
+                        "in": "query",
+                        "description": "Filter vendors depending if they have one or more corporate domains set",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "ffl-expired",
+                        "in": "query",
+                        "description": "Only when types=22. Filter vendors based on the FFL expiration date",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "has-ffl",
+                        "in": "query",
+                        "description": "Only when types=22. Filter vendors that have (or not) the FFL file uploaded on GF",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "dealership",
+                        "in": "query",
+                        "description": "Only for types 21 and 22 (dealers). Pass the brand IDs separated by comma",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "profile-status",
+                        "in": "query",
+                        "description": "The status of the profile (online/offline/any) (online by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "deleted",
+                        "in": "query",
+                        "description": "Include soft deleted profiles in the search (yes/no/any) (no by default)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location-bis",
+                        "in": "query",
+                        "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "location-fence",
+                        "in": "query",
+                        "description": "Filter out from country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter out those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "The latitude of the user for a proximity search",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lon",
+                        "in": "query",
+                        "description": "The longitude of the user for a proximity search",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of vendor objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors/{vendorId}": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get a Single Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::getVendorAction",
+                "parameters": [
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "ID of the vendor to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of vendor objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Update a Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::updateVendorAction",
+                "parameters": [
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "ID of the vendor to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Updated vendor object",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Delete a Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::deleteVendorAction",
+                "parameters": [
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "ID of the vendor to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Vendor deleted"
+                    }
+                }
+            }
+        },
+        "/vendors/profile={profileId}": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get a Single Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::getVendorAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "Profile ID of the vendor to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of vendor objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors/name={name}": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get a Single Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::getVendorAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/with"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of the vendor to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of vendor objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors/": {
+            "post": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Create a Vendor",
+                "operationId": "App\\Controller\\Vendor\\VendorController::createVendorAction",
+                "requestBody": {},
+                "responses": {
+                    "201": {
+                        "description": "Created vendor object",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors/{vendorId}/ffl": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get a Vendor FFL",
+                "operationId": "App\\Controller\\Vendor\\VendorController::getFFLFileAction",
+                "parameters": [
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "ID of the vendor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "pre-signed URL to the FFL stored on Amazon S3 bucket, and redirect to it"
+                    }
+                }
+            }
+        },
+        "/employees": {
+            "get": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Get Vendor Employees",
+                "operationId": "App\\Controller\\Vendor\\VendorEmployeeController::getVendorEmployeesAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "vendor",
+                        "in": "query",
+                        "description": "Vendor ID employee belongs to. Mandatory parameter if not admin",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "brand",
+                        "in": "query",
+                        "description": "Brand ID employee belongs to. Mandatory parameter if not admin",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of vendor objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/employees/{profileId}": {
+            "delete": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Remove an Employee",
+                "operationId": "App\\Controller\\Vendor\\VendorEmployeeController::removeEmployeeAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "Profile ID of the vendor to remove the employee",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Employee removed"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -9386,10 +11420,10 @@
                         "type": "integer"
                     },
                     "experience": {
-                        "description": "The user professional experience\n(with=REQ_EXPERIENCE_AFFILIATION)"
+                        "$ref": "#/components/schemas/experience"
                     },
                     "outfitter": {
-                        "description": "The outfitter affiliating"
+                        "$ref": "#/components/schemas/outfitter"
                     },
                     "isAccepted": {
                         "description": "Is the affiliation accepted by the outfitter",
@@ -9533,7 +11567,7 @@
                         "type": "integer"
                     },
                     "outfitter": {
-                        "description": "The outfitter the member is registered for (if type = outfitter)"
+                        "$ref": "#/components/schemas/outfitter"
                     },
                     "number": {
                         "description": "The member registration number\nACL_PRIVATE",
@@ -9665,6 +11699,37 @@
                 },
                 "type": "object"
             },
+            "claim": {
+                "properties": {
+                    "id": {
+                        "description": "Claim ID",
+                        "type": "integer"
+                    },
+                    "claimant": {
+                        "$ref": "#/components/schemas/user"
+                    },
+                    "outfitter": {
+                        "$ref": "#/components/schemas/outfitter"
+                    },
+                    "isAccepted": {
+                        "description": "TRUE if claim was accepted (either by admin or via email validation)",
+                        "type": "boolean"
+                    },
+                    "isRefused": {
+                        "description": "TRUE if claim was refused by admin\nACL_PRIVATE",
+                        "type": "boolean"
+                    },
+                    "createdOn": {
+                        "description": "ISO date of the claim creation",
+                        "type": "string"
+                    },
+                    "deletedOn": {
+                        "description": "ISO date when the claim was soft-deleted by an admin\nACL_PRIVATE",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "clientship": {
                 "properties": {
                     "createdOn": {
@@ -9736,6 +11801,26 @@
                 },
                 "type": "object"
             },
+            "document": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/referential"
+                    },
+                    {
+                        "properties": {
+                            "isPublic": {
+                                "description": "If TRUE that document is shown to insiders and manager. If FALSE only for admins tagging.",
+                                "type": "boolean"
+                            },
+                            "isSystem": {
+                                "description": "If TRUE that document cannot be set by anyone",
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
             "item": {
                 "properties": {
                     "id": {
@@ -9782,7 +11867,7 @@
                         "$ref": "#/components/schemas/brand"
                     },
                     "vendor": {
-                        "description": "The FFL dealer the order was shipped to"
+                        "$ref": "#/components/schemas/vendor"
                     },
                     "total": {
                         "description": "Total amount GF collected from the buyer",
@@ -9837,6 +11922,28 @@
                     },
                     "createdOn": {
                         "description": "The ISO date when the order was created",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "experience": {
+                "properties": {
+                    "id": {
+                        "description": "The Experience ID",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "file": {
+                "properties": {
+                    "id": {
+                        "description": "File ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The file name (as uploaded)",
                         "type": "string"
                     }
                 },
@@ -9897,7 +12004,83 @@
                     }
                 ]
             },
+            "license": {
+                "properties": {
+                    "id": {
+                        "description": "License ID",
+                        "type": "integer"
+                    },
+                    "number": {
+                        "description": "License number",
+                        "type": "string"
+                    },
+                    "expiresOn": {
+                        "description": "ISO date of license expiration",
+                        "type": "string"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/state"
+                    },
+                    "licensee": {
+                        "description": "The licensee, can be a GF member or a simple name"
+                    }
+                },
+                "type": "object"
+            },
             "activity": {},
+            "outfitter": {
+                "properties": {
+                    "type": {
+                        "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Outfitter ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The business name",
+                        "type": "string"
+                    },
+                    "address": {
+                        "$ref": "#/components/schemas/address"
+                    },
+                    "profile": {
+                        "description": "The Guidefitter profile"
+                    },
+                    "phones": {
+                        "description": "Outfitter phones (outfitters can have more than 1)\nACL_PRIVATE",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/phone"
+                        }
+                    },
+                    "assoc": {
+                        "description": "Is the outfitter member of the NMCOG association?\nDeprecated, use association prop instead",
+                        "type": "boolean"
+                    },
+                    "clients": {
+                        "description": "All the outfitter past clients (deprecated, use route api.clientships.get_clientships)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/user"
+                        }
+                    },
+                    "email": {
+                        "description": "Outfitter email address\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "isEmailVerified": {
+                        "description": "Outfitter email has been verified\nACL_PRIVATE",
+                        "type": "boolean"
+                    },
+                    "bookingsCount": {
+                        "description": "Total of non-deleted bookings (past and future)\nACL_PRIVATE\n(with=REQ_OUTFITTER_DETAILS)\nOnly available from route 'api.outfitters.get_outfitter'",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "phone": {
                 "properties": {
                     "id": {
@@ -9959,6 +12142,59 @@
                 },
                 "type": "object"
             },
+            "product-fishing": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/product"
+                    }
+                ]
+            },
+            "product": {
+                "properties": {
+                    "id": {
+                        "description": "Product ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Product name",
+                        "type": "string"
+                    },
+                    "hash": {
+                        "description": "Product hash, a unique URL-friendly name we use to compound a unique SEO rich URL for the product",
+                        "type": "string"
+                    },
+                    "outfittingType": {
+                        "description": "Outfitting Type ID (10=Hunting, 20=Fishing, 30=Other)",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/referential"
+                    },
+                    "startOn": {
+                        "description": "ISO date of the start of the availibity window",
+                        "type": "string"
+                    },
+                    "endOn": {
+                        "description": "ISO date of the end of the availibity window",
+                        "type": "string"
+                    },
+                    "minPrice": {
+                        "description": "Minimum price of the product",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "maxPrice": {
+                        "description": "Minimum price of the product",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "isActive": {
+                        "description": "Is product active (displayed to the public and counted in search)\nACL_PRIVATE",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
             "profile": {
                 "properties": {
                     "id": {
@@ -10008,6 +12244,125 @@
                     "deletedOn": {
                         "description": "ISO date when the profile was soft-deleted\nACL_PRIVATE",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "verification-document": {
+                "properties": {
+                    "id": {
+                        "description": "The ProfileVerification ID",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/document"
+                    },
+                    "verifiedOn": {
+                        "description": "ISO date when the document was verified by an admin.",
+                        "type": "string"
+                    },
+                    "isReusable": {
+                        "description": "If TRUE this document can be reused for the renewal",
+                        "type": "boolean"
+                    },
+                    "files": {
+                        "description": "An array of files (name and ID) you can then download using route api.verifications.get_document_file",
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "verification": {
+                "properties": {
+                    "id": {
+                        "description": "The ProfileVerification ID",
+                        "type": "integer"
+                    },
+                    "insiderCategory": {
+                        "description": "The type of Insider: 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO",
+                        "type": "integer"
+                    },
+                    "insiderTypes": {
+                        "description": "List of insider-types the user is flagged/verified for",
+                        "type": "object"
+                    },
+                    "isActive": {
+                        "description": "If TRUE this is the current ProfileVerification of the user.\nIf FALSE it's either a pending renewal or an archived ProfileVerification",
+                        "type": "boolean"
+                    },
+                    "isRenewal": {
+                        "description": "TRUE when this verification is a renewal (it's not the first time the user verify his pro-status)",
+                        "type": "boolean"
+                    },
+                    "isDispatched": {
+                        "description": "Is the profile verification dispatched to admins.",
+                        "type": "boolean"
+                    },
+                    "isAccepted": {
+                        "description": "Is this GVP verification accepted?",
+                        "type": "boolean"
+                    },
+                    "isRefused": {
+                        "description": "Is this GVP verification refused?",
+                        "type": "boolean"
+                    },
+                    "isIncomplete": {
+                        "description": "Is the profile verification flagged incomplete by an admin\nACL_SHARED",
+                        "type": "boolean"
+                    },
+                    "isInProgress": {
+                        "description": "Is the profile verification underway\nACL_ADMIN",
+                        "type": "boolean"
+                    },
+                    "isInLimbo": {
+                        "description": "Is the profile verification blocked in a limbo?\nACL_ADMIN",
+                        "type": "boolean"
+                    },
+                    "vendor": {
+                        "description": "The vendor (brand, association, etc..) the insider is affiliated with. You'll either get:\nan AssociationJson, a BrandJson, a VendorJson)"
+                    },
+                    "otherVendor": {
+                        "description": "If $vendor is NULL, the name of the brand, association, ...etc the insider is affiliated with.",
+                        "type": "boolean"
+                    },
+                    "jobTitle": {
+                        "description": "The job title of the employee in $vendor (e.g. Salesman, CEO, ...)",
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "description": "The verified first name of the insider",
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "description": "The verified last name of the insider",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email used to verify the Insider is legit\nIf this matches the corporate domain of a vendor, no documents needed\nACL_SHARED",
+                        "type": "string"
+                    },
+                    "isEmailVerified": {
+                        "description": "TRUE if the insider verified $email is his\nACL_SHARED",
+                        "type": "boolean"
+                    },
+                    "emailVerifiedOn": {
+                        "description": "ISO date when the work email was verified (if NULL it's not verified)\nACL_SHARED",
+                        "type": "string"
+                    },
+                    "isExpiring": {
+                        "description": "Is this verification soon expiring (1 month before expiration)\nOnly get this attribute when isAccepted=TRUE (note: isExpiring will be FALSE if isExpired is TRUE)\nACL_SHARED",
+                        "type": "boolean"
+                    },
+                    "isWizardDone": {
+                        "description": "TRUE if the user reached the end of the wizard\nACL_SHARED",
+                        "type": "boolean"
+                    },
+                    "isFired": {
+                        "description": "Flag when the verification was expired after the employee was fired from his employer\nACL_ADMIN",
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -10089,6 +12444,27 @@
                 },
                 "type": "object"
             },
+            "referential": {
+                "properties": {
+                    "id": {
+                        "description": "Entity ID",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "The name",
+                        "type": "string"
+                    },
+                    "code": {
+                        "description": "A code",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "A description",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "user": {
                 "properties": {
                     "type": {
@@ -10137,6 +12513,70 @@
                     "zendeskId": {
                         "description": "The Zendesk ID of that user\nACL_PRIVATE",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "vendor": {
+                "properties": {
+                    "type": {
+                        "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Vendor ID",
+                        "type": "integer"
+                    },
+                    "vendorType": {
+                        "description": "The vendor type (e.g. 60 for Conservation Groups)",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Business name",
+                        "type": "string"
+                    },
+                    "profile": {
+                        "description": "Vendor GF profile"
+                    },
+                    "email": {
+                        "description": "Vendor email address\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "corporateDomains": {
+                        "description": "The list of the vendor's corporate email addresses domains",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "corporateDomainsRegex": {
+                        "description": "The regular expression matching the vendor's corporate email addresses domains",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isEmailEnough": {
+                        "description": "If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded",
+                        "type": "boolean"
+                    },
+                    "insiderCategory": {
+                        "description": "The Insider Category that vendor opens to his employees.\nI.e. by being an employee of that vendor you're at least flagged with that insider category",
+                        "type": "integer"
+                    },
+                    "insiderTypes": {
+                        "description": "The insider types valid for this vendor (could be empty for some categories)",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "phones": {
+                        "description": "Vendor phones\n(with=REQ_VENDOR_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/phone"
+                        }
                     }
                 },
                 "type": "object"
