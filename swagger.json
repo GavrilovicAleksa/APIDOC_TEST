@@ -25,6 +25,7 @@
                     "Activity"
                 ],
                 "summary": "Get Activities",
+                "description": "Search through activities.",
                 "operationId": "App\\Controller\\Admin\\ActivityController::getActivitiesAction",
                 "parameters": [
                     {
@@ -54,7 +55,7 @@
                     {
                         "name": "groups",
                         "in": "query",
-                        "description": "Filter on activity group (separated by commas)",
+                        "description": "Filter on activity group (separated by commas).",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -63,7 +64,7 @@
                     {
                         "name": "types",
                         "in": "query",
-                        "description": "Filter on activity type (create/update/delete)",
+                        "description": "Filter on activity type (create/update/delete).",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -72,7 +73,7 @@
                     {
                         "name": "is-triage",
                         "in": "query",
-                        "description": "Filter activities for admin triage. Will return only activities that require mandatory admin inspection",
+                        "description": "Filter activities for admin triage. Will return only activities that require mandatory admin inspection.",
                         "required": false,
                         "schema": {
                             "type": "boolean"
@@ -153,7 +154,7 @@
                     {
                         "name": "album",
                         "in": "query",
-                        "description": "Also include activities related to this album",
+                        "description": "Include activities related to this album",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -182,7 +183,8 @@
                 "tags": [
                     "Activity"
                 ],
-                "summary": "Get Single Activity",
+                "summary": "Get a Single Activity",
+                "description": "Get a single activity. Only Lambda apps with admin token can access.",
                 "operationId": "App\\Controller\\Admin\\ActivityController::getActivityAction",
                 "parameters": [
                     {
@@ -267,12 +269,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/lon"
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
                     }
                 ],
                 "responses": {
@@ -647,7 +643,7 @@
                         "description": "The Insider Type that's opened when user is an employee of the vendor",
                         "required": false,
                         "schema": {
-                            "type": "integer    "
+                            "type": "integer"
                         }
                     },
                     {
@@ -1046,7 +1042,89 @@
                 ],
                 "summary": "Create Article",
                 "operationId": "App\\Controller\\Article\\ArticleController::createArticleAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "description": "The type of article (news=1, GF news=2, job=3, landing page=4, video=5, giveaway=6)",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "The article name (URL friendly)",
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "description": "The article title",
+                                        "type": "string"
+                                    },
+                                    "folder": {
+                                        "description": "The article template folder (e.g. 2018-05)",
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "description": "The article summary",
+                                        "type": "string"
+                                    },
+                                    "page_title": {
+                                        "description": "The article meta page title (max 100 char)",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The article meta description (max 250 char)",
+                                        "type": "string"
+                                    },
+                                    "video_url": {
+                                        "description": "The full URL to the video hosted on Vimeo",
+                                        "type": "string"
+                                    },
+                                    "authors": {
+                                        "description": "Array of profile IDs of the authors (GF members)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "publish": {
+                                        "description": "To publish/unpublish the article",
+                                        "type": "boolean"
+                                    },
+                                    "articles": {
+                                        "description": "Array of article IDs that are related to this one",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "outfitters": {
+                                        "description": "Array of outfitter IDs featured",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "outfitters_spotlight": {
+                                        "description": "Set if the article is a paid spotlight (by the featured outfitter)",
+                                        "type": "boolean"
+                                    },
+                                    "tags": {
+                                        "description": "A list of hashtags for the article",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created article object",
@@ -1147,7 +1225,81 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "description": "The type of article (news=1, GF news=2, job=3, landing page=4, video=5, giveaway=6)",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "The article name (URL friendly)",
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "description": "The article title",
+                                        "type": "string"
+                                    },
+                                    "summary": {
+                                        "description": "The article summary",
+                                        "type": "string"
+                                    },
+                                    "page_title": {
+                                        "description": "The article meta page title (max 100 char)",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The article meta description (max 250 char)",
+                                        "type": "string"
+                                    },
+                                    "video_url": {
+                                        "description": "The full URL to the video hosted on Vimeo",
+                                        "type": "string"
+                                    },
+                                    "authors": {
+                                        "description": "Array of profile IDs of the authors (GF members)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "publish": {
+                                        "description": "To publish/unpublish the article",
+                                        "type": "boolean"
+                                    },
+                                    "articles": {
+                                        "description": "Array of article IDs that are related to this one",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "outfitters": {
+                                        "description": "Array of outfitter IDs featured",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "outfitters_spotlight": {
+                                        "description": "Set if the article is a paid spotlight (by the featured outfitter)",
+                                        "type": "boolean"
+                                    },
+                                    "tags": {
+                                        "description": "A list of hashtags for the article",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated article object",
@@ -1772,7 +1924,59 @@
                     "Association"
                 ],
                 "summary": "Create a Association Membership",
-                "requestBody": {},
+                "operationId": "App\\Controller\\Association\\AssociationMembershipController::createAssociationMembershipAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "association": {
+                                        "description": "The ID of the association to add the member to",
+                                        "type": "integer"
+                                    },
+                                    "number": {
+                                        "description": "The registration number of the member",
+                                        "type": "string"
+                                    },
+                                    "profile": {
+                                        "description": "The profile ID of the member",
+                                        "type": "integer"
+                                    },
+                                    "email": {
+                                        "description": "The email of the member. We will try to find him in GF memberbase or else send him an invite",
+                                        "type": "string"
+                                    },
+                                    "fee": {
+                                        "description": "The $ cost of the membership for that year (to overide Association fee).",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "due_date": {
+                                        "description": "ISO date when the member must pay his membership",
+                                        "type": "string"
+                                    },
+                                    "paid_date": {
+                                        "description": "Payment method of the membership",
+                                        "type": "string"
+                                    },
+                                    "method": {
+                                        "description": "ID of the outfitter registered to the membership",
+                                        "type": "integer"
+                                    },
+                                    "outfitter": {
+                                        "description": "The ID of the association to add the member to",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Association membership created",
@@ -1805,7 +2009,38 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fee": {
+                                        "description": "The $ cost of the membership for that year (to overide Association fee).",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "due_date": {
+                                        "description": "ISO date when the member must pay his membership",
+                                        "type": "string"
+                                    },
+                                    "paid_date": {
+                                        "description": "Payment method of the membership",
+                                        "type": "string"
+                                    },
+                                    "method": {
+                                        "description": "ID of the outfitter registered to the membership",
+                                        "type": "integer"
+                                    },
+                                    "outfitter": {
+                                        "description": "The ID of the association to add the member to",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated association membership object",
@@ -2561,7 +2796,7 @@
                     },
                     {
                         "name": "year",
-                        "in": "path",
+                        "in": "query",
                         "description": "Year to fetch stats for. If ommited it'll use current year",
                         "required": false,
                         "schema": {
@@ -6751,7 +6986,7 @@
                                     },
                                     "post": {
                                         "description": "If commenting on a post, the post ID",
-                                        "type": ""
+                                        "type": "integer"
                                     },
                                     "review": {
                                         "description": "If commenting on a review, the review ID",
@@ -6797,7 +7032,7 @@
                         "name": "commentId",
                         "in": "path",
                         "description": "The comment to retrieve",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -6823,14 +7058,14 @@
                 "tags": [
                     "Comment"
                 ],
-                "summary": "Create a Comment",
+                "summary": "Reply to a Comment",
                 "operationId": "App\\Controller\\Comment\\CommentController::createCommentReplyAction",
                 "parameters": [
                     {
                         "name": "commentId",
                         "in": "path",
                         "description": "The comment to retrieve",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -6883,7 +7118,7 @@
                         "name": "commentId",
                         "in": "path",
                         "description": "The comment to retrieve",
-                        "required": false,
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -7545,14 +7780,20 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Single Countries",
+                "summary": "Get a Single Country",
                 "operationId": "App\\Controller\\Geo\\CountryController::getCountryAction",
                 "parameters": [
                     {
                         "name": "countryId",
                         "in": "path",
                         "description": "Geoname ID of the country",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -7577,7 +7818,13 @@
                         "name": "countryId",
                         "in": "path",
                         "description": "Geoname ID of the country",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/q"
@@ -7602,7 +7849,13 @@
                         "name": "countryId",
                         "in": "path",
                         "description": "Geoname ID of the country",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -7627,7 +7880,13 @@
                         "name": "stateId",
                         "in": "path",
                         "description": "Geoname ID of the state",
-                        "required": true
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -7724,7 +7983,45 @@
                         "$ref": "#/components/parameters/with"
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of person to invite",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "An email address we send invite to",
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "description": "A message we'll put in the invite email",
+                                        "type": "string"
+                                    },
+                                    "profession": {
+                                        "description": "ID of the profession of the invited team member (type=TYPE_OUTFITTER_TEAM)",
+                                        "type": "integer"
+                                    },
+                                    "start_on": {
+                                        "description": "Date when invited team member joined team (type=TYPE_OUTFITTER_TEAM)",
+                                        "type": "string"
+                                    },
+                                    "outfitter": {
+                                        "description": "The outfitter member of the association (type=TYPE_ASSOCIATION_MEMBER)",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created guest invitation object",
@@ -7939,15 +8236,6 @@
                         }
                     },
                     {
-                        "name": "user",
-                        "in": "query",
-                        "description": "User ID of the member/ghost invited",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
                         "$ref": "#/components/parameters/with"
                     }
                 ],
@@ -8049,15 +8337,6 @@
                         "name": "user",
                         "in": "query",
                         "description": "Filter invites sent AFTER that date (timestamp)",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "user",
-                        "in": "query",
-                        "description": "User ID of the member/ghost invited",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -8184,7 +8463,29 @@
                 ],
                 "summary": "Create a Competition",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::createInsiderCompetitionAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "month": {
+                                        "description": "The month for that competition (e.g. 202006)",
+                                        "type": "string"
+                                    },
+                                    "rank_count": {
+                                        "description": "The number of winning ranks for the competition (default 10)",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Created insider competition",
@@ -8217,7 +8518,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rules": {
+                                        "description": "he rules of the competition displayed on legal page",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated insider competition",
@@ -8242,7 +8561,33 @@
                 ],
                 "summary": "Add a Winning Rank",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::addInsiderCompetitionRankAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "prize": {
+                                        "description": "A name/description of the rank prize",
+                                        "type": "string"
+                                    },
+                                    "prize_photo": {
+                                        "description": "The ID of the photo of the rank prize",
+                                        "type": "integer"
+                                    },
+                                    "winner": {
+                                        "description": "Profile ID of the winner of that rank prize",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created winning rank to a month competition"
@@ -8276,7 +8621,33 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "prize": {
+                                        "description": "A name/description of the rank prize",
+                                        "type": "string"
+                                    },
+                                    "prize_photo": {
+                                        "description": "The ID of the photo of the rank prize",
+                                        "type": "integer"
+                                    },
+                                    "winner": {
+                                        "description": "Profile ID of the winner of that rank prize",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated winning rank to a month competition",
@@ -8486,7 +8857,21 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "hard": {
+                                        "description": "Hard-delete the campaign in the database. Might then be re-created on next Mailchimp import",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "Campaign deleted"
@@ -8512,7 +8897,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "brand": {
+                                        "description": "The ID of the brand to attach to the campaign",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Brand added to a campaign"
@@ -8547,7 +8950,21 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Brand added to a campaign"
@@ -8561,6 +8978,7 @@
                     "Tracking"
                 ],
                 "summary": "Get Trackings",
+                "description": "Search through all the trackings",
                 "operationId": "App\\Controller\\Meta\\TrackingController::getTrackingsAction",
                 "parameters": [
                     {
@@ -8614,7 +9032,45 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "_u": {
+                                        "description": "The ID of the user we're tracking (null if not signed in)",
+                                        "type": "string"
+                                    },
+                                    "_c": {
+                                        "description": "The Campaign ID",
+                                        "type": "string"
+                                    },
+                                    "_rf": {
+                                        "description": "Referer: the absolute URL to the referer page",
+                                        "type": "string"
+                                    },
+                                    "_ua": {
+                                        "description": "User Agent: the user agent string from the browser",
+                                        "type": "string"
+                                    },
+                                    "_sw": {
+                                        "description": "Screen width",
+                                        "type": "string"
+                                    },
+                                    "_sh": {
+                                        "description": "Screen height",
+                                        "type": "string"
+                                    },
+                                    "eid": {
+                                        "description": "The entity ID we're tracking (e.g. profile ID, article ID, review ID...etc)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Tracking added",
@@ -8901,9 +9357,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/with"
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
                     }
                 ],
                 "responses": {
@@ -9076,7 +9529,128 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "business_name": {
+                                        "description": "The name of the business",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "email": {
+                                        "description": "An email address",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "description": {
+                                        "description": "The outfitter business description",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "location": {
+                                        "description": "The ID of the country or state the outfitter operates in. For US and Canada, a state is required.",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "owner": {
+                                        "description": "The profile ID of a Guidefitter member, or a name (string)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "outfitting_type": {
+                                        "description": "The specialization of the outfitter",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "product_types": {
+                                        "description": "The list of activities (ProductType entity) the outfitter is offering",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "url": {
+                                        "description": "Outfitter website URL",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "assoc": {
+                                        "description": "Is the outfitter member of the New Mexico outfitters and guides association",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "oob": {
+                                        "description": "Is the outfitter out of business",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "email_cancel": {
+                                        "description": "Cancel email change request (unset the pending email address)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "name": {
+                                        "description": "The Outfitter's Profile name (that'll be his Guidefitter URL)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "avatar": {
+                                        "description": "The ID of the photo to use as profile avatar",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "cover": {
+                                        "description": "The ID of the photo to use as profile cover",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "notifications": {
+                                        "description": "The list of notifications IDs the outfitter is subscribed to",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "active": {
+                                        "description": "Enable/disable the profile (only admins)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "undelete": {
+                                        "description": "Un-delete the outfitter (only admins)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "watermark": {
+                                        "description": "Enable/disable the watermarking of uploaded photos (only Guidefitter Business PRO)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "reminders": {
+                                        "description": "Enable/disable the sending of payment reminders to clients in CRM (only Guidefitter Business PRO)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "hide_similiar": {
+                                        "description": "Enable/disable showing competition in ODP (only Guidefitter Business PRO)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters/5002"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated Outfitter object",
@@ -9124,7 +9698,42 @@
                 ],
                 "summary": "Create a Outfitter",
                 "operationId": "App\\Controller\\Outfitter\\OutfitterController::createOutfitterAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "business_name": {
+                                        "description": "The name of the business",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters"
+                                    },
+                                    "email": {
+                                        "description": "An email address (unique to other outfitters, but not users)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters"
+                                    },
+                                    "state": {
+                                        "description": "The ID of the state the outfitter operates in.",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/outfitters"
+                                    },
+                                    "profile": {
+                                        "description": "The profile ID of the user owner and manager of the outfitter (if not provided, use logged in user)",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/outfitters"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/outfitters"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Outfitter object",
@@ -9215,8 +9824,30 @@
                     "Outfitter"
                 ],
                 "summary": "Update a Price List",
+                "description": "Update the price list (must be authenticated)",
                 "operationId": "App\\Controller\\Outfitter\\PriceListController::updatePriceListAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "description": "Enable/disable the price list",
+                                        "type": "boolean"
+                                    },
+                                    "default_location": {
+                                        "description": "The default location for new products. Array with 'lat' and 'lon'",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "Update successful"
@@ -9619,7 +10250,36 @@
                 ],
                 "summary": "Create an Album",
                 "operationId": "App\\Controller\\Photo\\AlbumController::createAlbumAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "profile": {
+                                        "description": "The ID of the owner's profile",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "A valid name (e.g. not URL or email)",
+                                        "type": "integer"
+                                    },
+                                    "photos": {
+                                        "description": "The ID of the owner's profile",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created album object",
@@ -9685,7 +10345,40 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "profile": {
+                                        "description": "The ID of the owner's profile",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/albums/123"
+                                    },
+                                    "name": {
+                                        "description": "A valid name (e.g. not URL or email)",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/albums/123"
+                                    },
+                                    "photos": {
+                                        "description": "The ID of the owner's profile",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "https://api.guidefitter.com/albums/123"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/albums/123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Updated album object",
@@ -10612,7 +11305,53 @@
                 ],
                 "summary": "Create a Booking",
                 "operationId": "App\\Controller\\Pro\\BookingController::createBookingAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "customer": {
+                                        "description": "The ID of the booked product",
+                                        "type": "integer"
+                                    },
+                                    "product": {
+                                        "description": "The ID of the booked product",
+                                        "type": "integer"
+                                    },
+                                    "arrivial_date": {
+                                        "description": "Customer arrival date (leave empty if = to start_date)",
+                                        "type": "string"
+                                    },
+                                    "start_date": {
+                                        "description": "Booking start date (when hunt starts)",
+                                        "type": "string"
+                                    },
+                                    "end_date": {
+                                        "description": "Booking end date (when hunt ends or customer leaves)",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Full price paid by the customer",
+                                        "type": "string"
+                                    },
+                                    "comment": {
+                                        "description": "A private comment the outfitter can keep",
+                                        "type": "integer"
+                                    },
+                                    "email_confirm": {
+                                        "description": "Send TRUE to make API send a booking confirmation email to the customer. Only sent if we have an email and the dates are in the future.",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created a booking object",
@@ -10674,7 +11413,16 @@
                         "name": "profile",
                         "in": "query",
                         "description": "The profile ID of the outfitter",
-                        "required": false,
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "path",
+                        "description": "The profile ID of the outfitter",
+                        "required": true,
                         "schema": {
                             "type": "integer"
                         }
@@ -10715,7 +11463,65 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "product": {
+                                        "description": "The ID of the booked product",
+                                        "type": "integer"
+                                    },
+                                    "arrivial_date": {
+                                        "description": "Customer arrival date (leave empty if = to start_date)",
+                                        "type": "string"
+                                    },
+                                    "start_date": {
+                                        "description": "Booking start date (when hunt starts)",
+                                        "type": "string"
+                                    },
+                                    "end_date": {
+                                        "description": "Booking end date (when hunt ends or customer leaves)",
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "description": "Full price paid by the customer",
+                                        "type": "string"
+                                    },
+                                    "comment": {
+                                        "description": "A private comment the outfitter can keep",
+                                        "type": "integer"
+                                    },
+                                    "cancel": {
+                                        "description": "Flag the booking as cancelled today",
+                                        "type": "boolean"
+                                    },
+                                    "cancel_comment": {
+                                        "description": "A comment about the cancellation",
+                                        "type": "string"
+                                    },
+                                    "refund": {
+                                        "description": "The $ amount the outfitter refunded",
+                                        "type": "string"
+                                    },
+                                    "refund_date": {
+                                        "description": "ISO date when the booking was refunded",
+                                        "type": "string"
+                                    },
+                                    "email_cancel": {
+                                        "description": "Send TRUE to make API send a booking cancellation email to the customer",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Update a booking object",
@@ -10821,7 +11627,51 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "amount": {
+                                        "description": "The payment amount in US dollars",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "deposit": {
+                                        "description": "Is that payment the deposit",
+                                        "type": "boolean"
+                                    },
+                                    "due_date": {
+                                        "description": "Date when payment is due",
+                                        "type": "string"
+                                    },
+                                    "paid_date": {
+                                        "description": "Date when payment was received",
+                                        "type": "string"
+                                    },
+                                    "amount_paid": {
+                                        "description": "The payment received in US dollars",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "method": {
+                                        "description": "The payment method (see BookingPayment entity for mapping)",
+                                        "type": "integer"
+                                    },
+                                    "comment": {
+                                        "description": "A comment on the payment",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Booking payment created",
@@ -10905,7 +11755,47 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "amount": {
+                                        "description": "The payment amount in US dollars",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "deposit": {
+                                        "description": "Is that payment the deposit",
+                                        "type": "boolean"
+                                    },
+                                    "due_date": {
+                                        "description": "Date when payment is due",
+                                        "type": "string"
+                                    },
+                                    "paid_date": {
+                                        "description": "Date when payment was received",
+                                        "type": "string"
+                                    },
+                                    "amount_paid": {
+                                        "description": "The payment received in US dollars",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "method": {
+                                        "description": "The payment method (see BookingPayment entity for mapping)",
+                                        "type": "integer"
+                                    },
+                                    "comment": {
+                                        "description": "A comment on the payment",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Booking payment updated",
@@ -10969,7 +11859,7 @@
                         "description": "Profile ID of the customer to retreive calendar notes for",
                         "required": true,
                         "schema": {
-                            "schema": "integer"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -11099,7 +11989,53 @@
                 ],
                 "summary": "Create a Customer",
                 "operationId": "App\\Controller\\Pro\\CustomerController::createCustomerAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "profile": {
+                                        "description": "The ID of the profile of the outfitter to add customers to",
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "description": "The customer name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The customer email address (we'll try to find a match)",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "The customer phone number",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "A short tagline to describe the customer (kinda like a mnemonic)",
+                                        "type": "string"
+                                    },
+                                    "source": {
+                                        "description": "An ID of a the source where the customer was acquired (see Customer entity for mappings). Guidefitter source by default.",
+                                        "type": "integer"
+                                    },
+                                    "source_other": {
+                                        "description": "A free text where th eoutfitter can type where customer was acquired",
+                                        "type": "string"
+                                    },
+                                    "user_profile": {
+                                        "description": "A Guidefitter ProfileStandard ID to connect the customer with a GF member.",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": " Created Customer object",
@@ -11161,11 +12097,122 @@
                         "description": "ID of the customer to update",
                         "required": true,
                         "schema": {
-                            "schema": "integer"
+                            "type": "integer"
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The customer name",
+                                        "type": "string"
+                                    },
+                                    "avatar": {
+                                        "description": "The photo ID of the avatar",
+                                        "type": "integer"
+                                    },
+                                    "email": {
+                                        "description": "The customer email address (we'll try to find a match)",
+                                        "type": "string"
+                                    },
+                                    "qualifications": {
+                                        "description": "The prospect quality (see Customer entity for mapping)",
+                                        "type": "integer"
+                                    },
+                                    "year": {
+                                        "description": "Year for which customer is a prospect",
+                                        "type": "integer"
+                                    },
+                                    "phone": {
+                                        "description": "The customer phone number",
+                                        "type": "string"
+                                    },
+                                    "phone2": {
+                                        "description": "The customer alternate phone number",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "A short tagline to describe the customer (kinda like a mnemonic)",
+                                        "type": "string"
+                                    },
+                                    "birth_date": {
+                                        "description": "The customer birth date (ISO)",
+                                        "type": "string"
+                                    },
+                                    "source": {
+                                        "description": "An ID of a the source where the customer was acquired (see Customer entity for mappings). Guidefitter source by default.",
+                                        "type": "integer"
+                                    },
+                                    "source_other": {
+                                        "description": "A free text where th eoutfitter can type where customer was acquired",
+                                        "type": "string"
+                                    },
+                                    "user_profile": {
+                                        "description": "A Guidefitter ProfileStandard ID to connect the customer with a GF member.",
+                                        "type": "integer"
+                                    },
+                                    "past_customer": {
+                                        "description": "Flag the customer as a 'Past Client' or not",
+                                        "type": "boolean"
+                                    },
+                                    "products": {
+                                        "description": "A list of product IDs customer is interested in",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "animals": {
+                                        "description": "A list of animal IDs customer is interested in",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "weapons": {
+                                        "description": "A list of weapon IDs customer is interested in",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "city": {
+                                        "description": "Customer address city (AddressJson)",
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "description": "Customer address state (geoname ID)",
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "description": "Customer address country (geoname ID)",
+                                        "type": "string"
+                                    },
+                                    "street1": {
+                                        "description": "Customer address line 1",
+                                        "type": "string"
+                                    },
+                                    "street2": {
+                                        "description": "Customer address line 2",
+                                        "type": "string"
+                                    },
+                                    "zip": {
+                                        "description": "Customer address ZIP code",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated Customer object",
@@ -11187,6 +12234,7 @@
                     "Customer"
                 ],
                 "summary": "Update a Customer",
+                "description": "Delete a customer and its bookings (if any exist)",
                 "operationId": "App\\Controller\\Pro\\CustomerController::deleteCustomerAction",
                 "parameters": [
                     {
@@ -11195,7 +12243,7 @@
                         "description": "ID of the customer to delete",
                         "required": true,
                         "schema": {
-                            "schema": "integer"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -11257,7 +12305,29 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "content": {
+                                        "description": "The note content",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "The photo ID to attach to the note",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": " Created Customer Note object",
@@ -11299,7 +12369,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "content": {
+                                        "description": "The note content",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": " Updated Customer Note object",
@@ -13085,7 +14173,44 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "verify": {
+                                        "description": "Admin decision to accept/refuse the document",
+                                        "type": "boolean"
+                                    },
+                                    "type": {
+                                        "description": "The document type ID of the document",
+                                        "type": "integer"
+                                    },
+                                    "files": {
+                                        "description": "An array off File IDs. The existing files not in the array will be deleted, the new ones added.",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "file_s3": {
+                                        "description": "The file name on the S3 bucket",
+                                        "type": "string"
+                                    },
+                                    "reusable": {
+                                        "description": "Make the document reusable or not for next renewal",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated Profile verification document",
@@ -13128,7 +14253,21 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "refusal_message": {
+                                        "description": "A message to send by email to the user (no email sent if no message)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "Document deleted"
@@ -13213,7 +14352,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "document": {
+                                        "description": "The document ID to move the file to",
+                                        "type": "integer"
+                                    },
+                                    "type": {
+                                        "description": "If 'document' not set, by passing 'type' (Document Type ID) it'll create a new document and move the file to it",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "Update success"
@@ -13315,7 +14472,29 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "content": {
+                                        "description": "The note content",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "The photo ID to attach to the note",
+                                        "type": "integer"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": " Created Customer Note object",
@@ -13459,7 +14638,48 @@
                 "summary": "Create a Review",
                 "description": "Author is the authenticated user",
                 "operationId": "App\\Controller\\Review\\ReviewController::createReviewAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "item": {
+                                        "description": "The gear item ID to review",
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "description": "The review name (150 chars max)",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The review itself (supports markdown, 10k char max)",
+                                        "type": "string"
+                                    },
+                                    "dispatch": {
+                                        "description": "Submit the review for admin approval",
+                                        "type": "boolean"
+                                    },
+                                    "publish": {
+                                        "description": "Publish/unpublish the review (publish is admins only)",
+                                        "type": "boolean"
+                                    },
+                                    "tags": {
+                                        "description": "A list of hashtags for the review",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Created Review",
@@ -13513,6 +14733,7 @@
                     "Review"
                 ],
                 "summary": "Update a Review",
+                "description": "Update a review (must be authenticated)",
                 "operationId": "App\\Controller\\Review\\ReviewController::updateReviewAction",
                 "parameters": [
                     {
@@ -13525,7 +14746,56 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "The review name (150 chars max)",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "The review itself (supports markdown, 10k char max)",
+                                        "type": "string"
+                                    },
+                                    "tags": {
+                                        "description": "A list of hashtags for the review",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "rating": {
+                                        "description": "1 to 5 stars rating",
+                                        "type": "integer"
+                                    },
+                                    "is_recommended": {
+                                        "description": "TRUE if the product is recommended, FALSE if not, NULL if neutral",
+                                        "type": "boolean"
+                                    },
+                                    "dispatch": {
+                                        "description": "Submit the review for admin approval",
+                                        "type": "boolean"
+                                    },
+                                    "publish": {
+                                        "description": "Publish/unpublish the review (publish is admins only)",
+                                        "type": "boolean"
+                                    },
+                                    "undelete": {
+                                        "description": "Un-delete the review (admins only)",
+                                        "type": "boolean"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated Review",
@@ -13593,7 +14863,21 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Added Review Item",
@@ -13671,7 +14955,53 @@
                 ],
                 "summary": "Create a Lead",
                 "operationId": "App\\Controller\\Thread\\LeadController::createLeadAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "outfitter": {
+                                        "description": "The outfitter ID to send lead to",
+                                        "type": "integer"
+                                    },
+                                    "first_name": {
+                                        "description": "The person first name",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "The person last name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The person email address",
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "description": "The content of the message",
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "description": "The ID of the country of the person",
+                                        "type": "integer"
+                                    },
+                                    "state": {
+                                        "description": "The ID of the state of the person",
+                                        "type": "integer"
+                                    },
+                                    "phone": {
+                                        "description": "The phone number of the person",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Created lead",
@@ -13737,7 +15067,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "description": "The content of the message",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Message created",
@@ -13770,7 +15118,25 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "response": {
+                                        "description": "The response (true for positive)",
+                                        "type": "boolean"
+                                    },
+                                    "message": {
+                                        "description": "The content of the message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "The feedback added"
@@ -13815,7 +15181,37 @@
                 ],
                 "summary": "Create a Thread Message",
                 "operationId": "App\\Controller\\Thread\\ThreadController::createMessageAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "description": "The content of the message",
+                                        "type": "string"
+                                    },
+                                    "profile": {
+                                        "description": "The profile ID of the owner of the inbox sending the message",
+                                        "type": "string"
+                                    },
+                                    "recipients": {
+                                        "description": "List of recipient profile IDs (required only for new thread)",
+                                        "type": "string"
+                                    },
+                                    "photo": {
+                                        "description": "The ID of the photo to attach to the message",
+                                        "type": "string"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Thread object",
@@ -14775,7 +16171,7 @@
                         "description": "The Insider Type that's opened when user is an employee of the vendor",
                         "required": false,
                         "schema": {
-                            "type": "integer    "
+                            "type": "integer"
                         }
                     },
                     {
@@ -14900,7 +16296,136 @@
                         }
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "vendor_name": {
+                                        "description": "The vendor name",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "email": {
+                                        "description": "An email address",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "description": {
+                                        "description": "The vendor description",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "join_message": {
+                                        "description": "The message displayed on the vendor's signup page",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "url": {
+                                        "description": "Vendor website URL (not GOP, general public URL)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "city": {
+                                        "description": "Vendor address city (AddressJson)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "state": {
+                                        "description": "Vendor address state (geoname ID)",
+                                        "type": "number",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "country": {
+                                        "description": "Vendor address country (geoname ID)",
+                                        "type": "number",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "street1": {
+                                        "description": "Vendor address line 1",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "street2": {
+                                        "description": "Vendor address line 2",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "zip": {
+                                        "description": "Vendor address ZIP code",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "corporate_domains": {
+                                        "description": "List of email domains for the vendor (including @) (admins only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "email_enough": {
+                                        "description": "If having a corp email domain is enough to get verified. If not documents are required (admins only)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "dealerships": {
+                                        "description": "List of brands (brand ID) the dealer is selling (admins only)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "ffl_number": {
+                                        "description": "The FFL number (6 parts separated with dashes e.g. X-XX-XXX-XX-XX-XXXXX). Required for FFL dealers (admins only)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "ffl_file": {
+                                        "description": "The file name of the FFL license already uploaded on guidefitterconfidential S3 bucket (admins only)",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "name": {
+                                        "description": "The Vendor Profile name (that'll be his Guidefitter URL)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "avatar": {
+                                        "description": "The ID of the photo to use as profile avatar",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "cover": {
+                                        "description": "The ID of the photo to use as profile cover",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "notifications": {
+                                        "description": "The list of notifications IDs the vendor is subscribed to",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "active": {
+                                        "description": "Enable/disable the profile (only admins)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    },
+                                    "undelete": {
+                                        "description": "Un-delete the vendor (only admins)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/vendors/5002"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated vendor object",
@@ -15009,7 +16534,60 @@
                 ],
                 "summary": "Create a Vendor",
                 "operationId": "App\\Controller\\Vendor\\VendorController::createVendorAction",
-                "requestBody": {},
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The Guidefitter Profile name of the vendor",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "vendor_name": {
+                                        "description": "The name of the vendor",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "type": {
+                                        "description": "The type of Vendor (see description for types mapping)",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "corporate_domains": {
+                                        "description": "List of email domains for the vendor (including @)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "corporate_domains_regex": {
+                                        "description": "A regexp to catch all variations of corporate domains (including @) (admins only)",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "email_enough": {
+                                        "description": "If having a corp email domain is enough to get verified. If not documents are required (FALSE by default)",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "ffl_number": {
+                                        "description": "The FFL number (6 parts separated with dashes e.g. X-XX-XXX-XX-XX-XXXXX). Required for FFL dealers.",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    },
+                                    "with": {
+                                        "description": "The extra fields you want in the returned JSON",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/vendors"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Created vendor object",
@@ -16662,90 +18240,90 @@
             "with": {
                 "name": "with",
                 "in": "query",
+                "description": "The extra fields you want in the returned JSON.",
                 "required": false,
                 "schema": {
-                    "description": "The extra fields you want in the returned JSON.",
                     "type": "string"
                 }
             },
             "q": {
                 "name": "q",
                 "in": "query",
+                "description": "The terms to search.",
                 "required": false,
                 "schema": {
-                    "description": "The terms to search.",
                     "type": "string"
                 }
             },
             "sort": {
                 "name": "sort",
                 "in": "query",
+                "description": "The sorting criteria",
                 "required": false,
                 "schema": {
-                    "description": "The sorting criteria",
                     "type": "string"
                 }
             },
             "profile-status": {
                 "name": "profile-status",
                 "in": "query",
+                "description": "The status of the profile (online/offline/any) (online by default)",
                 "required": false,
                 "schema": {
-                    "description": "The status of the profile (online/offline/any) (online by default)",
                     "type": "string"
                 }
             },
             "deleted": {
                 "name": "deleted",
                 "in": "query",
+                "description": "Include soft deleted profiles in the search (yes/no/any) (no by default)",
                 "required": false,
                 "schema": {
-                    "description": "Include soft deleted profiles in the search (yes/no/any) (no by default)",
                     "type": "string"
                 }
             },
             "location": {
                 "name": "location",
                 "in": "query",
+                "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                 "required": false,
                 "schema": {
-                    "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                     "type": "string"
                 }
             },
             "location-bis": {
                 "name": "location-bis",
                 "in": "query",
+                "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                 "required": false,
                 "schema": {
-                    "description": "Filter by country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                     "type": "string"
                 }
             },
             "location-fence": {
                 "name": "location-fence",
                 "in": "query",
+                "description": "Filter out from country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter out those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                 "required": false,
                 "schema": {
-                    "description": "Filter out from country or state. The Geoname ID of the GeoEntities separated by commas, or '0' to filter out those without a location.<br> Also those values are possible 'midwest', 'south', 'east', 'west'",
                     "type": "string"
                 }
             },
             "lat": {
                 "name": "lat",
                 "in": "query",
+                "description": "The latitude of the user for a proximity search",
                 "required": false,
                 "schema": {
-                    "description": "The latitude of the user for a proximity search",
                     "type": "string"
                 }
             },
             "lon": {
                 "name": "lon",
                 "in": "query",
+                "description": "The longitude of the user for a proximity search",
                 "required": false,
                 "schema": {
-                    "description": "The longitude of the user for a proximity search",
                     "type": "string"
                 }
             },
@@ -17570,8 +19148,7 @@
                 "description": "Filter users who have a profile photo",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "has-claim": {
@@ -17580,8 +19157,7 @@
                 "description": "Filter users who claimed a business profile",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "insider-category": {
@@ -17589,11 +19165,11 @@
                 "in": "query",
                 "description": "Filters users based on insider category (0=NONE, 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO)",
                 "required": false,
+                "explode": false,
                 "schema": {
                     "type": "array",
                     "items": {
-                        "type": "integer",
-                        "default": []
+                        "type": "integer"
                     }
                 }
             },
@@ -17602,11 +19178,11 @@
                 "in": "query",
                 "description": "Filter on phylum from active insider verification",
                 "required": false,
+                "explode": false,
                 "schema": {
                     "type": "array",
                     "items": {
-                        "type": "integer",
-                        "default": []
+                        "type": "integer"
                     }
                 }
             },
@@ -17616,8 +19192,7 @@
                 "description": "Insider status. If TRUE filter only verified insiders, if FALSE only the flagged insiders.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-dod-verified": {
@@ -17626,8 +19201,7 @@
                 "description": "If TRUE filter users with active verification verified through the DoD service.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "profile-verification": {
@@ -17636,8 +19210,7 @@
                 "description": "Filters users based on profile verification status\n     *      (none=99,\n     *      pending=1,\n     *      accepted=2,\n     *      refused=3,\n     *      in progress=4,\n     *      not yet in progress=5,\n     *      expiring=6,\n     *      expired=7,\n     *      in grace period=8,\n     *      out of grace period=9,\n     *      in limbo=10,\n     *      incomplete=11).",
                 "required": false,
                 "schema": {
-                    "type": "integer",
-                    "default": false
+                    "type": "integer"
                 }
             },
             "profile-verification-before": {
@@ -17683,12 +19256,12 @@
                 "in": "query",
                 "description": "Filter users that are members of those brand programs.",
                 "required": false,
+                "explode": false,
                 "schema": {
                     "description": "List of brand IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer",
-                        "default": []
+                        "type": "integer"
                     }
                 }
             },
@@ -17698,8 +19271,7 @@
                 "description": "Filter users that manages a business or vendor profile",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "has-pending-document": {
@@ -17708,8 +19280,7 @@
                 "description": "Filter users who have a Profile Verification document not yet verified by admins",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "has-experience": {
@@ -17718,8 +19289,7 @@
                 "description": "Filter users who have or haven't a work experience",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-email-verified": {
@@ -17728,8 +19298,7 @@
                 "description": "Filter users who have their PERSONAL email verified or not (TRUE=verified, FALSE=unverified, NULL=ignored)",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "brag-app": {
@@ -17738,8 +19307,7 @@
                 "description": "Filter users that have installed the brag app (0=not brag app user, 1=brag app user, 11=iOS user, 12=Android user)",
                 "required": false,
                 "schema": {
-                    "type": "integer",
-                    "default": 0
+                    "type": "integer"
                 }
             },
             "business-app": {
@@ -17748,8 +19316,7 @@
                 "description": "Filter users that have installed the business app (0=not business app user, 1=business app user, 11=iOS user, 12=Android user)",
                 "required": false,
                 "schema": {
-                    "type": "integer",
-                    "default": 0
+                    "type": "integer"
                 }
             },
             "notifications": {
@@ -17757,12 +19324,12 @@
                 "in": "query",
                 "description": "Filter users that are subscribed to any of the given notifications.",
                 "required": false,
+                "explode": false,
                 "schema": {
                     "description": "List of notificaton IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer",
-                        "default": []
+                        "type": "integer"
                     }
                 }
             },
@@ -17771,12 +19338,12 @@
                 "in": "query",
                 "description": "Filter users that are following these profiles.",
                 "required": false,
+                "explode": false,
                 "schema": {
                     "description": "List of profile IDs separated by commas",
                     "type": "array",
                     "items": {
-                        "type": "integer",
-                        "default": []
+                        "type": "integer"
                     }
                 }
             },
@@ -17786,8 +19353,7 @@
                 "description": "Filter users who are GF admins or not (TRUE=admin, FALSE=not admin, NULL=ignored).",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-prostaff": {
@@ -17796,8 +19362,7 @@
                 "description": "Filter users that are in pro staff of at least 1 brand.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-activated-insider": {
@@ -17806,8 +19371,7 @@
                 "description": "Filter users that are activated insider for at least 1 brand.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "has-review": {
@@ -17816,8 +19380,7 @@
                 "description": "Filter users that are author of at least 1 review (published or not).",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "is-ghost": {
@@ -17826,8 +19389,7 @@
                 "description": "Filter users that are ghosts.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             },
             "has-names": {
@@ -17836,8 +19398,7 @@
                 "description": "Filter users depending if they have both first and last names.",
                 "required": false,
                 "schema": {
-                    "type": "boolean",
-                    "default": false
+                    "type": "boolean"
                 }
             }
         }
