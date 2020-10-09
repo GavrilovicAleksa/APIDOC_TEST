@@ -2355,7 +2355,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brands",
-                "description": "Search brands with advanced filters reserved to admins\\ The only public filters are `q` and `profile-status`\\ Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
+                "description": "Search brands with advanced filters reserved to admins. The only public filters are `q` and `profile-status`. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandsAction",
                 "parameters": [
                     {
@@ -2520,7 +2520,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Create Brand",
+                "summary": "Create a Brand",
+                "description": "Create a brand, its profile, and its GOP",
                 "operationId": "App\\Controller\\Brand\\BrandController::createBrandAction",
                 "requestBody": {
                     "description": "The user object that will be added.",
@@ -2580,6 +2581,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Brand - Name",
+                "description": "Get one brand and his profile by name",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2613,6 +2615,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Brand - Profile",
+                "description": "Get one brand and his profile by his profile ID",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2646,6 +2649,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single Brand - Profile",
+                "description": "Get one brand and his profile by his brand ID",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2676,7 +2680,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Update an brand (must be authenticated)\n> Update the brand entity, the address, and its profile",
+                "summary": "Update a Brand",
+                "description": "Update a brand (must be authenticated). Updates the brand entity, the address, and his profile",
                 "operationId": "App\\Controller\\Brand\\BrandController::updateBrandAction",
                 "parameters": [
                     {
@@ -2926,7 +2931,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Delete Brand",
+                "summary": "Delete a Brand",
+                "description": "Delete a brand and its profile",
                 "operationId": "App\\Controller\\Brand\\BrandController::deleteBrandAction",
                 "parameters": [
                     {
@@ -2964,6 +2970,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brands Subscriptions",
+                "description": "Get all the subscriptions of all programs combined",
                 "operationId": "App\\Controller\\Brand\\BrandController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -2996,7 +3003,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Brand Pending",
+                "summary": "Get Brands Pending",
+                "description": "Get the number of pending subscriptions and sales across all programs",
                 "operationId": "App\\Controller\\Brand\\BrandController::getPendingCountsAction",
                 "parameters": [
                     {
@@ -3034,7 +3042,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Brand Subscriptions",
+                "summary": "Get Brands Grid Agreement",
+                "description": "Generate a pre-signed URL to the Grid agreement stored on Amazon S3 bucket, and redirect to it",
                 "operationId": "App\\Controller\\Brand\\BrandController::getGridAgreementAction",
                 "parameters": [
                     {
@@ -3060,7 +3069,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Brand Statistics",
+                "summary": "Get Brand Statistics",
+                "description": "Get all the brand programs statistics.",
                 "operationId": "App\\Controller\\Brand\\BrandController::getStatisticsAction",
                 "parameters": [
                     {
@@ -3086,14 +3096,98 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The user",
+                        "description": "Three objects with yearly, weekly, and daily statistics",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "": {
+                                        "yearly": {
                                             "description": "Get all the brand programs statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- s  > shopping<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
-                                            "type": "object"
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "monthly": {
+                                            "description": "Get all the brand programs statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- s  > shopping<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "daily": {
+                                            "description": "Get all the brand programs statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- s  > shopping<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/brands/{brandId}/statistics-aim": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get Brand Aim Statistics",
+                "description": "Get all the brand AIM statistics. 3 objects in the response:\n     *     time | description\n     *     --- | ---\n     *     `yearly` | contains the yearly stat\n     *     `monthly` | contains the monthly stats for the last 12 months\n     *     `daily` | contains the daily stats for the last 6 months\n     *\n     *\n     *     ",
+                "operationId": "App\\Controller\\Brand\\BrandController::getStatisticsAimAction",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "Id of the brand",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "Year to fetch stats for. If ommited it'll use current year",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Three objects with yearly, weekly, and daily statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "yearly": {
+                                            "description": "Get all the brand AIM statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- rd > reads<br>\n- t  > thanks<br>\n- cm > comments<br>\n- s  > shares<br>\n- b  > baits<br>\n- h  > hooks<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "monthly": {
+                                            "description": "Get all the brand AIM statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- rd > reads<br>\n- t  > thanks<br>\n- cm > comments<br>\n- s  > shares<br>\n- b  > baits<br>\n- h  > hooks<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        },
+                                        "daily": {
+                                            "description": "Get all the brand AIM statistics.<br>\n3 objects in the response:<br>\n- \"today\" contains the latest stats<br>\n- \"monthly\" contains the monthly stats for the last 12 months<br>\n- \"daily\" contains the daily stats for the last 6 months<br>\n<br><br>\nMapping for keys:<br>\n- m  > members<br>\n- mn > members_new<br>\n- v  > visits<br>\n- rd > reads<br>\n- t  > thanks<br>\n- cm > comments<br>\n- s  > shares<br>\n- b  > baits<br>\n- h  > hooks<br>\n- r  > revenue<br>\n- g  > gross<br>\n- c  > comsn<br>\n- o  > nborders<br>",
+                                            "type": "Array",
+                                            "items": {
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -3110,6 +3204,7 @@
                     "Brand"
                 ],
                 "summary": "Get Discount Codes",
+                "description": "Search discount codes.For managers, the `brand` parameter is mandatory. For insiders, the `program` parameter (gop, idp, ...etc) is mandatory.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodesAction",
                 "parameters": [
                     {
@@ -3137,9 +3232,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/is-assigned"
-                    },
-                    {
-                        "$ref": "#/components/parameters/is-expired"
                     },
                     {
                         "name": "gop",
@@ -3222,7 +3314,7 @@
                         }
                     },
                     {
-                        "name": "dealer2",
+                        "name": "dealer",
                         "in": "query",
                         "description": "Vendor ID. Filter discount codes that have been checked or used at that dealer",
                         "required": false,
@@ -3253,6 +3345,7 @@
                     "Brand"
                 ],
                 "summary": "Create a Discount Code",
+                "description": "For admins and brand managers: create a discount code. Examples:<br>\n     *      - To create a global code for all shops/programs: {'code': 'XXXXX'}<br>\n     *     - To create a global code for Zeiss GOP: {'code': 'XXXXX', 'brand': 6, 'gop': 6}<br>\n     *     - To create a personal code for a Zeiss Pro member: {'code': 'XXXXX', 'brand': 6, 'gop': 6, 'user': 1234}<br>\n     *     ",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeAction",
                 "requestBody": {
                     "content": {
@@ -3349,6 +3442,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single Discount Code",
+                "description": "For dealers: get the insider information attached to a discount code. Only searches 'assigned' discount codes",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodeAction",
                 "parameters": [
                     {
@@ -3388,6 +3482,7 @@
                     "Brand"
                 ],
                 "summary": "Claim a Discount Code",
+                "description": "For insiders: claim a discount code previously created by admins or brand managers. We will check the insider category of the insider and fetch an existing unclaimed code for his program. The insider can then get his discount codes from route api.discountcodes.get_discountcodes (but the codes will also be in the response to this call)",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::claimDiscountCodeAction",
                 "parameters": [
                     {
@@ -3434,6 +3529,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a Discount Code",
+                "description": "Delete a discount code",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::deleteDiscountCodeAction",
                 "parameters": [
                     {
@@ -3470,6 +3566,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a Discount Code Target",
+                "description": "delete a discount-code target",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::deleteDiscountCodeTargetAction",
                 "parameters": [
                     {
@@ -3500,12 +3597,187 @@
                 }
             }
         },
+        "/discount-code-events/{brandId}/vendors/{vendorId}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get Discount Code Events - Dealer",
+                "description": "Get all the discount code events related to a dealer (only for brand managers)",
+                "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodeEventsVendorAction",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "The ID of the brand",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "The ID of the dealer recording the event",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of discount code event objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/discount-code-event"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vendor not found"
+                    }
+                }
+            }
+        },
+        "/discount-code-events/{brandId}/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get Discount Code Events - User",
+                "description": "Get all the discount code events related to a member (only for brand managers)",
+                "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodeEventsUserAction",
+                "parameters": [
+                    {
+                        "name": "brandId",
+                        "in": "path",
+                        "description": "The ID of the brand",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "The ID of the user in the event",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of discount code event objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/discount-code-event"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/discount-code-events/{codeId}/checked/{vendorId}": {
+            "post": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Record a Dealer Event - Check",
+                "description": "Record a dealer event on a discount code. Saves the event that the discount code was verified by the dealer",
+                "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeEventAction",
+                "parameters": [
+                    {
+                        "name": "codeId",
+                        "in": "path",
+                        "description": "The ID of the discount code to delete",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "The ID of the dealer recording the event",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Saved the event"
+                    },
+                    "404": {
+                        "description": "Discount code or vendor not found"
+                    }
+                }
+            }
+        },
+        "/discount-code-events/{codeId}/used/{vendorId}": {
+            "post": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Record a Dealer Event - Check",
+                "description": "Record a dealer event on a discount code. Saves the event that the discount code was flagged as used by the dealer",
+                "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeEventAction",
+                "parameters": [
+                    {
+                        "name": "codeId",
+                        "in": "path",
+                        "description": "The ID of the discount code to delete",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "description": "The ID of the dealer recording the event",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Saved the event"
+                    },
+                    "404": {
+                        "description": "Discount code or vendor not found"
+                    }
+                }
+            }
+        },
         "/insiders": {
             "get": {
                 "tags": [
                     "Brand"
                 ],
                 "summary": "Get Insiders",
+                "description": "Search brands activated insiders.The `brand` filter is mandatory for a brand manager. Admins can get a list of all activated insiders across all brands. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
                 "operationId": "App\\Controller\\Brand\\InsiderController::getActivatedInsidersAction",
                 "parameters": [
                     {
@@ -3550,6 +3822,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Insider",
+                "description": "Get a Brand activated insider object.",
                 "operationId": "App\\Controller\\Brand\\InsiderController::getActivatedInsiderAction",
                 "parameters": [
                     {
@@ -3591,6 +3864,7 @@
                     "Brand"
                 ],
                 "summary": "Add a user to brand's Insiders",
+                "description": "Add a user to a brand's activated insiders",
                 "operationId": "App\\Controller\\Brand\\InsiderController::addActivatedInsiderAction",
                 "parameters": [
                     {
@@ -3632,6 +3906,7 @@
                     "Brand"
                 ],
                 "summary": "Remove an Insider",
+                "description": "Remove a user from the brand's Activated Insiders",
                 "operationId": "App\\Controller\\Brand\\InsiderController::removeActivatedInsiderAction",
                 "parameters": [
                     {
@@ -7029,6 +7304,7 @@
                     "Brand"
                 ],
                 "summary": "Get Prostaff",
+                "description": "Search brands prostaff with advanced filters reserved for admins. The `brand` filter is mandatory fore a brand manager. Admins can get a list of all prostaff across all brands. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance.",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstaffAction",
                 "parameters": [
                     {
@@ -7067,6 +7343,7 @@
                     "Brand"
                 ],
                 "summary": "Pro Staff Agreement",
+                "description": "Generate a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirect to it.",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstaffAgreementAction",
                 "parameters": [
                     {
@@ -7082,7 +7359,7 @@
                 ],
                 "responses": {
                     "302": {
-                        "description": "Return a redirection to the file located on S3 bucket"
+                        "description": "Returns a redirection to the file located on S3 bucket"
                     }
                 }
             }
@@ -7093,6 +7370,7 @@
                     "Brand"
                 ],
                 "summary": "Pro Staff Agreement - Profile",
+                "description": "Generate a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirect to it",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstafferAgreementAction",
                 "parameters": [
                     {
@@ -7129,6 +7407,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Prostaff",
+                "description": "Get pro staffer object representing the pro staff association between a GF member and a brand",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstafferAction",
                 "parameters": [
                     {
@@ -7170,6 +7449,7 @@
                     "Brand"
                 ],
                 "summary": "Add an user to Prostaff",
+                "description": "Add a user to a brand's pro staff",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::addProstaffAction",
                 "parameters": [
                     {
@@ -7197,7 +7477,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Prostaff object",
                         "content": {
                             "application/json": {
@@ -7216,6 +7496,7 @@
                     "Brand"
                 ],
                 "summary": "Update a ProStaffer",
+                "description": "Update a brand pro staffer",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::updateProstaffAction",
                 "parameters": [
                     {
@@ -7259,7 +7540,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Updated object",
+                        "description": "Updated prostaff object",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -7278,6 +7559,7 @@
                     "Brand"
                 ],
                 "summary": "Update a ProStaffer",
+                "description": "Remove a user from the brand's Pro Staff",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::removeProstaffAction",
                 "parameters": [
                     {
@@ -7314,6 +7596,7 @@
                     "Comment"
                 ],
                 "summary": "Get Comments",
+                "description": "",
                 "operationId": "App\\Controller\\Comment\\CommentController::getCommentsAction",
                 "parameters": [
                     {
@@ -7366,6 +7649,7 @@
                     "Comment"
                 ],
                 "summary": "Create a Comment",
+                "description": "Create a comment (must be authenticated).<br> For a comment on a Post, check the post type and:<br> - 30 (photo) send 'photo' with photo ID<br> - 60 (article) send 'article' with article ID<br> - 80 (review) send 'review' with review ID<br>",
                 "operationId": "App\\Controller\\Comment\\CommentController::createCommentAction",
                 "requestBody": {
                     "content": {
@@ -7430,6 +7714,7 @@
                     "Comment"
                 ],
                 "summary": "Get Single Comment",
+                "description": "Get a single comment",
                 "operationId": "App\\Controller\\Comment\\CommentController::getCommentAction",
                 "parameters": [
                     {
@@ -7464,6 +7749,7 @@
                     "Comment"
                 ],
                 "summary": "Reply to a Comment",
+                "description": "Deprecated, use route api.comments.create_comment instead",
                 "operationId": "App\\Controller\\Comment\\CommentController::createCommentReplyAction",
                 "parameters": [
                     {
@@ -7511,13 +7797,15 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             },
             "delete": {
                 "tags": [
                     "Comment"
                 ],
                 "summary": "Delete a Comment",
+                "description": "Delete a comment",
                 "operationId": "App\\Controller\\Comment\\CommentController::deleteCommentAction",
                 "parameters": [
                     {
@@ -7551,6 +7839,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Items",
+                "description": "Search items.",
                 "operationId": "App\\Controller\\Ecomm\\ItemController::getItemsAction",
                 "parameters": [
                     {
@@ -7592,6 +7881,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get a Single Item",
+                "description": "Get a single item.",
                 "operationId": "App\\Controller\\Ecomm\\ItemController::getItemAction",
                 "parameters": [
                     {
@@ -7628,6 +7918,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Orders",
+                "description": "Search Orders. If the user's not the admin, `brand` paramater is required.",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrdersAction",
                 "parameters": [
                     {
@@ -7812,6 +8103,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Orders Statistics",
+                "description": "Search Order statistics. If the user's not the admin, `brand` paramater is required.",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrderStatisticsAction",
                 "parameters": [
                     {
@@ -7996,6 +8288,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get a Single Order",
+                "description": "Get a single order. By default the order items are returned",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrderAction",
                 "parameters": [
                     {
@@ -8030,6 +8323,7 @@
                     "Ecomm"
                 ],
                 "summary": "Update an Order",
+                "description": "Update an order. Fields we get from Magento are not editable.",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::updateOrderAction",
                 "parameters": [
                     {
@@ -8085,6 +8379,7 @@
                     "Ecomm"
                 ],
                 "summary": "Sync an Order on Magento",
+                "description": "Synchronize an order from Magento",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::syncOrderAction",
                 "parameters": [
                     {
@@ -8111,6 +8406,7 @@
                     "Ecomm"
                 ],
                 "summary": "Add a Shipment on Magento",
+                "description": "Synchronize an order from Magento",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::shipOrderAction",
                 "parameters": [
                     {
@@ -8137,6 +8433,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Order Invoice",
+                "description": "Generate a pre-signed URL to the Order PDF stored on Amazon S3 bucket, and redirect to it",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrderInvoiceAction",
                 "parameters": [
                     {
@@ -8166,6 +8463,7 @@
                     "Referential"
                 ],
                 "summary": "Get Countries",
+                "description": "Get all countries",
                 "operationId": "App\\Controller\\Geo\\CountryController::getCountriesAction",
                 "parameters": [
                     {
@@ -8195,6 +8493,7 @@
                     "Referential"
                 ],
                 "summary": "Get Fishing Countries",
+                "description": "Get all countries referenced in hunting/fishing products.<br> The response is different in that it won't return entities but just raw DB data to build the page:<br> - geo_country_id: the ID of the country<br> - name: Name of the country <br> - continent: continent code<br> - hash: the URL key to build link to the SRP",
                 "operationId": "App\\Controller\\Geo\\CountryController::getHuntingCountriesAction",
                 "responses": {
                     "200": {
@@ -8223,6 +8522,7 @@
                     "Referential"
                 ],
                 "summary": "Get a Single Country",
+                "description": "Get a single coutry.",
                 "operationId": "App\\Controller\\Geo\\CountryController::getCountryAction",
                 "parameters": [
                     {
@@ -8255,6 +8555,7 @@
                     "Referential"
                 ],
                 "summary": "Get Airports",
+                "description": "Search through airports",
                 "operationId": "App\\Controller\\Geo\\CountryController::getAirportsAction",
                 "parameters": [
                     {
@@ -8287,6 +8588,7 @@
                     "Referential"
                 ],
                 "summary": "Get Country States",
+                "description": "Get all the states of a country",
                 "operationId": "App\\Controller\\Geo\\StateController::getStatesAction",
                 "parameters": [
                     {
@@ -8318,7 +8620,8 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Country States",
+                "summary": "Get a Single State",
+                "description": "Get a single state.",
                 "operationId": "App\\Controller\\Geo\\StateController::getStateAction",
                 "parameters": [
                     {
@@ -9512,6 +9815,7 @@
                     "Tracking"
                 ],
                 "summary": "Add a Tracking",
+                "description": "",
                 "operationId": "App\\Controller\\Meta\\TrackingController::createTrackingAction",
                 "parameters": [
                     {
@@ -15338,7 +15642,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Created Review",
                         "content": {
                             "application/json": {
@@ -15456,7 +15760,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Updated Review",
                         "content": {
                             "application/json": {
@@ -17871,6 +18175,7 @@
                 },
                 "type": "object"
             },
+            "discount-code-event": {},
             "discount-code": {
                 "properties": {
                     "id": {
