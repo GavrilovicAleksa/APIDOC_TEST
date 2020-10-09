@@ -3137,7 +3137,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brand Aim Statistics",
-                "description": "Get all the brand AIM statistics. 3 objects in the response:<br>| time | description |<br>| --- | --- |<br>| `yearly` | contains the yearly stats |<br>| `monthly` | contains the monthly stats for the last 12 months |<br>|`daily` | contains the daily stats for the last 6 months |",
+                "description": "Get all the brand AIM statistics. 3 objects in the response:<br>\n| time | description |\n| --- | --- |\n| `yearly` | contains the yearly stats |\n| `monthly` | contains the monthly stats for the last 12 months |\n|`daily` | contains the daily stats for the last 6 months |\n ",
                 "operationId": "App\\Controller\\Brand\\BrandController::getStatisticsAimAction",
                 "parameters": [
                     {
