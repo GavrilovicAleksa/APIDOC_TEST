@@ -4562,7 +4562,7 @@
                 }
             }
         },
-        "/cnp-subscription/{cnpId}/{profileId}": {
+        "/cnp-subscriptions/{cnpId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -4607,9 +4607,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/cnp-subscriptions/{cnpId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -5006,7 +5004,7 @@
                 }
             }
         },
-        "/ecp-subscription/{cnpId}/{profileId}": {
+        "/ecp-subscriptions/{cnpId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -5051,9 +5049,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/ecp-subscriptions/{cnpId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -5452,7 +5448,7 @@
                 }
             }
         },
-        "/frp-subscription/{frpId}/{profileId}": {
+        "/frp-subscriptions/{frpId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -5497,9 +5493,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/frp-subscriptions/{frpId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -5703,6 +5697,31 @@
                         "description": "Nothing to update"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Close a GOP",
+                "description": "Closes an GOP. Reserved for admins",
+                "operationId": "App\\Controller\\Brand\\Program\\GopController::deleteGopAction",
+                "parameters": [
+                    {
+                        "name": "gopId",
+                        "in": "path",
+                        "description": "The GOP Id to remove.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OEP closed"
+                    }
+                }
             }
         },
         "/gops/brand={brand}": {
@@ -5738,33 +5757,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/gop/{gopId}": {
-            "delete": {
-                "tags": [
-                    "Brand"
-                ],
-                "summary": "Close a GOP",
-                "description": "Closes an GOP. Reserved for admins",
-                "operationId": "App\\Controller\\Brand\\Program\\GopController::deleteGopAction",
-                "parameters": [
-                    {
-                        "name": "gopId",
-                        "in": "path",
-                        "description": "The GOP Id to remove.",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "OEP closed"
                     }
                 }
             }
@@ -5928,7 +5920,7 @@
                 }
             }
         },
-        "/gop-subscription/{gopId}/{profileId}": {
+        "/gop-subscriptions/{gopId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -5973,9 +5965,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/gop-subscriptions/{gopId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -6063,7 +6053,7 @@
                 }
             }
         },
-        "/idp": {
+        "/idps": {
             "get": {
                 "tags": [
                     "Brand"
@@ -6371,7 +6361,7 @@
                 }
             }
         },
-        "/idp-subscription/{idpId}/{profileId}": {
+        "/idp-subscriptions/{idpId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -6416,9 +6406,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/idp-subscriptions/{idpId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -6542,12 +6530,12 @@
                 }
             }
         },
-        "/mip/{mipId}": {
+        "/mips/{mipId}": {
             "get": {
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Get Single IMP",
+                "summary": "Get Single MIP",
                 "description": "Returns a single MIP. Only pro users can access MIPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipAction",
                 "parameters": [
@@ -6577,46 +6565,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/mips/brand={brand}": {
-            "get": {
-                "tags": [
-                    "Brand"
-                ],
-                "summary": "Get Single MIP - Brand",
-                "description": "Returns a single MIP. Only pro users can access MIPs.",
-                "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipAction",
-                "parameters": [
-                    {
-                        "name": "brand",
-                        "in": "path",
-                        "description": "Profile name of the brand",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/schemas/program"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "MIP Object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/program"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/mips/{mipId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -6683,6 +6632,43 @@
                 "responses": {
                     "204": {
                         "description": "MIP closed"
+                    }
+                }
+            }
+        },
+        "/mips/brand={brand}": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get Single MIP - Brand",
+                "description": "Returns a single MIP. Only pro users can access MIPs.",
+                "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipAction",
+                "parameters": [
+                    {
+                        "name": "brand",
+                        "in": "path",
+                        "description": "Profile name of the brand",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "MIP Object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/program"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -6816,7 +6802,7 @@
                 }
             }
         },
-        "/mip-subscription/{mipId}/{profileId}": {
+        "/mip-subscriptions/{mipId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -6861,9 +6847,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/mip-subscriptions/{mipId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
@@ -7259,7 +7243,7 @@
                 }
             }
         },
-        "/oep-subscription/{oepId}/{profileId}": {
+        "/oep-subscriptions/{oepId}/{profileId}": {
             "get": {
                 "tags": [
                     "Profile"
@@ -7304,9 +7288,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/oep-subscriptions/{oepId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Profile"
@@ -7703,7 +7685,7 @@
                 }
             }
         },
-        "/rtp-subscription/{rtpId}/{profileId}": {
+        "/rtp-subscriptions/{rtpId}/{profileId}": {
             "get": {
                 "tags": [
                     "Brand"
@@ -7754,9 +7736,7 @@
                         "description": "Subscription not found"
                     }
                 }
-            }
-        },
-        "/rtp-subscriptions/{rtpId}/{profileId}": {
+            },
             "put": {
                 "tags": [
                     "Brand"
