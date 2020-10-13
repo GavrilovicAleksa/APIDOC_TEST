@@ -1167,6 +1167,67 @@
                 }
             }
         },
+        "/admin/sent-notification": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create a Send Notification",
+                "description": "Logs a sent notification. `profile`, `type`, `token` properties are required",
+                "operationId": "App\\Controller\\Admin\\SentNotificationController::createSentNotificationAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "profile": {
+                                        "description": "The ID of the profile that received the notification",
+                                        "type": "integer"
+                                    },
+                                    "type": {
+                                        "description": "The type ID of the sent notification (1=push, 2=email)",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "The UUID or token the provider (Mandrill, Batch) returned to identify the notification",
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "description": "For an email the subject, for a push the notification message body",
+                                        "type": "string"
+                                    },
+                                    "appkey": {
+                                        "description": "[PUSH] The app key the push notification was sent to",
+                                        "type": "string"
+                                    },
+                                    "template": {
+                                        "description": "[EMAIL] The email template that was generated and sent",
+                                        "type": "string"
+                                    },
+                                    "activity": {
+                                        "description": "The ID of the activity that triggered the notification",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created Sent Notification object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/sent-notification"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/admin/settings": {
             "get": {
                 "tags": [
@@ -1196,6 +1257,68 @@
                 "responses": {
                     "204": {
                         "description": "Update sucess"
+                    }
+                }
+            }
+        },
+        "/statistics/today": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get Today's Statistics",
+                "description": "Today's statistics summary",
+                "operationId": "App\\Controller\\Admin\\StatisticController::getStatisticsAction",
+                "responses": {
+                    "200": {
+                        "description": "Statistics object"
+                    }
+                }
+            }
+        },
+        "/statistics/daily/{source}/{stat}": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get a Single Statistic",
+                "description": "Returns daily values for 1 statistic.",
+                "operationId": "App\\Controller\\Admin\\StatisticController::getDailyStatisticsAction",
+                "parameters": [
+                    {
+                        "name": "source",
+                        "in": "path",
+                        "description": "The stat source (t/s/b)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "stat",
+                        "in": "path",
+                        "description": "The stat to retrieve",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gear-category",
+                        "in": "query",
+                        "description": "When source is 'gc' you need to pass the gear category ID",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistics object"
                     }
                 }
             }
@@ -1579,7 +1702,7 @@
                 "tags": [
                     "Association"
                 ],
-                "summary": "Get Association",
+                "summary": "Get Associations",
                 "description": "Search through associations, advanced filters reserved for admins",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationsAction",
                 "parameters": [
@@ -1732,7 +1855,7 @@
                 "tags": [
                     "Association"
                 ],
-                "summary": "Create a Association",
+                "summary": "Create an Association",
                 "description": "Create an association and its profile",
                 "operationId": "App\\Controller\\Association\\AssociationController::createAssociationAction",
                 "requestBody": {
@@ -1831,7 +1954,7 @@
                     "Association"
                 ],
                 "summary": "Update an Association",
-                "description": "Update an association (must be authenticated). Updates he association entity, the address, and the profile",
+                "description": "Update an association (must be authenticated). Updates the association entity, the address, and the profile",
                 "operationId": "App\\Controller\\Association\\AssociationController::updateAssociationAction",
                 "parameters": [
                     {
@@ -1988,7 +2111,7 @@
                 "tags": [
                     "Association"
                 ],
-                "summary": "Delete a Association",
+                "summary": "Delete an Association",
                 "description": "Delete an association and its profile",
                 "operationId": "App\\Controller\\Association\\AssociationController::deleteAssociationAction",
                 "parameters": [
@@ -2026,7 +2149,7 @@
                 "tags": [
                     "Association"
                 ],
-                "summary": "Get a Single Association",
+                "summary": "Get Similar Associations",
                 "operationId": "App\\Controller\\Association\\AssociationController::getSimilarAssociationsAction",
                 "parameters": [
                     {
@@ -2057,7 +2180,7 @@
                 }
             }
         },
-        "/associatons-memberships": {
+        "/association-memberships": {
             "get": {
                 "tags": [
                     "Association"
@@ -2101,85 +2224,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/association-membershio.{_format}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Export Association Memberships",
-                "description": "Export association memberships. Admins can export all memberships, association managers can only export their association's memberships with the association parameter",
-                "operationId": "App\\Controller\\Association\\AssociationMembershipController::exportAssociationMembershipsAction",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
-                    },
-                    {
-                        "$ref": "#/components/parameters/association"
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "The type of membership (1=outfitter, 2=guide, 3=sportsman, 4=associate)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns a CSV file"
-                    }
-                }
-            }
-        },
-        "/associaton-memberships/{membershipId}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Get a Single Association Membership",
-                "description": "Get one association membership",
-                "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipAction",
-                "parameters": [
-                    {
-                        "name": "membershipId",
-                        "in": "path",
-                        "description": "The ID of the AssociationMembership",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Associaton Membership object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/association"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/association-memberships": {
+            },
             "post": {
                 "tags": [
                     "Association"
@@ -2253,6 +2298,82 @@
                 }
             }
         },
+        "/association-memberships.{_format}": {
+            "get": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Export Association Memberships",
+                "description": "Export association memberships. Admins can export all memberships, association managers can only export their association's memberships with the association parameter",
+                "operationId": "App\\Controller\\Association\\AssociationMembershipController::exportAssociationMembershipsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "$ref": "#/components/parameters/association"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The type of membership (1=outfitter, 2=guide, 3=sportsman, 4=associate)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns a CSV file"
+                    }
+                }
+            }
+        },
+        "/associaton-memberships/{membershipId}": {
+            "get": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Get a Single Association Membership",
+                "description": "Get a single association membership",
+                "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipAction",
+                "parameters": [
+                    {
+                        "name": "membershipId",
+                        "in": "path",
+                        "description": "The ID of the AssociationMembership",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Associaton Membership object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/association"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/association-memberships/{memberhipId}": {
             "put": {
                 "tags": [
@@ -2265,7 +2386,7 @@
                     {
                         "name": "membershipId",
                         "in": "path",
-                        "description": "The ID of the AssociationMembership",
+                        "description": "The ID of the Association Membership to update",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -2334,7 +2455,7 @@
                     {
                         "name": "membershipId",
                         "in": "path",
-                        "description": "The ID of the AssociationMembership",
+                        "description": "The ID of the Association Membership to remove",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -2345,6 +2466,203 @@
                 "responses": {
                     "204": {
                         "description": "Nothing to update"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login",
+                "description": "Logs in a user using email and passowrd.",
+                "operationId": "App\\Controller\\AuthenticationController::loginAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "_username": {
+                                        "description": "The current active email address of the User",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/login"
+                                    },
+                                    "_password": {
+                                        "description": "The User's password",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/login"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/fblogin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Facebook Login",
+                "description": "Logs in a user using a Facebook token.",
+                "operationId": "App\\Controller\\AuthenticationController::fbLoginAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "fb_token": {
+                                        "description": "The Facebook token",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/fblogin"
+                                    },
+                                    "email": {
+                                        "description": "An alternative email address in case the user revoked the Facebook email permission for Guidefitter app",
+                                        "type": "string",
+                                        "example": "https://api.guidefitter.com/fblogin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/applelogin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Apple Login",
+                "description": "Logs in a user using a Apple token.",
+                "operationId": "App\\Controller\\AuthenticationController::appleLoginAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "apple_token": {
+                                        "description": "The Apple Sign in token",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The Apple app ID used to sign",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Wrong credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout",
+                "description": "Logs out a user. Invalidates the session and clears the cookie.",
+                "operationId": "App\\Controller\\AuthenticationController::logoutAction",
+                "responses": {
+                    "204": {
+                        "description": "User logged out"
+                    }
+                }
+            }
+        },
+        "/bridge": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Bridge",
+                "description": "",
+                "operationId": "App\\Controller\\AuthenticationController::bridgeAction",
+                "parameters": [
+                    {
+                        "name": "_t",
+                        "in": "query",
+                        "description": "The signin token",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "_r",
+                        "in": "query",
+                        "description": "The root",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "'Success"
                     }
                 }
             }
@@ -3068,7 +3386,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brand Statistics",
-                "description": "Get all the brand programs statistics.",
+                "description": "Get all the brand program statistics. 3 objects in the response:<br>- 'yearly' contains the yearly stats<br>- 'monthly' contains the monthly stats for the last 12 months<br>- 'daily' contains the daily stats for the last 6 months<br><br><br>Mapping for keys:<br>- m  > members<br>- mn > members_new<br>- v  > visits<br>- s  > shopping<br>- r  > revenue<br>- g  > gross<br>- c  > comsn<br>- o  > nborders<br>",
                 "operationId": "App\\Controller\\Brand\\BrandController::getStatisticsAction",
                 "parameters": [
                     {
@@ -3135,7 +3453,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brand Aim Statistics",
-                "description": "Get all the brand AIM statistics. 3 objects in the response:<br>\n          | time | description |\n          | --- | --- |\n          | `yearly` | contains the yearly stats |\n          | `monthly` | contains the monthly stats for the last 12 months |\n          |`daily` | contains the daily stats for the last 6 months |\n     *     ",
+                "description": "Get all the brand AIM statistics. 3 objects in the response:<br>- 'yearly' contains the yearly stats<br>- 'monthly' contains the monthly stats for the last 12 months<br>- 'daily' contains the daily stats for the last 6 months<br><br><br>Mapping for keys:<br>- m  > members<br>- mn > members_new<br>- v  > visits<br>- rd > reads<br>- t  > thanks<br>- cm > comments<br>- s  > shares<br>- b  > baits<br>- r  > revenue<br>- h  > hooks<br>- g  > gross<br>- c  > comsn<br>- o  > nborders<br>",
                 "operationId": "App\\Controller\\Brand\\BrandController::getStatisticsAimAction",
                 "parameters": [
                     {
@@ -3941,6 +4259,7 @@
                     "Brand"
                 ],
                 "summary": "Get CNPS",
+                "description": "Returns a list of CNPS (Conservation Group Programs).",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpController::getCnpsAction",
                 "parameters": [
                     {
@@ -3977,7 +4296,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single CNP",
-                "description": "Only pro users can access CNPs",
+                "description": "Returns a single CNP. Only pro users can access.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpController::getCnpAction",
                 "parameters": [
                     {
@@ -4012,6 +4331,7 @@
                     "Brand"
                 ],
                 "summary": "Update a CNP",
+                "description": "Updates a CNP. The user must be authenticated and authorized.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpController::updateCnpAction",
                 "parameters": [
                     {
@@ -4055,7 +4375,7 @@
                     "Brand"
                 ],
                 "summary": "Close CNP",
-                "description": "Cloas a CNP (admins only)",
+                "description": "Closes a CNP. Program will be put offline, shop to None and all subscriptions deleted.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpController::deleteCnpAction",
                 "parameters": [
                     {
@@ -4082,7 +4402,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single CNP - Brand",
-                "description": "Only pro users can access CNPs",
+                "description": "Returns a single CNP. Only pro users can access.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpController::getCnpAction",
                 "parameters": [
                     {
@@ -4119,6 +4439,8 @@
                     "Brand"
                 ],
                 "summary": "Get CNP subscriptions",
+                "description": "Get all the subscriptions to a CNP (for brand managers)<br>This is for the brand manager, so only Dispatched subscription are returned.<br>By default Refused and Revoked are excluded",
+                "operationId": "App\\Controller\\Brand\\Program\\CnpController::getSubscriptionsAction",
                 "parameters": [
                     {
                         "name": "cnpId",
@@ -4154,6 +4476,7 @@
                     "Brand"
                 ],
                 "summary": "Get CNP Subscriptions",
+                "description": "Search through Conservation NGO subscriptions. This end point is mainly to display the member's brands and their status (My Brands)<br>The parameter 'profile' is mandatory if you're not admin.<br>By default Refused are excluded, but Revoked are included",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpSubscriptionController::getCnpSubscriptionsAction",
                 "parameters": [
                     {
@@ -4214,6 +4537,7 @@
                     "Brand"
                 ],
                 "summary": "Create CNP",
+                "description": "Creates a CNP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active CNP.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpSubscriptionController::createCnpSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -4244,6 +4568,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single CNP Subscription",
+                "description": "Returns a signle CNP subscription.",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpSubscriptionController::getCnpSubscriptionAction",
                 "parameters": [
                     {
@@ -4290,6 +4615,7 @@
                     "Brand"
                 ],
                 "summary": "Update a CNP Subscription",
+                "description": "Updates a CNP Subscription (must be authenticated and authorized)",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpSubscriptionController::updateCnpSubscriptionAction",
                 "parameters": [
                     {
@@ -4340,6 +4666,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a CNP subscription",
+                "description": "Deletes a CNP subscription. You can only delete a CNP subscription before it's dispatched",
                 "operationId": "App\\Controller\\Brand\\Program\\CnpSubscriptionController::deleteCnpSubscriptionAction",
                 "parameters": [
                     {
@@ -4376,6 +4703,7 @@
                     "Brand"
                 ],
                 "summary": "Get ECPS",
+                "description": "Returns a list of ECPs (Outdoor Government Employees Programs)",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::getEcpsAction",
                 "parameters": [
                     {
@@ -4412,7 +4740,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single ECP",
-                "description": "Only pro users can access ECPs",
+                "description": "Returns a single ECP. Only pro users can access ECPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::getEcpAction",
                 "parameters": [
                     {
@@ -4447,6 +4775,7 @@
                     "Brand"
                 ],
                 "summary": "Update ECP",
+                "description": "Update an ECP. The user must be authenticated and authorized",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::updateEcpAction",
                 "parameters": [
                     {
@@ -4490,7 +4819,7 @@
                     "Brand"
                 ],
                 "summary": "Close ECP",
-                "description": "Close a ECP (admins only)",
+                "description": "Closes a ECP (admins only)",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::deleteEcpAction",
                 "parameters": [
                     {
@@ -4517,7 +4846,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single ECP - Brand",
-                "description": "Only pro users can access ECPs",
+                "description": "Returns a single ECP. Only pro users can access ECPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::getEcpAction",
                 "parameters": [
                     {
@@ -4554,6 +4883,7 @@
                     "Brand"
                 ],
                 "summary": "Get ECP subscriptions",
+                "description": "Get all the subscriptions to an ECP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -4590,6 +4920,7 @@
                     "Brand"
                 ],
                 "summary": "Get ECP Subscriptions",
+                "description": "Returns a list of Outdoor Educators subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpSubscriptionController::getEcpSubscriptionsAction",
                 "parameters": [
                     {
@@ -4650,6 +4981,7 @@
                     "Brand"
                 ],
                 "summary": "Create ECP",
+                "description": "Creates a ECP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active ECP.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpSubscriptionController::createEcpSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -4680,6 +5012,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single ECP Subscription",
+                "description": "Returns a Single Ecp Subscription",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpSubscriptionController::getEcpSubscriptionAction",
                 "parameters": [
                     {
@@ -4726,6 +5059,7 @@
                     "Brand"
                 ],
                 "summary": "Update a ECP Subscription",
+                "description": "Updates a ECP Subscription. The user must be authenticated and authorized",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpSubscriptionController::updateEcpSubscriptionAction",
                 "parameters": [
                     {
@@ -4778,6 +5112,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a ECP subscription",
+                "description": "Delete a ECP subscription. You can only delete a ECP subscription before it's dispatched.",
                 "operationId": "App\\Controller\\Brand\\Program\\EcpSubscriptionController::deleteEcpSubscriptionAction",
                 "parameters": [
                     {
@@ -4814,6 +5149,7 @@
                     "Brand"
                 ],
                 "summary": "Get FRPS",
+                "description": "Retunrs a list of FRPs (Outdoor Government Employees Programs).",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpController::getFrpsAction",
                 "parameters": [
                     {
@@ -4850,7 +5186,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single FRP",
-                "description": "Only pro users can access FRPs",
+                "description": "Returns a single FRP. Only pro users can access FRPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpController::getFrpAction",
                 "parameters": [
                     {
@@ -4885,6 +5221,7 @@
                     "Brand"
                 ],
                 "summary": "Update CNP",
+                "description": "Updates a FRP (must be authenticated and authorized)",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpController::updateFrpAction",
                 "parameters": [
                     {
@@ -4955,7 +5292,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single FRP - Brand",
-                "description": "Only pro users can access FRPs",
+                "description": "Returns a single FRP. Only pro users can access FRPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpController::getFrpAction",
                 "parameters": [
                     {
@@ -4992,6 +5329,7 @@
                     "Brand"
                 ],
                 "summary": "Get FRP subscriptions",
+                "description": "Get all the subscriptions to an FRP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -5028,6 +5366,7 @@
                     "Brand"
                 ],
                 "summary": "Get FRP Subscriptions",
+                "description": "Returns a list of First Responders subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpSubscriptionController::getFrpSubscriptionsAction",
                 "parameters": [
                     {
@@ -5087,7 +5426,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Create FRP",
+                "summary": "Create a FRP Subscription",
+                "description": "Creates a FRP Subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active FRP.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpSubscriptionController::createFrpSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -5117,7 +5457,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Get Single FRP Subscription",
+                "summary": "Get a Single FRP Subscription",
+                "description": "Returns a single FRP subscription.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpSubscriptionController::getFrpSubscriptionAction",
                 "parameters": [
                     {
@@ -5164,6 +5505,7 @@
                     "Brand"
                 ],
                 "summary": "Update a FRP Subscription",
+                "description": "Updates a FRP Subscription. The user must be authenticated and authorized.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpSubscriptionController::updateFrpSubscriptionAction",
                 "parameters": [
                     {
@@ -5214,6 +5556,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a FRP subscription",
+                "description": "Deletes a FRP subscription. You can only delete a FRP subscription before it's dispatched.",
                 "operationId": "App\\Controller\\Brand\\Program\\FrpSubscriptionController::deleteFrpSubscriptionAction",
                 "parameters": [
                     {
@@ -5250,6 +5593,7 @@
                     "Brand"
                 ],
                 "summary": "Get GOPS",
+                "description": "Returns a list of GOPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopController::getGopsAction",
                 "parameters": [
                     {
@@ -5286,7 +5630,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single GOP",
-                "description": "Only pro users can access GOPs",
+                "description": "Returns a single GOP. Only pro users can access GOPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopController::getGopAction",
                 "parameters": [
                     {
@@ -5315,6 +5659,50 @@
                         }
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Update a GOP",
+                "description": "Updates a GOP. The user must be authenticated and authorized",
+                "operationId": "App\\Controller\\Brand\\Program\\GopController::updateGopAction",
+                "parameters": [
+                    {
+                        "name": "gopId",
+                        "in": "path",
+                        "description": "The GOP Id to update.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/program-update"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The updated object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/program"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Nothing to update"
+                    }
+                }
             }
         },
         "/gops/brand={brand}": {
@@ -5323,7 +5711,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single GOP - Brand",
-                "description": "Only pro users can access GOPs",
+                "description": "Returns a single GOP. Only pro users can access GOPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopController::getGopAction",
                 "parameters": [
                     {
@@ -5354,12 +5742,107 @@
                 }
             }
         },
+        "/gop/{gopId}": {
+            "delete": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Close a GOP",
+                "description": "Closes an GOP. Reserved for admins",
+                "operationId": "App\\Controller\\Brand\\Program\\GopController::deleteGopAction",
+                "parameters": [
+                    {
+                        "name": "gopId",
+                        "in": "path",
+                        "description": "The GOP Id to remove.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "OEP closed"
+                    }
+                }
+            }
+        },
+        "/gops/{gopId}/subscriptions": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get GOP subscriptions",
+                "description": "Get all the subscriptions to a GOP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded",
+                "operationId": "App\\Controller\\Brand\\Program\\GopController::getSubscriptionsAction",
+                "parameters": [
+                    {
+                        "name": "gopId",
+                        "in": "path",
+                        "description": "The OEP Id to search by.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of OEP subscriptions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/subscription"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/oeps/{oepId}/ordering-guidelines": {
+            "get": {
+                "tags": [
+                    "Brand"
+                ],
+                "summary": "Get a GOP URL",
+                "description": "Generates a pre-signed URL to the ordering guidelines stored on Amazon S3 bucket, and redirects to it.",
+                "operationId": "App\\Controller\\Brand\\Program\\GopController::getGopFileAction",
+                "parameters": [
+                    {
+                        "name": "gopId",
+                        "in": "path",
+                        "description": "The OEP Id to search by.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "pre-signed URL to the ordering guidelines stored on Amazon S3 bucket"
+                    }
+                }
+            }
+        },
         "/gop-subscriptions": {
             "get": {
                 "tags": [
                     "Brand"
                 ],
                 "summary": "Get GOP Subscriptions",
+                "description": "Search through Guides & Outfitters subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopSubscriptionController::getGopSubscriptionsAction",
                 "parameters": [
                     {
@@ -5420,6 +5903,7 @@
                     "Brand"
                 ],
                 "summary": "Create GOP",
+                "description": "Creates a GOP subscription.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopSubscriptionController::createGopSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -5450,6 +5934,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single GOP Subscription",
+                "description": "Returns a single GOP subscription.",
                 "operationId": "App\\Controller\\Brand\\Program\\GopSubscriptionController::getGopSubscriptionAction",
                 "parameters": [
                     {
@@ -5496,6 +5981,7 @@
                     "Brand"
                 ],
                 "summary": "Update a GOP Subscription",
+                "description": "Updates a GOP Subscription. The user must be authenticated and authorized",
                 "operationId": "App\\Controller\\Brand\\Program\\GopSubscriptionController::updateGopSubscriptionAction",
                 "parameters": [
                     {
@@ -5545,7 +6031,8 @@
                 "tags": [
                     "Brand"
                 ],
-                "summary": "Delete a GOP subscription",
+                "summary": "Delete a GOP subscription. You can only delete a GOP subscription before it's dispatched.",
+                "description": "Delete a GOP subscription",
                 "operationId": "App\\Controller\\Brand\\Program\\GopSubscriptionController::deleteGopSubscriptionAction",
                 "parameters": [
                     {
@@ -5582,6 +6069,7 @@
                     "Brand"
                 ],
                 "summary": "Get IDPS",
+                "description": "Returns a list of IDPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpController::getIdpsAction",
                 "parameters": [
                     {
@@ -5618,7 +6106,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single IDP",
-                "description": "Only pro users can access IDPs",
+                "description": "Returns a single IDP. Only pro users can access IDPs",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpController::getIdpAction",
                 "parameters": [
                     {
@@ -5658,7 +6146,7 @@
                     {
                         "name": "cnpId",
                         "in": "path",
-                        "description": "The IDP Id to search by.",
+                        "description": "The IDP Id to update.",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -5696,13 +6184,13 @@
                     "Brand"
                 ],
                 "summary": "Close IDP",
-                "description": "Cloas a IDP (admins only)",
+                "description": "Closes an IDP (admins only)",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpController::deleteIdpAction",
                 "parameters": [
                     {
                         "name": "cnpId",
                         "in": "path",
-                        "description": "The IDP Id to search by.",
+                        "description": "The IDP Id to close.",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -5723,7 +6211,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single IDP - Brand",
-                "description": "Only pro users can access IDPs",
+                "description": "Returns a single IDP. Only pro users can access IDPs",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpController::getIdpAction",
                 "parameters": [
                     {
@@ -5760,6 +6248,7 @@
                     "Brand"
                 ],
                 "summary": "Get IDP subscriptions",
+                "description": "Get all the subscriptions to an IDP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -5796,6 +6285,7 @@
                     "Brand"
                 ],
                 "summary": "Get IDP Subscriptions",
+                "description": "Returns a list of Brand Employees subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpSubscriptionController::getIdpSubscriptionsAction",
                 "parameters": [
                     {
@@ -5856,6 +6346,7 @@
                     "Brand"
                 ],
                 "summary": "Create IDP",
+                "description": "Creates a IDP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active IDP.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpSubscriptionController::createIdpSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -5886,6 +6377,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single IDP Subscription",
+                "description": "Returns a single idp subscription.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpSubscriptionController::getIdpSubscriptionAction",
                 "parameters": [
                     {
@@ -5932,12 +6424,13 @@
                     "Brand"
                 ],
                 "summary": "Update a IDP Subscription",
+                "description": "Updates a IDP Subscription. The user must be authenticated and authorized.",
                 "operationId": "App\\Controller\\Brand\\Program\\IdpSubscriptionController::updateIdpSubscriptionAction",
                 "parameters": [
                     {
                         "name": "idpId",
                         "in": "path",
-                        "description": "ID of the IDP to retrieve",
+                        "description": "ID of the IDP to Update",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -6015,9 +6508,10 @@
         "/mips": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get MIPS",
+                "description": "Returns a list of MIPs (Outdoor Government Employees Programs)",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipsAction",
                 "parameters": [
                     {
@@ -6051,10 +6545,10 @@
         "/mip/{mipId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single IMP",
-                "description": "Only pro users can access MIPs",
+                "description": "Returns a single MIP. Only pro users can access MIPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipAction",
                 "parameters": [
                     {
@@ -6088,10 +6582,10 @@
         "/mips/brand={brand}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single MIP - Brand",
-                "description": "Only pro users can access MIPs",
+                "description": "Returns a single MIP. Only pro users can access MIPs.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::getMipAction",
                 "parameters": [
                     {
@@ -6125,9 +6619,10 @@
         "/mips/{mipId}": {
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Update MIP",
+                "description": "Updates a MIP. The user must be authenticated and authorized",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::updateMipAction",
                 "parameters": [
                     {
@@ -6168,10 +6663,10 @@
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Close MIP",
-                "description": "Cloas a MIP (admins only)",
+                "description": "Closes a MIP (admins only)",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::deleteMipAction",
                 "parameters": [
                     {
@@ -6195,9 +6690,10 @@
         "/mips/{mipId}/subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get MIP subscriptions",
+                "description": "Get all the subscriptions to an MIP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -6231,9 +6727,10 @@
         "/mip-subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get mip Subscriptions",
+                "description": "Returns a list of Military subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not an admin. By default Refused are excluded, but Revoked are included.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipSubscriptionController::getMipSubscriptionsAction",
                 "parameters": [
                     {
@@ -6291,9 +6788,10 @@
             },
             "post": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Create MIP",
+                "description": "Creates an MIP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active MIP.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipSubscriptionController::createMipSubscriptionAction",
                 "requestBody": {
                     "content": {
@@ -6321,9 +6819,10 @@
         "/mip-subscription/{mipId}/{profileId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single CNP Subscription",
+                "description": "Returns a single MIP Subscription",
                 "operationId": "App\\Controller\\Brand\\Program\\MipSubscriptionController::getMipSubscriptionAction",
                 "parameters": [
                     {
@@ -6367,9 +6866,10 @@
         "/mip-subscriptions/{mipId}/{profileId}": {
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Update a MIP Subscription",
+                "description": "Updates an MIP Subscription. The user must be authenticated and authorized.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipSubscriptionController::updateMipSubscriptionAction",
                 "parameters": [
                     {
@@ -6417,9 +6917,10 @@
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Delete a MIP subscription",
+                "description": "Deletes a MIP subscription. You can only delete a MIP subscription before it's dispatched.",
                 "operationId": "App\\Controller\\Brand\\Program\\MipSubscriptionController::deleteMipSubscriptionAction",
                 "parameters": [
                     {
@@ -6453,9 +6954,11 @@
         "/oeps": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get OEPS",
+                "description": "Returns a list of OEPs (Outdoor Government Employees Programs).",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::getOepsAction",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/q"
@@ -6488,9 +6991,11 @@
         "/oeps/{oepId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single OEP",
+                "description": "Returns a single OEP object. Only pro users can access OEPs.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::getOepAction",
                 "parameters": [
                     {
                         "name": "oepId",
@@ -6521,14 +7026,15 @@
             },
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Update OEP",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::updateOepAction",
                 "parameters": [
                     {
                         "name": "oepId",
                         "in": "path",
-                        "description": "The OEP Id to search by.",
+                        "description": "The OEP Id to update.",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -6563,13 +7069,14 @@
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Close OEP",
-                "description": "Cloas a OEP (admins only)",
+                "description": "Deletes an OEP. Reserved for admins",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::deleteOepAction",
                 "parameters": [
                     {
-                        "name": "cnpId",
+                        "name": "oepId",
                         "in": "path",
                         "description": "The OEP Id to search by.",
                         "required": true,
@@ -6589,9 +7096,11 @@
         "/oeps/brand={brand}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single OEP - Brand",
+                "description": "Returns a single OEP object. Only pro users can access OEPs.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::getOepAction",
                 "parameters": [
                     {
                         "name": "brand",
@@ -6624,12 +7133,14 @@
         "/oeps/{oepId}/subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get OEP subscriptions",
+                "description": "Get all the subscriptions to an OEP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded",
+                "operationId": "App\\Controller\\Brand\\Program\\OepController::getSubscriptionsAction",
                 "parameters": [
                     {
-                        "name": "cnpId",
+                        "name": "oepId",
                         "in": "path",
                         "description": "The OEP Id to search by.",
                         "required": true,
@@ -6662,6 +7173,8 @@
                     "Profile"
                 ],
                 "summary": "Get OEP Subscriptions",
+                "description": "Returns a list of Outdoor Government subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepSubscriptionController::getOepSubscriptionsAction",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/q"
@@ -6721,6 +7234,8 @@
                     "Profile"
                 ],
                 "summary": "Create OEP",
+                "description": "Creates an OEP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active OEP.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepSubscriptionController::createOepSubscriptionAction",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -6750,6 +7265,8 @@
                     "Profile"
                 ],
                 "summary": "Get Single OEP Subscription",
+                "description": "Returns a single OEP subscription.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepSubscriptionController::getOepSubscriptionAction",
                 "parameters": [
                     {
                         "name": "oepId",
@@ -6795,6 +7312,8 @@
                     "Profile"
                 ],
                 "summary": "Update a OEP Subscription",
+                "description": "Updates an OEP Subscription. The user must be authenticated and authorized.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepSubscriptionController::updateOepSubscriptionAction",
                 "parameters": [
                     {
                         "name": "oepId",
@@ -6843,7 +7362,9 @@
                 "tags": [
                     "Profile"
                 ],
-                "summary": "Delete a CNP subscription",
+                "summary": "Delete a CNP subscription. You can only delete a OEP subscription before it's dispatched.",
+                "description": "Deletes a OEP subscription.",
+                "operationId": "App\\Controller\\Brand\\Program\\OepSubscriptionController::deleteOepSubscriptionAction",
                 "parameters": [
                     {
                         "name": "cnpId",
@@ -6876,9 +7397,11 @@
         "/rtps": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
-                "summary": "Get RTPS",
+                "summary": "Geta RTPS",
+                "description": "Returns a list of RTPs (Retail Employees Programs).",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::getRtpsAction",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/q"
@@ -6911,9 +7434,11 @@
         "/rtps/{rtpId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
-                "summary": "Get Single RTP",
+                "summary": "Get a Single RTP",
+                "description": "Returns a single RTP. Only pro users can access.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::getRtpAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -6944,14 +7469,16 @@
             },
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
-                "summary": "Update RTP",
+                "summary": "Update a RTP",
+                "description": "Updates a RTP. The user must be authenticated and authorized",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::updateRtpAction",
                 "parameters": [
                     {
                         "name": "rtpId",
                         "in": "path",
-                        "description": "The RTP Id to search by.",
+                        "description": "The RTP Id to update.",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -6969,9 +7496,6 @@
                     }
                 },
                 "responses": {
-                    "204": {
-                        "description": "Nothing to update"
-                    },
                     "200": {
                         "description": "The updated object",
                         "content": {
@@ -6981,15 +7505,19 @@
                                 }
                             }
                         }
+                    },
+                    "204": {
+                        "description": "Nothing to update"
                     }
                 }
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Close CNP",
                 "description": "Cloas a RTP (admins only)",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::deleteRtpAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -7012,9 +7540,11 @@
         "/rtps/brand={brand}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
-                "summary": "Get Single RTP - Brand",
+                "summary": "Get a Single RTP - Brand",
+                "description": "Returns a single RTP. Only pro users can access.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::getRtpAction",
                 "parameters": [
                     {
                         "name": "brand",
@@ -7047,9 +7577,11 @@
         "/rtps/{rtpId}/subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get RTP subscriptions",
+                "description": "Returns all the subscriptions to an RTP (for brand managers). This is for the brand manager, so only Dispatched subscription are returned. By default Refused and Revoked are excluded",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpController::getSubscriptionsAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -7082,9 +7614,11 @@
         "/rtp-subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get RTP Subscriptions",
+                "description": "Returns a list of Retail Employees subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpSubscriptionController::getRtpSubscriptionsAction",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/q"
@@ -7141,9 +7675,11 @@
             },
             "post": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Create RTP",
+                "description": "Creates a RTP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active RTP.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpSubscriptionController::createRtpSubscriptionAction",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -7170,9 +7706,11 @@
         "/rtp-subscription/{rtpId}/{profileId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single RTP Subscription",
+                "description": "Returns a single rtp subscription.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpSubscriptionController::getRtpSubscriptionAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -7208,6 +7746,12 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Not allowed to access the subscription"
+                    },
+                    "404": {
+                        "description": "Subscription not found"
                     }
                 }
             }
@@ -7215,9 +7759,11 @@
         "/rtp-subscriptions/{rtpId}/{profileId}": {
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Update a RTP Subscription",
+                "description": "Updates a RTP Subscription. User must be authenticated and authorized.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpSubscriptionController::updateRtpSubscriptionAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -7264,9 +7810,11 @@
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Delete a RTP subscription",
+                "description": "Delete a RTP subscription. You can only delete a RTP subscription before it's dispatched.",
+                "operationId": "App\\Controller\\Brand\\Program\\RtpSubscriptionController::deleteRtpSubscriptionAction",
                 "parameters": [
                     {
                         "name": "rtpId",
@@ -7584,6 +8132,47 @@
                 "responses": {
                     "204": {
                         "description": "Returned when successful"
+                    }
+                }
+            }
+        },
+        "/collect-email": {
+            "post": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Collect an Email",
+                "description": "Saves an email address and some metadata in a table for future use.",
+                "operationId": "App\\Controller\\CollectedEmailController::collectEmailAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string"
+                                    },
+                                    "insider_category": {
+                                        "description": "The type of ProfileVerification: 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO",
+                                        "type": "integer"
+                                    },
+                                    "insider_types": {
+                                        "description": "An array InsiderType IDs. See route `api.referential.get_insider_types`",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
                     }
                 }
             }
@@ -7920,6 +8509,124 @@
                 "responses": {
                     "204": {
                         "description": "Comment unliked."
+                    }
+                }
+            }
+        },
+        "/contacts/partner": {
+            "post": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Contect Sales",
+                "description": "Contacts Sales. Sends a slack to the channel #sales_marketing. **All** parameters are reqired.",
+                "operationId": "App\\Controller\\ContactController::contactPartnerAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the person contacting us",
+                                        "type": "string"
+                                    },
+                                    "company": {
+                                        "description": "The name of the company that person represents",
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "description": "The position of the person contacting us in his company",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the person contacting us",
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "description": "The phone number of the person contacting us",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contact successful"
+                    }
+                }
+            }
+        },
+        "/contacts/public": {
+            "post": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Contect Support",
+                "description": "Contacts Support. Sensd an email and slack. `to` and `message` parameters are reqired.",
+                "operationId": "App\\Controller\\ContactController::contactPublicAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the person contacting us",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the person contacting us",
+                                        "type": "string"
+                                    },
+                                    "to": {
+                                        "description": "The Guidefitter email to send message to (support@guidefitter.com)",
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "description": "The user's message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contact successful"
+                    }
+                }
+            }
+        },
+        "/crawl": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Crawl a Page",
+                "description": "Fetches a web page and crawls through it to extract meta information like Page Title, description and thumbnail. `url` parameter is required.",
+                "operationId": "App\\Controller\\CrawlerController::getMetadataAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "url": {
+                                        "description": "The full URL to the web page to crawl",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "An object with scrap data"
                     }
                 }
             }
@@ -8733,6 +9440,36 @@
                 "responses": {
                     "200": {
                         "description": "Array of state objects"
+                    }
+                }
+            }
+        },
+        "/settings": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get Settings",
+                "description": "Returns API Settings depending on environment.",
+                "operationId": "App\\Controller\\HomeController::configAction",
+                "responses": {
+                    "200": {
+                        "description": "Settings object"
+                    }
+                }
+            }
+        },
+        "/routes": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get Routes",
+                "description": "Returns API Routes in Guidefitter Apps: <br>- API<br>- Orange<br>- Admin<br>- Magento<br>",
+                "operationId": "App\\Controller\\HomeController::routesAction",
+                "responses": {
+                    "200": {
+                        "description": "Routes"
                     }
                 }
             }
@@ -9578,6 +10315,277 @@
                 "responses": {
                     "204": {
                         "description": "Rank deleted"
+                    }
+                }
+            }
+        },
+        "email/confirm": {
+            "put": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Email Validation",
+                "description": "Confirms if an email address is valid. Admins can do that freely. Anyone else has to provide a `token` that was sent by email to that email address.",
+                "operationId": "App\\Controller\\MailController::confirmEmailAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "The unique validation token sent to the email address",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email address to force-verify",
+                                        "type": "string"
+                                    },
+                                    "code": {
+                                        "description": "A 4 digits code sent to the email. Send 'email' prop as well (except for admin verification)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "email/email={email}": {
+            "get": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Get Email Verification - Email",
+                "description": "Checks if an email address is verified.",
+                "operationId": "App\\Controller\\MailController::getEmailVerifiedAction",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "The email address to check",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "If TRUE, API sends a 4 digits code to the email (valid for 12 hours) instead of a verification link",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns 'isVerified': true/false"
+                    },
+                    "404": {
+                        "description": "Email address not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Send a Verification Email - Email",
+                "description": "Requests a verification of an email address.",
+                "operationId": "App\\Controller\\MailController::requestEmailVerificationAction",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "The email address to verify",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "If TRUE, API sends a 4 digits code to the email (valid for 12 hours) instead of a verification link",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Email already verified"
+                    }
+                }
+            }
+        },
+        "email/{profileId}": {
+            "get": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Get Email Verifcation - Profile",
+                "description": "Checks if an email address is verified.",
+                "operationId": "App\\Controller\\MailController::getEmailVerifiedAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The ID of the profile of the user/outfitter to check the email address of",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "If TRUE, API sends a 4 digits code to the email (valid for 12 hours) instead of a verification link",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "'isVerified': true/false"
+                    },
+                    "404": {
+                        "description": "Profile not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Send a Verification Email - Profile",
+                "description": "Requests a verification of an email address.",
+                "operationId": "App\\Controller\\MailController::requestEmailVerificationAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "The ID of the profile of the user/outfitter to verify email address",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "If TRUE, API sends a 4 digits code to the email (valid for 12 hours) instead of a verification link",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Email already verified"
+                    }
+                }
+            }
+        },
+        "email/matches/email}": {
+            "get": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Email Corporate Match",
+                "description": "Checks if an email address matches a corporate domain.",
+                "operationId": "App\\Controller\\MailController::getEmailDomainMatchesAction",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "The email address to check",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of brand/vendor objects."
+                    }
+                }
+            }
+        },
+        "/undrill/{verifCode}": {
+            "get": {
+                "tags": [
+                    "Mail"
+                ],
+                "summary": "Verify an unsubscription request",
+                "description": "Verifies an unsubscription request. Accessible from email only.",
+                "operationId": "App\\Controller\\MailController::unsubscribeMandrillAction",
+                "parameters": [
+                    {
+                        "name": "verifCode",
+                        "in": "path",
+                        "description": "The verification code",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "'isVerified': true/false"
+                    },
+                    "404": {
+                        "description": "Profile not found"
                     }
                 }
             }
@@ -17495,6 +18503,182 @@
                 }
             }
         },
+        "/professions/{insiderCategory}": {
+            "get": {
+                "tags": [
+                    "Referential"
+                ],
+                "summary": "Get Insider Category Professions - Term",
+                "description": "Returns a list of professions for an insider category.",
+                "operationId": "App\\Controller\\Referential\\ProfessionController::getProfessionsInsiderAction",
+                "parameters": [
+                    {
+                        "name": "insiderCategory",
+                        "in": "path",
+                        "description": "ID of the insider category to get jobs of",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Professions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/referential"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/professions/{insiderCategory}/{term}": {
+            "get": {
+                "tags": [
+                    "Referential"
+                ],
+                "summary": "Get Insider Category Professions - Term",
+                "description": "Returns a list of professions for an insider category.",
+                "operationId": "App\\Controller\\Referential\\ProfessionController::getProfessionsInsiderAction",
+                "parameters": [
+                    {
+                        "name": "insiderCategory",
+                        "in": "path",
+                        "description": "ID of the insider category to get jobs of",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "term",
+                        "in": "path",
+                        "description": "The term to search by",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Professions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/referential"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reports": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Create a Report",
+                "description": "Creates a report. `type` and `id` parameters are required. Report types:<br>- 10: STORY<br>- 20: PHOTO<br>- 30: POST<br>- 40: PROFILE<br>- 50: COMMENT<br>- 60: REVIEW<br>",
+                "operationId": "App\\Controller\\ReportController::createReportAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "description": "The type of content (10=story, 20=photo, 30=post, 40=profile, 50=comment, 60=review)",
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "description": "The ID of the story/photo/post/profile/comment to report",
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "description": "A user message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created report object"
+                    }
+                }
+            }
+        },
+        "/reports/bug": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Create a Bug Report",
+                "description": "Creates a bug report, and sends message on Slack. `message` parameter is required.",
+                "operationId": "App\\Controller\\ReportController::createBugReportAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "description": "The error message for slack.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Report created"
+                    }
+                }
+            }
+        },
+        "/reports/insider": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Create a Bug Report",
+                "description": "Reports an issue to Insider Staff. This end point assumes that the logged in user has an active Profile Verification.",
+                "operationId": "App\\Controller\\ReportController::createInsiderReportAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "message": {
+                                        "description": "The error message for slack.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Report created"
+                    }
+                }
+            }
+        },
         "/reviews/{reviewId}/comments": {
             "get": {
                 "tags": [
@@ -18109,6 +19293,65 @@
                 }
             }
         },
+        "/tags": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get Tags",
+                "description": "Returns a list of tags. Unless the `per-page` parameter is set the default number of results is 8.",
+                "operationId": "App\\Controller\\TagController::searchTagsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "name": "per-page",
+                        "in": "query",
+                        "description": "Number of results per page",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of Tag objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/tag"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tags/suggestions": {
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get Tags Suggestions",
+                "description": "Returns a list of tag suggestions.",
+                "operationId": "App\\Controller\\TagController::getTagsSuggestionsAction",
+                "responses": {
+                    "200": {
+                        "description": "Array of Tag objects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/tag"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/leads": {
             "get": {
                 "tags": [
@@ -18660,6 +19903,298 @@
                 }
             }
         },
+        "/tokens": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get Tokens",
+                "description": "Finds tokens matching criteria.",
+                "operationId": "App\\Controller\\TokenController::getTokensAction",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The token type (2=inbox, 3=follower, 4=invite, 5=signin)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "thread",
+                        "in": "query",
+                        "description": "The UUID of the thread",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "invite",
+                        "in": "query",
+                        "description": "Invite ID to connect a registration with an invite",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "profile",
+                        "in": "query",
+                        "description": "Profile ID of the ghost invited",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of tokens"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Create a Token",
+                "description": "Create a unique short-lived signin token. The token is valid for 1 use within 5 minutes.<br>Open the user's browser on https://www.guidefitter.com/signin?_t=[the_token_here]&_r=[base64_encoded_target_url]<br>He will be signed in automatically and then redirected to the target URL",
+                "operationId": "App\\Controller\\TokenController::createTokenAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "description": "the token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token"
+                    }
+                }
+            }
+        },
+        "/tokens/{token}": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get Token Object",
+                "description": "Get the object behind a token. Either a lead or an invite. The type of object returned is in the meta ('lead' or 'invite')",
+                "operationId": "App\\Controller\\TokenController::getTokenAction",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "The token ",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lead or Invite object"
+                    }
+                }
+            }
+        },
+        "/uploads/{profileId}/document": {
+            "get": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Get a Document Upload URL",
+                "description": "Returns a pre-signed URL to be able to upload a file to S3 private bucket for documents. The URL returned here will include everything to do a PutObject operation on S3. [See example](https://medium.com/@kevinwu/client-side-file-upload-to-s3-using-axios-c9363ec7b530)",
+                "operationId": "App\\Controller\\UploadController::getUploadDocumentParametersAction",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "The original file name (e.g. 'My ID card.pdf')",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The original file mime type (e.g. 'application/pdf')",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The pre-signed URL and the file name"
+                    }
+                }
+            }
+        },
+        "/uploads/{profileId}/photo": {
+            "get": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Get a Photo Upload URL",
+                "description": "Returns a pre-signed URL to be able to upload a file to S3 private bucket for documents. The URL returned here will include everything to do a PutObject operation on S3. [See example](https://medium.com/@kevinwu/client-side-file-upload-to-s3-using-axios-c9363ec7b530)",
+                "operationId": "App\\Controller\\UploadController::getUploadPhotoParametersAction",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "The original file name (e.g. 'My ID card.pdf')",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The original file mime type (e.g. 'application/pdf')",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The pre-signed URL and the file name"
+                    }
+                }
+            }
+        },
+        "/password": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a Password",
+                "description": "Changes the user password. User must be authenticated. Admins can change password without token or providing current password. `confirm` and `new` parameters are required.",
+                "operationId": "App\\Controller\\User\\PasswordController::changePasswordAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "description": "The ID of the user",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "A secret token sent by email allowing a 1-time password change",
+                                        "type": "string"
+                                    },
+                                    "current": {
+                                        "description": "The current password of the account",
+                                        "type": "string"
+                                    },
+                                    "new": {
+                                        "description": "The new password",
+                                        "type": "string"
+                                    },
+                                    "confirm": {
+                                        "description": "The new password repeated (ask user to type twice)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Password changed"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Request Password Change",
+                "description": "Request an email to be sent with a link to guidefitter.com where a user can change his password. `email` parameter is required.",
+                "operationId": "App\\Controller\\User\\PasswordController::requestPasswordResetAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Password change email sent."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Reset a Password",
+                "description": "Resets the users password. Sends an email with a random generated password. Without a token, user must be authenticated. ",
+                "operationId": "App\\Controller\\User\\PasswordController::resetPasswordAction",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "description": "The ID of the user",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "A secret token sent by email allowing a 1-time password change. If no token provided, must have private access to the user",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Password reset success"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -18824,10 +20359,6 @@
                                     "last_name": {
                                         "description": "The user's last name",
                                         "type": "string"
-                                    },
-                                    "guidefitter": {
-                                        "description": "The ID of an outfitter if the lead token comes from an outfitter claiming a business to answer the lead",
-                                        "type": "integer"
                                     },
                                     "token": {
                                         "description": "An invitation token. User creating account comes form an invite.",
@@ -19074,7 +20605,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/users/{userId}": {
             "put": {
                 "tags": [
                     "User"
@@ -19090,7 +20623,7 @@
                         "required": true,
                         "explode": false,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -19126,10 +20659,6 @@
                                     "last_name": {
                                         "description": "The user's last name",
                                         "type": "string"
-                                    },
-                                    "guidefitter": {
-                                        "description": "The ID of an outfitter if the lead token comes from an outfitter claiming a business to answer the lead",
-                                        "type": "integer"
                                     },
                                     "token": {
                                         "description": "An invitation token. User creating account comes form an invite.",
@@ -19194,7 +20723,7 @@
                         "required": true,
                         "explode": false,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     },
                     {
@@ -19212,6 +20741,73 @@
                 "responses": {
                     "204": {
                         "description": "User deleted"
+                    }
+                }
+            }
+        },
+        "/users/{userId}/facebook": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Bind a User to Facebook",
+                "description": "Binds a user account to a facebook account. `facebookToken` property is required.",
+                "operationId": "App\\Controller\\User\\UserController::bindFacebookAction",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user to bind facebook account to",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "facebookToken": {
+                                        "description": "The facebook token",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Bind successful"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Bind a User to Facebook",
+                "description": "Unbinds a user account from a facebook account.",
+                "operationId": "App\\Controller\\User\\UserController::bindFacebookAction",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Id of the user to unbind facebook account from",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Unbind successful"
                     }
                 }
             }
@@ -19354,6 +20950,84 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validations/{token}": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get a Validation - Token",
+                "description": "Returns a validation object using a token.",
+                "operationId": "App\\Controller\\ValidationController::getValidationAction",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "The token.",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The validation object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/validation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validations/{type}/{entityId}": {
+            "get": {
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get a Validation - Type",
+                "description": "Returns a validation object using a type and entity ID (types are: 2:password, 4:business profile claim, 5:affiliation, 6:email).",
+                "operationId": "App\\Controller\\ValidationController::getValidationAction",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "The type (types are: 2:password, 4:business profile claim, 5:affiliation, 6:email)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "entityId",
+                        "in": "path",
+                        "description": "The entity ID",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The validation object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/validation"
                                 }
                             }
                         }
@@ -19967,11 +21641,11 @@
                         "type": "string"
                     },
                     "guidelines": {
-                        "description": "The ordering guidelines (shown to enrolled insiders)",
+                        "description": "The ordering guidelines (shown to enrolled pros)",
                         "type": "string"
                     },
                     "return_policy": {
-                        "description": "The return policy (shown to enrolled insiders)",
+                        "description": "The return policy (shown to enrolled pros)",
                         "type": "string"
                     },
                     "moto": {
@@ -19986,6 +21660,14 @@
                         "description": "Show on the Grid or not",
                         "type": "boolean"
                     },
+                    "coming_soon": {
+                        "description": "When not public, shows program on the Grid but can't access it",
+                        "type": "boolean"
+                    },
+                    "custom_verification": {
+                        "description": "A UI setting to know if we should show the enrollment verification settings to the managers",
+                        "type": "boolean"
+                    },
                     "auto_dispatch": {
                         "description": "Setting to block the automatic dispatch of the application to the brand managers",
                         "type": "boolean"
@@ -19994,6 +21676,51 @@
                         "description": "Setting enable auto-accepting incoming dispatched applications",
                         "type": "boolean"
                     },
+                    "auto_renewal": {
+                        "description": "Setting enable auto-renewal of members applications that renewed their Pro Status",
+                        "type": "boolean"
+                    },
+                    "nb_required_documents": {
+                        "description": "The number of valid proof documents a pro must send to be able to apply",
+                        "type": "integer"
+                    },
+                    "is_documents_mandatory": {
+                        "description": "Whether ALL the required_documents will be asked or either one is enough",
+                        "type": "boolean"
+                    },
+                    "association_allowed": {
+                        "description": "Let active association members apply even without GVP status (admins only)",
+                        "type": "boolean"
+                    },
+                    "required_documents": {
+                        "description": "List document type IDs that will be required to apply to the Program",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "refused_documents": {
+                        "description": "List document type IDs that will be refused and not count to apply to the Program",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "document": {
+                        "description": "The file name of the Ordering Guidelines document already uploaded on guidefitterconfidential S3 bucket",
+                        "type": "integer"
+                    },
+                    "grid_feature": {
+                        "description": "Feature a brand Program on The Grid (admins only)",
+                        "type": "boolean"
+                    },
+                    "restricted_types": {
+                        "description": "An array of Insider Type IDs. The program will be restricted to the insiders of that category.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
                     "channel": {
                         "description": "Set distribution channel for the program: shop, code, dealer (admins only)",
                         "type": "string"
@@ -20001,10 +21728,6 @@
                     "shop_status": {
                         "description": "Set magento shop status for the program, 1=created, 2=opened (admins only)",
                         "type": "integer"
-                    },
-                    "grid_feature": {
-                        "description": "Feature a brand IDP on The Grid (admins only)",
-                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -20033,11 +21756,11 @@
             "update-subscription": {
                 "properties": {
                     "anwser": {
-                        "description": "Accept or refuse a CNP application (brand manager & admins only)",
+                        "description": "Accept or refuse a application (brand manager & admins only)",
                         "type": "boolean"
                     },
                     "revoke": {
-                        "description": "Reject an already accepted CNP application (brand manager & admins only)",
+                        "description": "Reject an already accepted application (brand manager & admins only)",
                         "type": "boolean"
                     },
                     "message": {
@@ -20837,6 +22560,41 @@
                 "type": "object"
             },
             "campaign": {},
+            "sent-notification": {
+                "properties": {
+                    "id": {
+                        "description": "The Tracking ID",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of notification (1=EMAIL, 2=PUSH)",
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "description": "ISO date when the notification was sent",
+                        "type": "string"
+                    },
+                    "readOn": {
+                        "description": "ISO date when the notification was seen by the user",
+                        "type": "string"
+                    },
+                    "target": {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    "activity": {
+                        "$ref": "#/components/schemas/activity"
+                    },
+                    "appKey": {
+                        "description": "The app ID the notification was sent to (PUSH only)",
+                        "type": "string"
+                    },
+                    "message": {
+                        "description": "The subject of the email or the content of the push notification",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "tracking": {
                 "properties": {
                     "id": {
@@ -20876,13 +22634,6 @@
                     "assoc": {
                         "description": "Is the outfitter member of the NMCOG association?\nDeprecated, use association prop instead",
                         "type": "boolean"
-                    },
-                    "clients": {
-                        "description": "All the outfitter past clients (deprecated, use route api.clientships.get_clientships)",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/user"
-                        }
                     },
                     "email": {
                         "description": "Outfitter email address\nACL_PRIVATE",
@@ -21497,6 +23248,39 @@
                 },
                 "type": "object"
             },
+            "report": {
+                "properties": {
+                    "id": {
+                        "description": "Report ID",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "Report type",
+                        "type": "integer"
+                    },
+                    "resource": {
+                        "description": "Resource Id",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "Report status",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "Report message",
+                        "type": "integer"
+                    },
+                    "sender": {
+                        "description": "Message",
+                        "type": "string"
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
             "review": {
                 "properties": {
                     "id": {
@@ -21604,6 +23388,19 @@
                 },
                 "type": "object"
             },
+            "tag": {
+                "properties": {
+                    "tag": {
+                        "description": "The tag",
+                        "type": "string"
+                    },
+                    "tagCount": {
+                        "description": "How much time this tag has been used",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "thread": {
                 "properties": {
                     "id": {
@@ -21682,6 +23479,51 @@
                     },
                     "zendeskId": {
                         "description": "The Zendesk ID of that user\nACL_PRIVATE",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "validation": {
+                "properties": {
+                    "id": {
+                        "description": "The validation ID",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "The validation type (2=password, 4=outfitter claim, 5=outfitter affiliation, 6=email)",
+                        "type": "integer"
+                    },
+                    "code": {
+                        "description": "The unique code to build route 'request.verify'\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email to validate (null if $type != 6)\nACL_PRIVATE",
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/user"
+                    },
+                    "outfitter": {
+                        "$ref": "#/components/schemas/outfitter"
+                    },
+                    "claim": {
+                        "$ref": "#/components/schemas/claim"
+                    },
+                    "affiliation": {
+                        "$ref": "#/components/schemas/affiliation"
+                    },
+                    "isExpired": {
+                        "description": "Is this validation expired?",
+                        "type": "boolean"
+                    },
+                    "isDeleted": {
+                        "description": "Is this validation soft-deleted?",
+                        "type": "boolean"
+                    },
+                    "createdOn": {
+                        "description": "The ISO date when the validation was created",
                         "type": "string"
                     }
                 },
