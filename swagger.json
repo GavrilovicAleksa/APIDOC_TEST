@@ -1329,7 +1329,7 @@
                     "Article"
                 ],
                 "summary": "Get Articles",
-                "description": "Get all the articles",
+                "description": "Returns a list of articles.",
                 "operationId": "App\\Controller\\Article\\ArticleController::getArticlesAction",
                 "parameters": [
                     {
@@ -1372,7 +1372,7 @@
                     "Article"
                 ],
                 "summary": "Create an Article",
-                "description": "Create an Article",
+                "description": "Creates an Article. `type`, `name`, `title`, `folder`, and `summary` fields are required.",
                 "operationId": "App\\Controller\\Article\\ArticleController::createArticleAction",
                 "requestBody": {
                     "content": {
@@ -1477,7 +1477,7 @@
                     "Article"
                 ],
                 "summary": "Get a Single Article - Name",
-                "description": "Get a single article by article name",
+                "description": "Returns a single article using the article name.",
                 "operationId": "App\\Controller\\Article\\ArticleController::getArticleAction",
                 "parameters": [
                     {
@@ -1514,7 +1514,7 @@
                     "Article"
                 ],
                 "summary": "Get a Single Article",
-                "description": "Get a single article by articleID",
+                "description": "Returns a single article using the article ID.",
                 "operationId": "App\\Controller\\Article\\ArticleController::getArticleAction",
                 "parameters": [
                     {
@@ -1549,7 +1549,7 @@
                     "Article"
                 ],
                 "summary": "Update an Article",
-                "description": "Update an article (must be authenticated)",
+                "description": "Updates an article. The user must be authenticated",
                 "operationId": "App\\Controller\\Article\\ArticleController::updateArticleAction",
                 "parameters": [
                     {
@@ -1649,15 +1649,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Article not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/article"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Article not found"
                     }
                 }
             },
@@ -1678,32 +1671,40 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "hard",
-                        "in": "query",
-                        "description": "To hard-delete the article",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "hard": {
+                                        "description": "To hard-delete the article.",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "Article removed"
+                    },
+                    "404": {
+                        "description": "Article not found"
                     }
                 }
             }
         },
-        "/associatons": {
+        "/associations": {
             "get": {
                 "tags": [
                     "Association"
                 ],
                 "summary": "Get Associations",
-                "description": "Search through associations, advanced filters reserved for admins",
+                "description": "Returns a list of associations. Some filters reserved for admins.",
                 "operationId": "App\\Controller\\Association\\AssociationController::getAssociationsAction",
                 "parameters": [
                     {
@@ -1737,126 +1738,13 @@
                         }
                     }
                 }
-            }
-        },
-        "/associatons/name={name}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Get a Single Association - Name",
-                "description": "Get a single association and its profile by name",
-                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "path",
-                        "description": "Name of the association to retreive",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Association object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/association"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/associatons/profile={profileId}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Get a Single Association - Profile",
-                "description": "Get a single association and its profile by profileId",
-                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
-                "parameters": [
-                    {
-                        "name": "profileId",
-                        "in": "path",
-                        "description": "Profile ID of the Association to retrieve",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Association object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/association"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/associatons/{associationId}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Get a Single Association",
-                "description": "Get a single association and its profile by associationId",
-                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
-                "parameters": [
-                    {
-                        "name": "associationId",
-                        "in": "path",
-                        "description": "Association ID of the Association to retrieve",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Associaton object",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/association"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/associations": {
+            },
             "post": {
                 "tags": [
                     "Association"
                 ],
                 "summary": "Create an Association",
-                "description": "Create an association and its profile",
+                "description": "Creates an association and its profile.",
                 "operationId": "App\\Controller\\Association\\AssociationController::createAssociationAction",
                 "requestBody": {
                     "content": {
@@ -1948,13 +1836,122 @@
                 }
             }
         },
+        "/associations/name={name}": {
+            "get": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Get a Single Association - Name",
+                "description": "Returns a single association using the associaton name.",
+                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of the association to retreive",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Association object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/association"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/associations/profile={profileId}": {
+            "get": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Get a Single Association - Profile",
+                "description": "Returns a single association using the associaton profile.",
+                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
+                "parameters": [
+                    {
+                        "name": "profileId",
+                        "in": "path",
+                        "description": "Profile ID of the Association to retrieve",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Association object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/association"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/associations/{associationId}": {
+            "get": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Get a Single Association",
+                "description": "Returns a single association using the associaton ID.",
+                "operationId": "App\\Controller\\Association\\AssociationController::getAssociationAction",
+                "parameters": [
+                    {
+                        "name": "associationId",
+                        "in": "path",
+                        "description": "Association ID of the Association to retrieve",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Associaton object",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/association"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "Association"
                 ],
                 "summary": "Update an Association",
-                "description": "Update an association (must be authenticated). Updates the association entity, the address, and the profile",
+                "description": "Updates the association. The user must be authenticated. Updates the association entity, the address, and the profile",
                 "operationId": "App\\Controller\\Association\\AssociationController::updateAssociationAction",
                 "parameters": [
                     {
@@ -2112,7 +2109,7 @@
                     "Association"
                 ],
                 "summary": "Delete an Association",
-                "description": "Delete an association and its profile",
+                "description": "Deletes an association and its profile.",
                 "operationId": "App\\Controller\\Association\\AssociationController::deleteAssociationAction",
                 "parameters": [
                     {
@@ -2124,19 +2121,24 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "hard",
-                        "in": "query",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "description": "To hard-delete the association and all its related entities",
-                            "type": "boolean",
-                            "default": false
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "hard": {
+                                        "description": "To hard-delete the association and all its related entities",
+                                        "type": "boolean",
+                                        "example": "https://api.guidefitter.com/associations/4625"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "204": {
                         "description": "association deleted"
@@ -2144,7 +2146,7 @@
                 }
             }
         },
-        "/associatons/{associationId}/siblings": {
+        "/associations/{associationId}/siblings": {
             "get": {
                 "tags": [
                     "Association"
@@ -2168,7 +2170,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Array ofAssociaton objects",
+                        "description": "Array of Related Associaton objects",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2186,7 +2188,7 @@
                     "Association"
                 ],
                 "summary": "Get Association Memberships",
-                "description": "Search association memberships. Admins can search all memberships, for association managers or anonymous 'association' or 'profile' filter is required",
+                "description": "Returns a list of association memberships. Admins can search all memberships, for association managers or anonymous users 'association' or 'profile' parameter is required",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipsAction",
                 "parameters": [
                     {
@@ -2230,7 +2232,7 @@
                     "Association"
                 ],
                 "summary": "Create an Association Membership",
-                "description": "Create an Association Membership",
+                "description": "Creates an association membership. The `associatoin` field is required.",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::createAssociationMembershipAction",
                 "requestBody": {
                     "content": {
@@ -2337,13 +2339,13 @@
                 }
             }
         },
-        "/associaton-memberships/{membershipId}": {
+        "/association-memberships/{membershipId}": {
             "get": {
                 "tags": [
                     "Association"
                 ],
                 "summary": "Get a Single Association Membership",
-                "description": "Get a single association membership",
+                "description": "Retuns a single associatoin membership",
                 "operationId": "App\\Controller\\Association\\AssociationMembershipController::getAssociationMembershipAction",
                 "parameters": [
                     {
@@ -2370,6 +2372,31 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Association"
+                ],
+                "summary": "Delete an Association Membership",
+                "description": "Delete an association membership",
+                "operationId": "App\\Controller\\Association\\AssociationMembershipController::deleteAssociationMembershipAction",
+                "parameters": [
+                    {
+                        "name": "membershipId",
+                        "in": "path",
+                        "description": "The ID of the Association Membership to remove",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Nothing to update"
                     }
                 }
             }
@@ -2437,33 +2464,6 @@
                             }
                         }
                     },
-                    "204": {
-                        "description": "Nothing to update"
-                    }
-                }
-            }
-        },
-        "/association-memberships/{membershipId}": {
-            "delete": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Delete an Association Membership",
-                "description": "Delete an association membership",
-                "operationId": "App\\Controller\\Association\\AssociationMembershipController::deleteAssociationMembershipAction",
-                "parameters": [
-                    {
-                        "name": "membershipId",
-                        "in": "path",
-                        "description": "The ID of the Association Membership to remove",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
                     "204": {
                         "description": "Nothing to update"
                     }
@@ -2673,7 +2673,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brands",
-                "description": "Search brands with advanced filters reserved to admins. The only public filters are `q` and `profile-status`. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
+                "description": "Returns a list of brands. The only public filters are `q` and `profile-status`. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance.",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandsAction",
                 "parameters": [
                     {
@@ -2839,10 +2839,10 @@
                     "Brand"
                 ],
                 "summary": "Create a Brand",
-                "description": "Create a brand, its profile, and its GOP",
+                "description": "Creates a brand, its profile, and its GOP.",
                 "operationId": "App\\Controller\\Brand\\BrandController::createBrandAction",
                 "requestBody": {
-                    "description": "The user object that will be added.",
+                    "description": "The user object that will be added. `name`, and `brand_name` fields are required.",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -2899,7 +2899,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Brand - Name",
-                "description": "Get one brand and his profile by name",
+                "description": "Returns a single brand using its name",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2933,7 +2933,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Brand - Profile",
-                "description": "Get one brand and his profile by his profile ID",
+                "description": "Returns a single brand using his profile",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2967,7 +2967,7 @@
                     "Brand"
                 ],
                 "summary": "Get Single Brand - Profile",
-                "description": "Get one brand and his profile by his brand ID",
+                "description": "Returns a single brand using his ID",
                 "operationId": "App\\Controller\\Brand\\BrandController::getBrandAction",
                 "parameters": [
                     {
@@ -2999,7 +2999,7 @@
                     "Brand"
                 ],
                 "summary": "Update a Brand",
-                "description": "Update a brand (must be authenticated). Updates the brand entity, the address, and his profile",
+                "description": "Updates a brand. The user must be authenticated. Updates the brand entity, the address, and his profile.",
                 "operationId": "App\\Controller\\Brand\\BrandController::updateBrandAction",
                 "parameters": [
                     {
@@ -3286,7 +3286,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brands Subscriptions",
-                "description": "Get all the subscriptions of all programs combined",
+                "description": "Returns all the subscriptions of all the programs combined.",
                 "operationId": "App\\Controller\\Brand\\BrandController::getSubscriptionsAction",
                 "parameters": [
                     {
@@ -3298,6 +3298,30 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "$ref": "#/components/parameters/with-refused"
+                    },
+                    {
+                        "$ref": "#/components/parameters/with-revoked"
+                    },
+                    {
+                        "$ref": "#/components/parameters/status"
+                    },
+                    {
+                        "$ref": "#/components/parameters/dealer"
+                    },
+                    {
+                        "$ref": "#/components/parameters/code"
+                    },
+                    {
+                        "$ref": "#/components/parameters/with"
                     }
                 ],
                 "responses": {
@@ -3359,7 +3383,7 @@
                     "Brand"
                 ],
                 "summary": "Get Brands Grid Agreement",
-                "description": "Generate a pre-signed URL to the Grid agreement stored on Amazon S3 bucket, and redirect to it",
+                "description": "Generates a pre-signed URL to the Grid agreement stored on Amazon S3 bucket, and redirects to it.",
                 "operationId": "App\\Controller\\Brand\\BrandController::getGridAgreementAction",
                 "parameters": [
                     {
@@ -3520,7 +3544,7 @@
                     "Brand"
                 ],
                 "summary": "Get Discount Codes",
-                "description": "Search discount codes.For managers, the `brand` parameter is mandatory. For insiders, the `program` parameter (gop, idp, ...etc) is mandatory.",
+                "description": "Returns a list of discount codes. For managers, the `brand` parameter is mandatory. For insiders, the `program` parameter (gop, idp, ...etc) is mandatory.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodesAction",
                 "parameters": [
                     {
@@ -3661,7 +3685,7 @@
                     "Brand"
                 ],
                 "summary": "Create a Discount Code",
-                "description": "For admins and brand managers: create a discount code. Examples:<br>- To create a global code for all shops/programs: {'code': 'XXXXX'}<br>- To create a global code for Zeiss GOP: {'code': 'XXXXX', 'brand': 6, 'gop': 6}<br>- To create a personal code for a Zeiss Pro member: {'code': 'XXXXX', 'brand': 6, 'gop': 6, 'user': 1234}<br>",
+                "description": "For admins and brand managers: create a discount code. `owner` and `code` fields are required. Examples:<br>- To create a global code for all shops/programs: {'code': 'XXXXX'}<br>- To create a global code for Zeiss GOP: {'code': 'XXXXX', 'brand': 6, 'gop': 6}<br>- To create a personal code for a Zeiss Pro member: {'code': 'XXXXX', 'brand': 6, 'gop': 6, 'user': 1234}<br>",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeAction",
                 "requestBody": {
                     "content": {
@@ -3845,7 +3869,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a Discount Code",
-                "description": "Delete a discount code",
+                "description": "Deletes a discount code.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::deleteDiscountCodeAction",
                 "parameters": [
                     {
@@ -3882,7 +3906,7 @@
                     "Brand"
                 ],
                 "summary": "Delete a Discount Code Target",
-                "description": "delete a discount-code target",
+                "description": "Deletes a discount-code target.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::deleteDiscountCodeTargetAction",
                 "parameters": [
                     {
@@ -3919,7 +3943,7 @@
                     "Brand"
                 ],
                 "summary": "Get Discount Code Events - Dealer",
-                "description": "Get all the discount code events related to a dealer (only for brand managers)",
+                "description": "Returns a list of all discount code events related to a dealer (only for brand managers)",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodeEventsVendorAction",
                 "parameters": [
                     {
@@ -3966,7 +3990,7 @@
                     "Brand"
                 ],
                 "summary": "Get Discount Code Events - User",
-                "description": "Get all the discount code events related to a member (only for brand managers)",
+                "description": "Returns a list of all discount code events related to a member (only for brand managers)",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::getDiscountCodeEventsUserAction",
                 "parameters": [
                     {
@@ -4013,7 +4037,7 @@
                     "Brand"
                 ],
                 "summary": "Record a Dealer Event - Check",
-                "description": "Record a dealer event on a discount code. Saves the event that the discount code was verified by the dealer",
+                "description": "Records a dealer event on a discount code. Saves the event that the discount code was verified by the dealer.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeEventAction",
                 "parameters": [
                     {
@@ -4053,7 +4077,7 @@
                     "Brand"
                 ],
                 "summary": "Record a Dealer Event - Check",
-                "description": "Record a dealer event on a discount code. Saves the event that the discount code was flagged as used by the dealer",
+                "description": "Records a dealer event on a discount code. Saves the event that the discount code was flagged as used by the dealer.",
                 "operationId": "App\\Controller\\Brand\\DiscountCodeController::createDiscountCodeEventAction",
                 "parameters": [
                     {
@@ -4093,7 +4117,7 @@
                     "Brand"
                 ],
                 "summary": "Get Insiders",
-                "description": "Search brands activated insiders.The `brand` filter is mandatory for a brand manager. Admins can get a list of all activated insiders across all brands. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
+                "description": "Returns a list of activated insiders.The `brand` filter is mandatory for a brand manager. Admins can get a list of all activated insiders across all brands. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance",
                 "operationId": "App\\Controller\\Brand\\InsiderController::getActivatedInsidersAction",
                 "parameters": [
                     {
@@ -4107,12 +4131,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/profile"
-                    },
-                    {
-                        "$ref": "#/components/parameters/before"
-                    },
-                    {
-                        "$ref": "#/components/parameters/after"
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -4180,7 +4198,7 @@
                     "Brand"
                 ],
                 "summary": "Add a user to brand's Insiders",
-                "description": "Add a user to a brand's activated insiders",
+                "description": "Adds a user to a brand's activated insiders.",
                 "operationId": "App\\Controller\\Brand\\InsiderController::addActivatedInsiderAction",
                 "parameters": [
                     {
@@ -4222,7 +4240,7 @@
                     "Brand"
                 ],
                 "summary": "Remove an Insider",
-                "description": "Remove a user from the brand's Activated Insiders",
+                "description": "Removes a user from the brand's Activated Insiders.",
                 "operationId": "App\\Controller\\Brand\\InsiderController::removeActivatedInsiderAction",
                 "parameters": [
                     {
@@ -7843,9 +7861,6 @@
                         "$ref": "#/components/parameters/brand"
                     },
                     {
-                        "$ref": "#/components/parameters/profile"
-                    },
-                    {
                         "$ref": "#/components/parameters/with"
                     }
                 ],
@@ -7869,7 +7884,7 @@
                     "Brand"
                 ],
                 "summary": "Pro Staff Agreement",
-                "description": "Generate a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirect to it.",
+                "description": "Generates a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirects to it.",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstaffAgreementAction",
                 "parameters": [
                     {
@@ -7896,7 +7911,7 @@
                     "Brand"
                 ],
                 "summary": "Pro Staff Agreement - Profile",
-                "description": "Generate a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirect to it",
+                "description": "Generates a pre-signed URL to the Pro Staff agreement stored on Amazon S3 bucket, and redirects to it.",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstafferAgreementAction",
                 "parameters": [
                     {
@@ -7933,7 +7948,7 @@
                     "Brand"
                 ],
                 "summary": "Get a Single Prostaff",
-                "description": "Get pro staffer object representing the pro staff association between a GF member and a brand",
+                "description": "Returns a pro staffer object representing the pro staff association between a GF member and a brand.",
                 "operationId": "App\\Controller\\Brand\\ProstaffController::getProstafferAction",
                 "parameters": [
                     {
@@ -8044,26 +8059,27 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "prostaff_agreement",
-                        "in": "query",
-                        "description": "The file ID of a uploaded Pro Staff Agreement document",
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "expiration_date",
-                        "in": "query",
-                        "description": "ISO date when the pro staff membership will expire (must be in the future)",
-                        "explode": false,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "prostaff_agreement": {
+                                        "description": "The file ID of a uploaded Pro Staff Agreement document",
+                                        "type": "integer"
+                                    },
+                                    "expiration_date": {
+                                        "description": "ISO date when the pro staff membership will expire (must be in the future)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated prostaff object",
@@ -8163,7 +8179,7 @@
                     "Comment"
                 ],
                 "summary": "Get Comments",
-                "description": "Search all comments.<br>Pivot pagination: the `pivot` parameter is the timestamp (insertedOn) of the comment making the pivot with the next page.<br>If sorting is `new` (default), it'll return comments before the pivot in chronological order.<br>If sorting is `old`, it'll return comments after the pivot in chronological order.<br>If sorting is `best`, there's no chronology so no pivot pagination, use `page` param.<br>With pivot pagination, `meta` will contain a prop `countNext` to know how many more comments there are after (before) the pivot comment.<br>If starting pagination from a comment in the middle, add the prop _pivot_prev to the query string to also get a `prev` URL in meta and start a reverse pagination.",
+                "description": "Returns a list of comments.<br>Pivot pagination: the `pivot` parameter is the timestamp (insertedOn) of the comment making the pivot with the next page.<br>If sorting is `new` (default), it'll return comments before the pivot in chronological order.<br>If sorting is `old`, it'll return comments after the pivot in chronological order.<br>If sorting is `best`, there's no chronology so no pivot pagination, use `page` param.<br>With pivot pagination, `meta` will contain a prop `countNext` to know how many more comments there are after (before) the pivot comment.<br>If starting pagination from a comment in the middle, add the prop _pivot_prev to the query string to also get a `prev` URL in meta and start a reverse pagination.",
                 "operationId": "App\\Controller\\Comment\\CommentController::getCommentsAction",
                 "parameters": [
                     {
@@ -8216,7 +8232,7 @@
                     "Comment"
                 ],
                 "summary": "Create a Comment",
-                "description": "Create a comment (must be authenticated).<br> For a comment on a Post, check the post type and:<br> - 30 (photo) send 'photo' with photo ID<br> - 60 (article) send 'article' with article ID<br> - 80 (review) send 'review' with review ID<br>",
+                "description": "Creates a comment. The user must be authenticated). `profile` and `content` fields are required. <br> For a comment on a Post, check the post type and:<br> - 30 (photo) send 'photo' with photo ID<br> - 60 (article) send 'article' with article ID<br> - 80 (review) send 'review' with review ID<br>",
                 "operationId": "App\\Controller\\Comment\\CommentController::createCommentAction",
                 "requestBody": {
                     "content": {
@@ -8280,7 +8296,7 @@
                 "tags": [
                     "Comment"
                 ],
-                "summary": "Get Single Comment",
+                "summary": "Returns a single comment.",
                 "description": "Get a single comment",
                 "operationId": "App\\Controller\\Comment\\CommentController::getCommentAction",
                 "parameters": [
@@ -8406,7 +8422,7 @@
                     "Comment"
                 ],
                 "summary": "Get Comment Likes",
-                "description": "Get the list of users who liked a comment",
+                "description": "Returns the list of users who liked a comment.",
                 "operationId": "App\\Controller\\Comment\\CommentLikeController::getLikesAction",
                 "parameters": [
                     {
@@ -8617,7 +8633,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Items",
-                "description": "Search items.",
+                "description": "Retunrs a list of items.",
                 "operationId": "App\\Controller\\Ecomm\\ItemController::getItemsAction",
                 "parameters": [
                     {
@@ -8696,7 +8712,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Orders",
-                "description": "Search Orders. If the user's not the admin, `brand` paramater is required.",
+                "description": "Returns a list of orders. If the user's not the admin, `brand` paramater is required.",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrdersAction",
                 "parameters": [
                     {
@@ -8832,7 +8848,7 @@
                         "$ref": "#/components/parameters/year"
                     },
                     {
-                        "$ref": "#/components/parameters/statuses"
+                        "$ref": "#/components/parameters/status"
                     },
                     {
                         "$ref": "#/components/parameters/sku"
@@ -8881,7 +8897,7 @@
                     "Ecomm"
                 ],
                 "summary": "Get Orders Statistics",
-                "description": "Search Order statistics. If the user's not the admin, `brand` paramater is required.",
+                "description": "Returns a list of Order statistics. If the user's not the admin, `brand` paramater is required.",
                 "operationId": "App\\Controller\\Ecomm\\OrderController::getOrderStatisticsAction",
                 "parameters": [
                     {
@@ -9241,7 +9257,7 @@
                     "Referential"
                 ],
                 "summary": "Get Countries",
-                "description": "Get all countries",
+                "description": "Returns a list of countries.",
                 "operationId": "App\\Controller\\Geo\\CountryController::getCountriesAction",
                 "parameters": [
                     {
@@ -9270,7 +9286,7 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Fishing Countries",
+                "summary": "Returns a list of fishing countries. The response is different in that it won't return entities but just raw DB data to build the page:<br> - geo_country_id: the ID of the country<br> - name: Name of the country <br> - continent: continent code<br> - hash: the URL key to build link to the SRP",
                 "description": "Get all countries referenced in hunting/fishing products.<br> The response is different in that it won't return entities but just raw DB data to build the page:<br> - geo_country_id: the ID of the country<br> - name: Name of the country <br> - continent: continent code<br> - hash: the URL key to build link to the SRP",
                 "operationId": "App\\Controller\\Geo\\CountryController::getHuntingCountriesAction",
                 "responses": {
@@ -9285,7 +9301,7 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Hunting Countries",
+                "summary": "Returns a list of hunting countries. The response is different in that it won't return entities but just raw DB data to build the page:<br> - geo_country_id: the ID of the country<br> - name: Name of the country <br> - continent: continent code<br> - hash: the URL key to build link to the SRP",
                 "operationId": "App\\Controller\\Geo\\CountryController::getHuntingCountriesAction",
                 "responses": {
                     "200": {
@@ -9300,7 +9316,7 @@
                     "Referential"
                 ],
                 "summary": "Get a Single Country",
-                "description": "Get a single coutry.",
+                "description": "Returns a single coutry.",
                 "operationId": "App\\Controller\\Geo\\CountryController::getCountryAction",
                 "parameters": [
                     {
@@ -9333,7 +9349,7 @@
                     "Referential"
                 ],
                 "summary": "Get Airports",
-                "description": "Search through airports",
+                "description": "Searches through airports",
                 "operationId": "App\\Controller\\Geo\\CountryController::getAirportsAction",
                 "parameters": [
                     {
@@ -9365,7 +9381,7 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Country States",
+                "summary": "Returns a list of country states",
                 "operationId": "App\\Controller\\Geo\\StateController::getStatesAction",
                 "parameters": [
                     {
@@ -9397,7 +9413,7 @@
                 "tags": [
                     "Referential"
                 ],
-                "summary": "Get Country States",
+                "summary": "Returns a singl country state",
                 "operationId": "App\\Controller\\Geo\\StateController::getStateAction",
                 "parameters": [
                     {
@@ -9460,7 +9476,7 @@
                     "Invitation"
                 ],
                 "summary": "Get Profile Invitations",
-                "description": "Get all the guest invitations by inviter",
+                "description": "Returns all the guest invitations by inviter. Types: <br> TYPE_USER_FRIEND = 10<br> TYPE_USER_PHOTO_TAG = 20<br> TYPE_USER_STORY_TAG = 30<br> TYPE_USER_COLLEAGUE = 40<br> TYPE_OUTFITTER_CLIENT = 100<br> TYPE_OUTFITTER_TEAM = 200<br> TYPE_OUTFITTER_MANAGER = 300<br> TYPE_OUTFITTER_LICENSEE = 400<br> TYPE_BRAND_EMPLOYEE = 1000<br> TYPE_BRAND_PROSTAFF = 2000<br> TYPE_ASSOCIATION_MEMBER = 10000<br>",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::getGuestInvitationsAction",
                 "parameters": [
                     {
@@ -9517,7 +9533,7 @@
                     "Invitation"
                 ],
                 "summary": "Create a Guest Invitation",
-                "description": "Types:\nTYPE_USER_FRIEND = 10<br>\nTYPE_USER_PHOTO_TAG = 20<br>\nTYPE_USER_STORY_TAG = 30<br>\nTYPE_USER_COLLEAGUE = 40<br>\nTYPE_OUTFITTER_CLIENT = 100<br>\nTYPE_OUTFITTER_TEAM = 200<br>\nTYPE_OUTFITTER_MANAGER = 300<br>\nTYPE_OUTFITTER_LICENSEE = 400<br>\nTYPE_BRAND_EMPLOYEE = 1000<br>\nTYPE_BRAND_PROSTAFF = 2000<br>\nTYPE_ASSOCIATION_MEMBER = 10000<br>",
+                "description": "Invite someone to Guidefitter, requiring only an email address and a name. Types: <br> TYPE_USER_FRIEND = 10<br> TYPE_USER_PHOTO_TAG = 20<br> TYPE_USER_STORY_TAG = 30<br> TYPE_USER_COLLEAGUE = 40<br> TYPE_OUTFITTER_CLIENT = 100<br> TYPE_OUTFITTER_TEAM = 200<br> TYPE_OUTFITTER_MANAGER = 300<br> TYPE_OUTFITTER_LICENSEE = 400<br> TYPE_BRAND_EMPLOYEE = 1000<br> TYPE_BRAND_PROSTAFF = 2000<br> TYPE_ASSOCIATION_MEMBER = 10000<br>",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::createGuestInvitationAction",
                 "parameters": [
                     {
@@ -9613,7 +9629,7 @@
                     "Invitation"
                 ],
                 "summary": "Resend a Guest Invitation",
-                "description": "Resend an invitation, reserved for admins. Valid only after 30 days.",
+                "description": "Resends an invitation, reserved for admins. Valid only after 30 days.",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::resendGuestInvitationAction",
                 "parameters": [
                     {
@@ -9648,7 +9664,7 @@
                     "Invitation"
                 ],
                 "summary": "Delete a Guest Invitation",
-                "description": "Delete an invitation. Reserved for admins.",
+                "description": "Deletes an invitation. Reserved for admins.",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::deleteGuestInvitationAction",
                 "parameters": [
                     {
@@ -9685,7 +9701,7 @@
                     "Invitation"
                 ],
                 "summary": "Reward a Guest Invitation",
-                "description": "Flag the invite as rewarded. Invite must be converted, i.e. user is not NULL.",
+                "description": "Flags the invite as rewarded. Invite must be converted, i.e. user is not NULL.",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::rewardGuestInvitationAction",
                 "parameters": [
                     {
@@ -9725,12 +9741,6 @@
                 "description": "Get the top 20 profiles with the most invites",
                 "operationId": "App\\Controller\\Invite\\GuestInvitationController::getInvitesLeaderboardAction",
                 "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
-                    },
                     {
                         "name": "type",
                         "in": "query",
@@ -9871,16 +9881,6 @@
                         }
                     },
                     {
-                        "name": "user",
-                        "in": "query",
-                        "description": "User ID of the member/ghost invited",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
                         "name": "status",
                         "in": "query",
                         "description": "Filter invites on their status: pending/converted/rewarded",
@@ -9914,16 +9914,6 @@
                         "name": "after",
                         "in": "query",
                         "description": "Filter invites sent BEFORE that date (timestamp)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "user",
-                        "in": "query",
-                        "description": "Filter invites sent AFTER that date (timestamp)",
                         "required": false,
                         "explode": false,
                         "schema": {
@@ -10545,7 +10535,7 @@
                 "tags": [
                     "Mail"
                 ],
-                "summary": "Verify an unsubscription request",
+                "summary": "Verify an Unsubscription Request",
                 "description": "Verifies an unsubscription request. Accessible from email only.",
                 "operationId": "App\\Controller\\MailController::unsubscribeMandrillAction",
                 "parameters": [
@@ -10576,14 +10566,11 @@
                     "Campaign"
                 ],
                 "summary": "Get Campaigns",
-                "description": "Search through all the campaigns",
+                "description": "Returns a list of campaigns. If the user is not the admin `brand` parameter is required. ",
                 "operationId": "App\\Controller\\Meta\\CampaignController::getCampaignsAction",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/q"
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
                     },
                     {
                         "name": "to",
@@ -10659,7 +10646,7 @@
                     "Campaign"
                 ],
                 "summary": "Get a Single Campaign",
-                "description": "Get a single campaign",
+                "description": "Returns a single campaign.",
                 "operationId": "App\\Controller\\Meta\\CampaignController::getCampaignAction",
                 "parameters": [
                     {
@@ -10711,6 +10698,32 @@
                         "$ref": "#/components/parameters/with"
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "The title of the campaign (by default the one from Mailchimp)",
+                                        "type": "string"
+                                    },
+                                    "publish": {
+                                        "description": "To publish/unpublish the campaign and make it appear in cockpits",
+                                        "type": "boolean"
+                                    },
+                                    "insider_categories": {
+                                        "description": "The insider categories that received this campaign (Pro Staff = 100)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Updated campaign object",
@@ -10869,12 +10882,9 @@
                     "Tracking"
                 ],
                 "summary": "Get Trackings",
-                "description": "Search through all the trackings",
+                "description": "Returns a list of the trackings. Tracking types are : `review`, `article`, `member`, `outfitter`, `outfitter_phone`, `product`, `photo`, `gop`, `idp`, `cnp`, `oep`, `mip`, `ecp`, `rtp`",
                 "operationId": "App\\Controller\\Meta\\TrackingController::getTrackingsAction",
                 "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
                     {
                         "name": "type",
                         "in": "query",
@@ -10884,9 +10894,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -10911,7 +10918,7 @@
                 "tags": [
                     "Tracking"
                 ],
-                "summary": "Add a Tracking",
+                "summary": "Adds a Tracking. Tracking types are: <br> - odp: Outfitter Detail Page (eid is the profile ID of the outfitter)<br> - mdp: Member Details Page (eid is the profile ID of the user)<br> - phone: Outfitter Phone (eid is the profile ID of the outfitter)<br> - godp: GOP Detail Page (eid is the profile ID of the brand)<br> - iddp: IDP Detail Page (eid is the profile ID of the brand)<br> - cndp: CNP Detail Page (eid is the profile ID of the brand)<br> - oedp: OEP Detail Page (eid is the profile ID of the brand)<br>  - midp: MIP Detail Page (eid is the profile ID of the brand)<br> - frdp: FRP Detail Page (eid is the profile ID of the brand)<br> - ecdp: ECP Detail Page (eid is the profile ID of the brand)<br> - rtdp: RTP Detail Page (eid is the profile ID of the brand)<br> - review_view: Public Review Page (eid is the review ID)<br> - review_scroll: Public Review Page (eid is the review ID)<br> - review_thank: Public Review Page (eid is the review ID)<br> - review_share: Public Review Page (eid is the review ID)<br> - review_comment: Public Review Page (eid is the review ID)<br> - review_bait: Public Review Page, CTA clicked (eid is the review ID)<br> - review_hook: Public Product Page, Added to cart (eid is the review ID)<br> - review_buy: Checkout, Product purchased (eid is the review ID)<br>",
                 "operationId": "App\\Controller\\Meta\\TrackingController::createTrackingAction",
                 "parameters": [
                     {
@@ -12351,6 +12358,9 @@
         },
         "/search/hunting": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Hunting Outfiters",
                 "description": "Search hunting outfitters with products matching filters",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::searchHuntingAction",
@@ -12370,6 +12380,9 @@
         },
         "/search/fishing": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Fishing Outfiters",
                 "description": "Search fishing outfitters with products matching filters",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::searchFishingAction",
@@ -12389,6 +12402,9 @@
         },
         "/search/locations": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Locations",
                 "description": "Search fishing outfitters with products matching filters",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::locationsAction",
@@ -12408,6 +12424,9 @@
         },
         "/search/locations/hunting": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Hunting Locations",
                 "description": "Search fishing outfitters with products matching filters",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::locationsAction",
@@ -12427,6 +12446,9 @@
         },
         "/search/locations/fishing": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Fishing Locations",
                 "description": "Search fishing outfitters with products matching filters",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::locationsAction",
@@ -12446,6 +12468,9 @@
         },
         "/search/animals": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Animals",
                 "description": "Search animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
@@ -12465,6 +12490,9 @@
         },
         "/search/animals/hunting": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Hunting Animals",
                 "description": "Search Hunting Animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
@@ -12484,6 +12512,9 @@
         },
         "/search/animals/fishing": {
             "get": {
+                "tags": [
+                    "Referential"
+                ],
                 "summary": "Search Fishing Animals",
                 "description": "Search animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
@@ -13495,6 +13526,9 @@
         },
         "/photos/{photoId}/likes": {
             "get": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Get Users that Liked the Photo",
                 "description": "Get the list of users that liked a photo",
                 "operationId": "App\\Controller\\Photo\\PhotoLikeController::getLikesAction",
@@ -13524,6 +13558,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Like a Photo",
                 "description": "Like a photo",
                 "operationId": "App\\Controller\\Photo\\PhotoLikeController::likePhotoAction",
@@ -13546,6 +13583,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Photo"
+                ],
                 "summary": "Dislike a Photo",
                 "description": "Dislike a photo",
                 "operationId": "App\\Controller\\Photo\\PhotoLikeController::likePhotoAction",
@@ -15469,7 +15509,7 @@
         "/affiliations": {
             "get": {
                 "tags": [
-                    "Affiliations"
+                    "Affiliation"
                 ],
                 "summary": "Get Affiliations",
                 "description": "Get all the outfitter affiliations (no pagination)",
@@ -15549,7 +15589,7 @@
         "/affiliations/{affiliationId}": {
             "get": {
                 "tags": [
-                    "Affiliations"
+                    "Affiliation"
                 ],
                 "summary": "Get Single Affiliation",
                 "operationId": "App\\Controller\\Profile\\AffiliationController::getAffiliationAction",
@@ -20585,9 +20625,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/users/{userId}": {
+            },
             "put": {
                 "tags": [
                     "User"
@@ -20603,7 +20641,7 @@
                         "required": true,
                         "explode": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
@@ -20703,7 +20741,7 @@
                         "required": true,
                         "explode": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
