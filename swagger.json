@@ -14,7 +14,7 @@
     },
     "servers": [
         {
-            "url": "https://aleksa-new-api.wildfitter.com",
+            "url": "https://api.wildfitter.com",
             "description": "Wildfitter doc test server"
         }
     ],
@@ -2296,45 +2296,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/association-memberships.{_format}": {
-            "get": {
-                "tags": [
-                    "Association"
-                ],
-                "summary": "Export Association Memberships",
-                "description": "Export association memberships. Admins can export all memberships, association managers can only export their association's memberships with the association parameter",
-                "operationId": "App\\Controller\\Association\\AssociationMembershipController::exportAssociationMembershipsAction",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
-                    },
-                    {
-                        "$ref": "#/components/parameters/association"
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "The type of membership (1=outfitter, 2=guide, 3=sportsman, 4=associate)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/parameters/with"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Returns a CSV file"
                     }
                 }
             }
@@ -7172,7 +7133,7 @@
         "/oep-subscriptions": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get OEP Subscriptions",
                 "description": "Returns a list of Outdoor Government subscriptions. This end point is mainly to display the member's brands and their status (My Brands). The parameter `profile` is mandatory if you're not admin. By default Refused are excluded, but Revoked are included.",
@@ -7233,7 +7194,7 @@
             },
             "post": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Create OEP",
                 "description": "Creates an OEP subscription. Can be done by the brand manager (he can add any GF user to its program) or by a user if he's a verified employee of a brand that has an active OEP.",
@@ -7264,7 +7225,7 @@
         "/oep-subscriptions/{oepId}/{profileId}": {
             "get": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Get Single OEP Subscription",
                 "description": "Returns a single OEP subscription.",
@@ -7309,7 +7270,7 @@
             },
             "put": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Update a OEP Subscription",
                 "description": "Updates an OEP Subscription. The user must be authenticated and authorized.",
@@ -7360,7 +7321,7 @@
             },
             "delete": {
                 "tags": [
-                    "Profile"
+                    "Brand"
                 ],
                 "summary": "Delete a CNP subscription. You can only delete a OEP subscription before it's dispatched.",
                 "description": "Deletes a OEP subscription.",
@@ -10991,7 +10952,7 @@
                     "Claim"
                 ],
                 "summary": "Get Claims",
-                "description": "Search claims on outfitters pages. You can search by outfitter or by claimant.",
+                "description": "Returns a list of claims on outfitters pages. You can search by outfitter or by claimant.",
                 "operationId": "App\\Controller\\Outfitter\\ClaimController::getClaimsAction",
                 "parameters": [
                     {
@@ -11036,7 +10997,7 @@
                     "Claim"
                 ],
                 "summary": "Create a claim",
-                "description": "Create a claim.",
+                "description": "Creates a claim.",
                 "operationId": "App\\Controller\\Outfitter\\ClaimController::createClaimAction",
                 "requestBody": {
                     "content": {
@@ -11077,7 +11038,7 @@
                     "Claim"
                 ],
                 "summary": "Get a single Claim",
-                "description": "Get an outfitters claim",
+                "description": "Returns a signle outfitter claim.",
                 "operationId": "App\\Controller\\Outfitter\\ClaimController::getClaimAction",
                 "parameters": [
                     {
@@ -11112,7 +11073,7 @@
                     "Claim"
                 ],
                 "summary": "Update a claim",
-                "description": "Update a claim.",
+                "description": "Updates a claim. The user must be authenticated.",
                 "operationId": "App\\Controller\\Outfitter\\ClaimController::updateClaimAction",
                 "parameters": [
                     {
@@ -11210,7 +11171,7 @@
                     "License"
                 ],
                 "summary": "Get Licenses",
-                "description": "Get all the outfitter's licenses",
+                "description": "Returns all the outfitter's licenses.",
                 "operationId": "App\\Controller\\Outfitter\\LicenseController::getLicensesAction",
                 "parameters": [
                     {
@@ -11245,7 +11206,7 @@
                     "License"
                 ],
                 "summary": "Create a License",
-                "description": "Create a license",
+                "description": "Creates a license. `outfitter` field is required.",
                 "operationId": "App\\Controller\\Outfitter\\LicenseController::createLicenseAction",
                 "requestBody": {
                     "content": {
@@ -11403,7 +11364,7 @@
                     "License"
                 ],
                 "summary": "Delete a License",
-                "description": "Delete a license",
+                "description": "Deletes a license.",
                 "operationId": "App\\Controller\\Outfitter\\LicenseController::deleteLicenseAction",
                 "parameters": [
                     {
@@ -11477,12 +11438,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/location-fence"
-                    },
-                    {
-                        "$ref": "#/components/parameters/lat"
-                    },
-                    {
-                        "$ref": "#/components/parameters/lon"
                     },
                     {
                         "$ref": "#/components/parameters/with"
@@ -12031,9 +11986,6 @@
                         }
                     },
                     {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
                         "$ref": "#/components/parameters/sort"
                     }
                 ],
@@ -12362,8 +12314,110 @@
                     "Referential"
                 ],
                 "summary": "Search Hunting Outfiters",
-                "description": "Search hunting outfitters with products matching filters",
+                "description": "Returns a list of hunting outfitters.",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::searchHuntingAction",
+                "parameters": [
+                    {
+                        "name": "pt",
+                        "in": "query",
+                        "description": "Product type ID (Big Game, Waterfowl, Upland, ...etc)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "l",
+                        "in": "query",
+                        "description": "Filter by outfitter country or state. A list of geoname IDs separated by commas",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "di",
+                        "in": "query",
+                        "description": "Disability filter",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "a",
+                        "in": "query",
+                        "description": "List of animal IDs (groups/species/subspecies) separated by commas, or an array of IDs",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "w",
+                        "in": "query",
+                        "description": "List of weapon IDs separated by commas, or an array of IDs",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "lt",
+                        "in": "query",
+                        "description": "Filter by land type (private/public)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ac",
+                        "in": "query",
+                        "description": "Types of accommodations IDs separated by commas, or an array of IDs",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "bc",
+                        "in": "query",
+                        "description": "Bird cleaning filter (waterfowl and upland)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "dop",
+                        "in": "query",
+                        "description": "Dogs provided filter (waterfowl and upland)t belong to",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "doa",
+                        "in": "query",
+                        "description": "Dogs allowed filter (waterfowl and upland)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Returns an array of OutfitterJson with matching products",
@@ -12384,8 +12438,70 @@
                     "Referential"
                 ],
                 "summary": "Search Fishing Outfiters",
-                "description": "Search fishing outfitters with products matching filters",
+                "description": "Returns a list of fishing outfitters.",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::searchFishingAction",
+                "parameters": [
+                    {
+                        "name": "pt",
+                        "in": "query",
+                        "description": "Product type ID (Big Game, Waterfowl, Upland, ...etc)",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "l",
+                        "in": "query",
+                        "description": "Filter by outfitter country or state. A list of geoname IDs separated by commas",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "di",
+                        "in": "query",
+                        "description": "Disability filter",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "a",
+                        "in": "query",
+                        "description": "List of animal IDs (groups/species/subspecies) separated by commas, or an array of IDs",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "me",
+                        "in": "query",
+                        "description": "Fishing method IDs separated by commas",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "wt",
+                        "in": "query",
+                        "description": "Water Type IDs separated by commas",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Returns an array of OutfitterJson with matching products",
@@ -12474,6 +12590,11 @@
                 "summary": "Search Animals",
                 "description": "Search animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Returns an array of animals",
@@ -12496,6 +12617,11 @@
                 "summary": "Search Hunting Animals",
                 "description": "Search Hunting Animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Returns an array of animals",
@@ -12518,6 +12644,11 @@
                 "summary": "Search Fishing Animals",
                 "description": "Search animals",
                 "operationId": "App\\Controller\\Outfitter\\SearchController::animalsAction",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Returns an array of animals",
@@ -12538,7 +12669,7 @@
                     "Photo"
                 ],
                 "summary": "Get Albums",
-                "description": "Get all the albums of a profile",
+                "description": "Retruns a list of albums of a profile",
                 "operationId": "App\\Controller\\Photo\\AlbumController::getAlbumsAction",
                 "parameters": [
                     {
@@ -12597,8 +12728,12 @@
                                         "description": "A valid name (e.g. not URL or email)",
                                         "type": "integer"
                                     },
+                                    "cover": {
+                                        "description": "The ID of the photo that will be the album cover",
+                                        "type": "integer"
+                                    },
                                     "photos": {
-                                        "description": "The ID of the owner's profile",
+                                        "description": "Array of photo IDs",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
@@ -12634,6 +12769,7 @@
                     "Photo"
                 ],
                 "summary": "Get a Single Album",
+                "description": "Returns a single album.",
                 "operationId": "App\\Controller\\Photo\\AlbumController::getAlbumAction",
                 "parameters": [
                     {
@@ -12693,6 +12829,11 @@
                                     },
                                     "name": {
                                         "description": "A valid name (e.g. not URL or email)",
+                                        "type": "integer",
+                                        "example": "https://api.guidefitter.com/albums/123"
+                                    },
+                                    "cover": {
+                                        "description": "The ID of the photo that will be the album cover",
                                         "type": "integer",
                                         "example": "https://api.guidefitter.com/albums/123"
                                     },
@@ -12762,17 +12903,24 @@
                     "Photo"
                 ],
                 "summary": "Get Brags",
-                "description": "Search through brags with filters",
+                "description": "Search through brags with filters.",
                 "operationId": "App\\Controller\\Photo\\PhotoController::searchBragsAction",
                 "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
                     {
                         "$ref": "#/components/parameters/sort"
                     },
                     {
                         "$ref": "#/components/parameters/ot"
+                    },
+                    {
+                        "name": "pt",
+                        "in": "query",
+                        "description": "Product type ID",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
                         "$ref": "#/components/parameters/south"
@@ -12874,12 +13022,9 @@
                     "Photo"
                 ],
                 "summary": "Get Photos",
-                "description": "Search photos. Sort criterias:<br>- 'new': by upload date, recent to old<br>- 'old': by upload date, old to recent<br>- 'pos-desc': by album position, top to bottom<br>- 'pos-asc': by album position, bottom to top<br>",
+                "description": "Returns a list of photos. Sort criterias:<br>- `new`: by upload date, recent to old<br>- `old`: by upload date, old to recent<br>- `pos-desc`: by album position, top to bottom<br>- `pos-asc`: by album position, bottom to top<br>",
                 "operationId": "App\\Controller\\Photo\\PhotoController::getPhotosAction",
                 "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
                     {
                         "$ref": "#/components/parameters/sort"
                     },
@@ -13120,7 +13265,7 @@
                     "Photo"
                 ],
                 "summary": "Add a Photo",
-                "description": "Triggers processing of photo (Lambdas) and creating photo entity in database.<br>- Photo for Feed: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'standard'} (then call api.posts.create_post using 'photo') <br>- Photo for Story: {'profile': 123, 'filename': 'Image 1.PNG', 'album': 456, 'type': 'standard'} (album is the story photo album) <br>- Profile avatar: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'avatar', 'crop_x': 120, 'crop_y': 5, 'crop_w': 255, 'crop_h': 255} (then call e.g. api.users.update_user to update 'avatar') <br>- Facebook avatar: {'profile': 123, 'type': 'facebook'} (then call e.g. api.users.update_user to update 'avatar') <br>- Profile cover: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'cover', 'crop_x': 120, 'crop_y': 5, 'crop_w': 1920, 'crop_h': 800} (then call e.g. api.outfitters.update_outfitter to update 'cover') <br>- Customer avatar: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'avatar', 'private': true, 'crop_x': 120, 'crop_y': 5, 'crop_w': 255, 'crop_h': 255} (then call api.customers.update_customer to update 'avatar') <br>- Photo for Brag: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'brag', 'brag_category': 10, 'crop_x': 120, 'crop_y': 5, 'crop_w': 600, 'crop_h': 600, 'animals': [1001, 2001], 'profiles': [4325, 4328], 'tags': ['nofilter', 'hunting-sunday']} <br>",
+                "description": "Triggers processing of photo (Lambdas) and creating photo entity in database. `profile` field is true.<br>- Photo for Feed: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'standard'} (then call api.posts.create_post using 'photo') <br>- Photo for Story: {'profile': 123, 'filename': 'Image 1.PNG', 'album': 456, 'type': 'standard'} (album is the story photo album) <br>- Profile avatar: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'avatar', 'crop_x': 120, 'crop_y': 5, 'crop_w': 255, 'crop_h': 255} (then call e.g. api.users.update_user to update 'avatar') <br>- Facebook avatar: {'profile': 123, 'type': 'facebook'} (then call e.g. api.users.update_user to update 'avatar') <br>- Profile cover: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'cover', 'crop_x': 120, 'crop_y': 5, 'crop_w': 1920, 'crop_h': 800} (then call e.g. api.outfitters.update_outfitter to update 'cover') <br>- Customer avatar: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'avatar', 'private': true, 'crop_x': 120, 'crop_y': 5, 'crop_w': 255, 'crop_h': 255} (then call api.customers.update_customer to update 'avatar') <br>- Photo for Brag: {'profile': 123, 'filename': 'Image 1.PNG', 'type': 'brag', 'brag_category': 10, 'crop_x': 120, 'crop_y': 5, 'crop_w': 600, 'crop_h': 600, 'animals': [1001, 2001], 'profiles': [4325, 4328], 'tags': ['nofilter', 'hunting-sunday']} <br>",
                 "operationId": "App\\Controller\\Photo\\PhotoController::createPhotoAction",
                 "requestBody": {
                     "content": {
@@ -13243,6 +13388,7 @@
                     "Photo"
                 ],
                 "summary": "Get Photos",
+                "description": "Returns a single photo.",
                 "operationId": "App\\Controller\\Photo\\PhotoController::getPhotoAction",
                 "parameters": [
                     {
@@ -13431,7 +13577,7 @@
                 "tags": [
                     "Photo"
                 ],
-                "summary": "Remove a Signle Photo",
+                "summary": "Remove a Single Photo",
                 "operationId": "App\\Controller\\Photo\\PhotoController::deletePhotosAction",
                 "parameters": [
                     {
@@ -13614,12 +13760,9 @@
                     "Post"
                 ],
                 "summary": "Get posts",
-                "description": "Get a list of posts",
+                "description": "Returns a list of posts.",
                 "operationId": "App\\Controller\\Post\\PostController::getPostsAction",
                 "parameters": [
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
                     {
                         "$ref": "#/components/parameters/sort"
                     },
@@ -13704,16 +13847,6 @@
                         }
                     },
                     {
-                        "name": "is-true",
-                        "in": "query",
-                        "description": "If TRUE, will only return a Post if logged in user follows its author",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    },
-                    {
                         "$ref": "#/components/parameters/with"
                     }
                 ],
@@ -13734,7 +13867,7 @@
                 "tags": [
                     "Post"
                 ],
-                "summary": "Create a Post",
+                "summary": "Creates a Post. `author` field is required.",
                 "operationId": "App\\Controller\\Post\\PostController::createPostAction",
                 "requestBody": {
                     "content": {
@@ -13870,7 +14003,7 @@
                 "tags": [
                     "Post"
                 ],
-                "summary": "Get a Single Post",
+                "summary": "Returns a Single Post.",
                 "operationId": "App\\Controller\\Post\\PostController::getPostAction",
                 "parameters": [
                     {
@@ -13904,7 +14037,7 @@
                 "tags": [
                     "Post"
                 ],
-                "summary": "Update a Post",
+                "summary": "Updates a Post. The user must be authenticated.",
                 "operationId": "App\\Controller\\Post\\PostController::updatePostAction",
                 "parameters": [
                     {
@@ -13977,7 +14110,7 @@
                 "tags": [
                     "Post"
                 ],
-                "summary": "Delete a Post",
+                "summary": "Deletes a Post.",
                 "operationId": "App\\Controller\\Post\\PostController::deletePostAction",
                 "parameters": [
                     {
@@ -14004,7 +14137,7 @@
                     "Post"
                 ],
                 "summary": "Get Post Likes",
-                "description": "Get the list of users who liked a post. Use only this end point for post that are not Photo or Review posts.<br>For photo posts `type=30`: api.photos.get_likes <br>For review posts `type=80`: api.reviews.get_likes <br>",
+                "description": "Returns the list of users who liked a post. Use only this end point for post that are not Photo or Review posts.<br>For photo posts `type=30`: api.photos.get_likes <br>For review posts `type=80`: api.reviews.get_likes <br>",
                 "operationId": "App\\Controller\\Post\\PostLikeController::getLikesAction",
                 "parameters": [
                     {
@@ -14088,7 +14221,7 @@
                     "Booking"
                 ],
                 "summary": "Get Bookings",
-                "description": "Search through customer bookings. For a non admins, the `profile` parameter is required",
+                "description": "Search through customer bookings. For regular users, the `profile` parameter is required",
                 "operationId": "App\\Controller\\Pro\\BookingController::getBookingsAction",
                 "parameters": [
                     {
@@ -14111,6 +14244,16 @@
                         "name": "profile",
                         "in": "query",
                         "description": "Profile ID of the outfitter the Customer belongs to",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "customer",
+                        "in": "query",
+                        "description": "The id of the customer.",
                         "required": false,
                         "explode": false,
                         "schema": {
@@ -14228,7 +14371,7 @@
                 "tags": [
                     "Booking"
                 ],
-                "summary": "Create a Booking",
+                "summary": "Create a Booking. `customer` field is required.",
                 "operationId": "App\\Controller\\Pro\\BookingController::createBookingAction",
                 "requestBody": {
                     "content": {
@@ -14860,7 +15003,7 @@
                     "Customer"
                 ],
                 "summary": "Get Customers",
-                "description": "Search through Guidefitter customers.",
+                "description": "Returns a list of guidefitter customers.",
                 "operationId": "App\\Controller\\Pro\\CustomerController::getCustomersAction",
                 "parameters": [
                     {
@@ -14868,6 +15011,16 @@
                     },
                     {
                         "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "profile",
+                        "in": "query",
+                        "description": "The ID of the profile of the outfitter to search customers",
+                        "required": true,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
                     },
                     {
                         "name": "products",
@@ -14940,16 +15093,6 @@
                         "explode": false,
                         "schema": {
                             "type": "boolean"
-                        }
-                    },
-                    {
-                        "name": "profile",
-                        "in": "query",
-                        "description": "The ID of the profile of the outfitter to search customers",
-                        "required": true,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
                         }
                     },
                     {
@@ -15042,7 +15185,7 @@
                 "tags": [
                     "Customer"
                 ],
-                "summary": "Get a Single Customer",
+                "summary": "Returns a Single Customer.",
                 "operationId": "App\\Controller\\Pro\\CustomerController::getCustomerAction",
                 "parameters": [
                     {
@@ -15543,7 +15686,7 @@
                 "tags": [
                     "Affiliation"
                 ],
-                "summary": "Create an Affiliation",
+                "summary": "Creates an Affiliation. `profile` field is required.",
                 "operationId": "App\\Controller\\Profile\\AffiliationController::createAffiliationAction",
                 "requestBody": {
                     "content": {
@@ -15854,7 +15997,7 @@
                 "tags": [
                     "Clientship"
                 ],
-                "summary": "Create a Clientship",
+                "summary": "Creates a Clientship. A clientship is the association entity between a user and an outfitter, the 'I've used this outfitter' button. `outfitter` field is required.",
                 "operationId": "App\\Controller\\Profile\\ClientshipController::createClientshipAction",
                 "requestBody": {
                     "content": {
@@ -15899,6 +16042,7 @@
                     "Clientship"
                 ],
                 "summary": "Delete a Clientships",
+                "description": "Deletes a clientship.",
                 "operationId": "App\\Controller\\Profile\\ClientshipController::deleteClientshipAction",
                 "parameters": [
                     {
@@ -15969,7 +16113,7 @@
                 "tags": [
                     "Experience"
                 ],
-                "summary": "Create an Experience",
+                "summary": "Creates an Experience.`profile` field is required.",
                 "operationId": "App\\Controller\\Profile\\ExperienceController::createExperienceAction",
                 "requestBody": {
                     "content": {
@@ -16162,6 +16306,12 @@
                 "description": "Get all the profiles favorited by a given user (default pagination 12).<br> Sort options:<br>- new: new profiles favorited first<br>- old: first profiles favorited first<br>- best: common favorites first, then new profiles favorited (default)<br>",
                 "operationId": "App\\Controller\\Profile\\FavoriteController::getFavoritesAction",
                 "parameters": [
+                    {
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
                     {
                         "name": "profileId",
                         "in": "path",
@@ -16459,7 +16609,7 @@
                     "Profile"
                 ],
                 "summary": "Add a Profile Manager",
-                "description": "Add a manager to the profile (must be authenticated)",
+                "description": "Adds a manager to the profile. The must be authenticated. `profile` field is required.",
                 "operationId": "App\\Controller\\Profile\\ManagerController::addManagerAction",
                 "parameters": [
                     {
@@ -16556,12 +16706,6 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
-                        "$ref": "#/components/parameters/sort"
                     },
                     {
                         "name": "type",
@@ -16955,7 +17099,7 @@
                     "Profile"
                 ],
                 "summary": "Get Profiles",
-                "description": "Search through Guidefitter profiles. Pagination is triggered only when passing the parameter 'page', otherwise only the first 8 results are returned.",
+                "description": "Search through Guidefitter profiles. Pagination is triggered only when passing the parameter 'page', otherwise only the first 8 results are returned. `deleted`, and `profile-status` are reserved for admins.",
                 "operationId": "App\\Controller\\Profile\\ProfileController::getProfilesAction",
                 "parameters": [
                     {
@@ -17237,7 +17381,7 @@
                 "tags": [
                     "Profile-Verification"
                 ],
-                "summary": "Create a Profile Verifications",
+                "summary": "Create a Profile Verifications. `profile` field is required. ",
                 "description": "Creates a profile verification.",
                 "operationId": "App\\Controller\\Profile\\ProfileVerificationController::createProfileVerificationAction",
                 "requestBody": {
@@ -17540,38 +17684,31 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "brand_message",
-                        "in": "query",
-                        "description": "Change the message written by the admin to the brand.",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "active",
-                        "in": "query",
-                        "description": "Set the PV as active and others as inactive. If present, API assumes it's TRUE (the value true/false is ignored)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    },
-                    {
-                        "name": "duration",
-                        "in": "query",
-                        "description": "The number of years of validity. 1, 2 or 3 accepted only. Default is 1.",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "brand_message": {
+                                        "description": "Change the message written by the admin to the brand.",
+                                        "type": "string"
+                                    },
+                                    "active": {
+                                        "description": "Set the PV as active and others as inactive. If present, API assumes it's TRUE (the value true/false is ignored)",
+                                        "type": "boolean"
+                                    },
+                                    "duration": {
+                                        "description": "The number of years of validity. 1, 2 or 3 accepted only. Default is 1.",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Accepted verification object",
@@ -17604,18 +17741,23 @@
                         "schema": {
                             "type": "integer"
                         }
-                    },
-                    {
-                        "name": "refusal_message",
-                        "in": "query",
-                        "description": "The message written by the admin refusing the verification.",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "refusal": {
+                                        "description": "The message written by the admin refusing the verification.",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Accepted verification object",
@@ -19382,7 +19524,57 @@
                 "operationId": "App\\Controller\\Thread\\LeadController::getLeadsAction",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/with"
+                        "$ref": "#/components/parameters/q"
+                    },
+                    {
+                        "name": "profile",
+                        "in": "query",
+                        "description": "Recipient profile ID (to get only threads where that profile is recipient)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "read",
+                        "in": "query",
+                        "description": "Filter to get only read or unread threads",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "has-answer",
+                        "in": "query",
+                        "description": "Filter leads that have an answer",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "has-feedback",
+                        "in": "query",
+                        "description": "Filter leads that have feedback",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "ignore-blocks",
+                        "in": "query",
+                        "description": "Set this filter to force getting messages from blocked profiles (false by default)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
                     }
                 ],
                 "responses": {
@@ -19403,7 +19595,7 @@
                     "Booking"
                 ],
                 "summary": "Create a Lead",
-                "description": "Creates a message. The thread will be created if needed, otherwise it'll be posted as a reply to existing thread between the involved profiles.",
+                "description": "Creates a message. The thread will be created if needed, otherwise it'll be posted as a reply to existing thread between the involved profiles. `outfitter`, `email`, `first_name`, `last_name`, fields are required. The user must be authenticated",
                 "operationId": "App\\Controller\\Thread\\LeadController::createLeadAction",
                 "requestBody": {
                     "content": {
@@ -19616,6 +19808,66 @@
                         "$ref": "#/components/parameters/sort"
                     },
                     {
+                        "name": "profile",
+                        "in": "query",
+                        "description": "Recipient profile ID (to get only threads where that profile is recipient)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "read",
+                        "in": "query",
+                        "description": "Filter to get only read or unread threads",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "lead",
+                        "in": "query",
+                        "description": "Filter to get lead messages only",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "before",
+                        "in": "query",
+                        "description": "Filter threads updated (i.e. last message sent) BEFORE that date (timestamp)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "after",
+                        "in": "query",
+                        "description": "Filter threads updated (i.e. last message sent) AFTER that date (timestamp)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ignore-blocks",
+                        "in": "query",
+                        "description": "Set this filter to force getting messages from blocked profiles (false by default)",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
                         "$ref": "#/components/parameters/with"
                     }
                 ],
@@ -19788,9 +20040,9 @@
                 "operationId": "App\\Controller\\Thread\\ThreadController::getThreadAction",
                 "parameters": [
                     {
-                        "name": "duelId",
+                        "name": "threadId",
                         "in": "path",
-                        "description": "ID of the duel",
+                        "description": "ID of the thread",
                         "required": true,
                         "explode": false,
                         "schema": {
@@ -19856,7 +20108,7 @@
                     "Thread"
                 ],
                 "summary": "Get Thread Messages",
-                "description": "Returns thread messages. Pivot pagination: the `pivot` parameter is the timestamp of the message making the pivot with the next page. If sorting is `new` (default), it'll return messages before the pivot in chronological order. If sorting is `old`, it'll return messages after the pivot in chronological order.<br><br>`meta` will contain a prop `countNext` to know how many more messages there are after/before the pivot message",
+                "description": "Returns thread messages. Pivot pagination: the `pivot` parameter is the timestamp of the message making the pivot with the next page. If sorting is `new` (default), it'll return messages before the pivot in chronological order. If sorting is `old`, it'll return messages after the pivot in chronological order.<br><br>`meta` will contain a prop `countNext` to know how many more messages there are after/before the pivot message.",
                 "operationId": "App\\Controller\\Thread\\ThreadController::getThreadMessagesAction",
                 "parameters": [
                     {
@@ -19870,30 +20122,7 @@
                         }
                     },
                     {
-                        "$ref": "#/components/parameters/q"
-                    },
-                    {
                         "$ref": "#/components/parameters/sort"
-                    },
-                    {
-                        "name": "before",
-                        "in": "query",
-                        "description": "Get only messages sent BEFORE that date (timestamp)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "after",
-                        "in": "query",
-                        "description": "Get only messages sent AFTER that date (timestamp)",
-                        "required": false,
-                        "explode": false,
-                        "schema": {
-                            "type": "integer"
-                        }
                     },
                     {
                         "name": "pivot",
@@ -20159,7 +20388,7 @@
                     "User"
                 ],
                 "summary": "Request Password Change",
-                "description": "Request an email to be sent with a link to guidefitter.com where a user can change his password. `email` parameter is required.",
+                "description": "Requests an email to be sent with a link to guidefitter.com where a user changes his password. `email` parameter is required.",
                 "operationId": "App\\Controller\\User\\PasswordController::requestPasswordResetAction",
                 "requestBody": {
                     "content": {
@@ -20318,12 +20547,6 @@
                         "$ref": "#/components/parameters/location-fence"
                     },
                     {
-                        "$ref": "#/components/parameters/lat"
-                    },
-                    {
-                        "$ref": "#/components/parameters/lon"
-                    },
-                    {
                         "$ref": "#/components/parameters/with"
                     }
                 ],
@@ -20344,7 +20567,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Create User",
+                "summary": "Create a User",
                 "description": "Creates a user and its profile. The response will contain a cookie to authenticate the user.",
                 "operationId": "App\\Controller\\User\\UserController::createUserAction",
                 "requestBody": {
@@ -20630,7 +20853,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Update User",
+                "summary": "Update a User",
                 "description": "Updates a user and its profile. The user must be authenticated",
                 "operationId": "App\\Controller\\User\\UserController::updateUserAction",
                 "parameters": [
@@ -20730,7 +20953,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Delete User",
+                "summary": "Delete a User",
                 "description": "Deletes the user and its profile.",
                 "operationId": "App\\Controller\\User\\UserController::deleteUserAction",
                 "parameters": [
@@ -20836,6 +21059,7 @@
                     "User"
                 ],
                 "summary": "Update User - Magento",
+                "description": "Updates the user and its profile. The user must be authenticated.",
                 "operationId": "App\\Controller\\User\\UserController::updateUserShopAction",
                 "parameters": [
                     {
@@ -20895,6 +21119,7 @@
                     "User"
                 ],
                 "summary": "User Shop Status",
+                "description": "Returns a user, and its status for a shop.",
                 "operationId": "App\\Controller\\User\\UserController::getUserShopAction",
                 "parameters": [
                     {
@@ -20927,7 +21152,8 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "User Single User - Magento",
+                "summary": "Get a Single User - Magento",
+                "description": "",
                 "operationId": "App\\Controller\\User\\UserController::getUserAdminShopAction",
                 "parameters": [
                     {
@@ -21059,7 +21285,7 @@
                     "Vendor"
                 ],
                 "summary": "Get Vendors",
-                "description": "Returns a list of vendors. Public filters are `q`, `type`, `insider-category` and `insider-type`. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance. To sort vendors by proximity, pass a latitude and longitude and results will be sorted by their proximity (works only if 'q' is not set)",
+                "description": "Returns a list of vendors. Admin filters are `deleted`, `profile-status`, `has-domain` and. Sort order is ignored when the `q` parameter is set, and instead results are sorted by match relevance. To sort vendors by proximity, pass a `latitude` and `longitude` and results will be sorted by their proximity (works only if 'q' is not set)",
                 "operationId": "App\\Controller\\Vendor\\VendorController::getVendorsAction",
                 "parameters": [
                     {
@@ -21181,6 +21407,7 @@
                     "Vendor"
                 ],
                 "summary": "Get a Single Vendor",
+                "description": "Returns a single vendor and its profile.",
                 "operationId": "App\\Controller\\Vendor\\VendorController::getVendorAction",
                 "parameters": [
                     {
@@ -21400,6 +21627,7 @@
                     "Vendor"
                 ],
                 "summary": "Get a Single Vendor",
+                "description": "Returns a single vendor and its profile.",
                 "operationId": "App\\Controller\\Vendor\\VendorController::getVendorAction",
                 "parameters": [
                     {
@@ -21468,7 +21696,7 @@
                     "Vendor"
                 ],
                 "summary": "Create a Vendor",
-                "description": "Creates a vendor and its profile.Vendor types are:<br><br>- 30: Military Branch<br>- 40: Municipal Law Enforcement<br>- 41: Country Law Enforcement<br>- 42: State Police<br>- 43: Federal Law Enforcement<br>- 45: Fire Department<br>- 46: Fire Marshal<br>- 47: EMS Department<br>- 50: State Government<br>- 51: Federal Government<br>- 60: Conservation Group<br>",
+                "description": "Creates a vendor and its profile.Vendor types are:<br>- 30: Military Branch<br>- 40: Municipal Law Enforcement<br>- 41: Country Law Enforcement<br>- 42: State Police<br>- 43: Federal Law Enforcement<br>- 45: Fire Department<br>- 46: Fire Marshal<br>- 47: EMS Department<br>- 50: State Government<br>- 51: Federal Government<br>- 60: Conservation Group<br>",
                 "operationId": "App\\Controller\\Vendor\\VendorController::createVendorAction",
                 "requestBody": {
                     "content": {
@@ -21569,7 +21797,7 @@
                     "Vendor"
                 ],
                 "summary": "Get Vendor Employees",
-                "description": "Returns an array of vendor employess.",
+                "description": "`api.vendors.get_employeesg`<br>Returns an array of vendor employess. Only admins can search without filters.",
                 "operationId": "App\\Controller\\Vendor\\VendorEmployeeController::getVendorEmployeesAction",
                 "parameters": [
                     {
