@@ -25,7 +25,7 @@
                     "Activity"
                 ],
                 "summary": "Get Activities",
-                "description": "Search through activities.",
+                "description": "`api.activities.get_activities`<br><br>Search through activities.",
                 "operationId": "App\\Controller\\Admin\\ActivityController::getActivitiesAction",
                 "parameters": [
                     {
@@ -21814,7 +21814,8 @@
                         "explode": false,
                         "schema": {
                             "type": "integer"
-                        }
+                        },
+                        "example": 45
                     },
                     {
                         "name": "brand",
