@@ -21813,9 +21813,9 @@
                         "required": false,
                         "explode": false,
                         "schema": {
-                            "type": "integer"
-                        },
-                        "example": 45
+                            "type": "integer",
+                            "default": "null"
+                        }
                     },
                     {
                         "name": "brand",
@@ -21824,7 +21824,8 @@
                         "required": false,
                         "explode": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": null
                         }
                     },
                     {
@@ -23859,7 +23860,8 @@
                 "required": false,
                 "explode": false,
                 "schema": {
-                    "type": "string"
+                    "type": "string",
+                    "default": ""
                 }
             },
             "sort": {
