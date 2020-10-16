@@ -21189,14 +21189,7 @@
                         }
                     },
                     "404": {
-                        "description": "When user not found from magento ID or his profile is deactivated or the brand is not found or offline or deleted",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/user"
-                                }
-                            }
-                        }
+                        "description": "When user not found from magento ID or his profile is deactivated or the brand is not found or offline or deleted"
                     }
                 }
             }
@@ -21374,9 +21367,6 @@
                         "$ref": "#/components/parameters/location"
                     },
                     {
-                        "$ref": "#/components/parameters/location-bis"
-                    },
-                    {
                         "$ref": "#/components/parameters/location-fence"
                     },
                     {
@@ -21429,7 +21419,33 @@
                         "description": "Array of vendor objects",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/vendor"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vendor not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Get one vendor and its profile",
+                                            "type": "string",
+                                            "default": "Vendor not found",
+                                            "example": "https://api.guidefitter.com/vendors/5002"
+                                        },
+                                        "code": {
+                                            "description": "Get one vendor and its profile",
+                                            "type": "string",
+                                            "default": "404",
+                                            "example": "https://api.guidefitter.com/vendors/5002"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
