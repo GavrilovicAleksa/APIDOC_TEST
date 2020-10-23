@@ -22322,7 +22322,7 @@
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
                     },
                     "id": {
                         "description": "Brand ID",
@@ -22894,6 +22894,10 @@
                         "items": {
                             "$ref": "#/components/schemas/phone"
                         }
+                    },
+                    "owner" : {
+                        "$ref": "#/components/schemas/user",
+                        "default" : "with=REQ_OUTFITTER_OWNER for instrance"
                     },
                     "assoc": {
                         "description": "Is the outfitter member of the NMCOG association?\nDeprecated, use association prop instead",
