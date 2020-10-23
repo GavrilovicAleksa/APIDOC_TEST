@@ -22458,7 +22458,7 @@
             "comment": {
                 "properties": {
                     "id": {
-                        "description": "Comment ID",
+                        "description": "Comment ID",//Comment Description
                         "type": "string"
                     },
                     "content": {
