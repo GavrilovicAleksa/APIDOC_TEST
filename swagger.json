@@ -22896,7 +22896,6 @@
                         }
                     },
                     "owner" : {
-                        "$ref": "#/components/schemas/user",
                         "default" : "with=REQ_OUTFITTER_OWNER for instrance"
                     },
                     "assoc": {
