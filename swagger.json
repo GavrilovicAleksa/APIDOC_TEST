@@ -22984,6 +22984,52 @@
                         "description": "Association name",
                         "type": "string"
                     },
+                    "description": {
+                        "description": "Association description\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Association description. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "url": {
+                        "description": "Association website URL\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Association website URL. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "email": {
+                        "description": "Association email address\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Association email address. ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "feeOutfitter": {
+                        "description": "Annual fee of an outfitter membership (in US dollars)\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "number",
+                        "format": "float",
+                        "default": "<float> Annual fee of an outfitter membership (in US dollars). ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "feeGuide": {
+                        "description": "Annual fee of a guide membership (in US dollars)\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "number",
+                        "format": "float",
+                        "default": "<float> Annual fee of a guide membership (in US dollars). ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "feeAssociate": {
+                        "description": "Annual fee of an associate membership (in US dollars)\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "number",
+                        "format": "float",
+                        "default": "<float> Annual fee of an associate membership (in US dollars). ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "affidavit": {
+                        "description": "The filename of the affidavit letter written by Bryan for brand managers<br>\nFile is located at [LIBRARY_CDN]/misc/afffidavits\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The filename of the affidavit letter written by Bryan for brand managers<br>. File is located at [LIBRARY_CDN]/misc/afffidavits. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
+                    "address": {
+                        "description": "Association address\n(with=REQ_ASSOCIATION_ADDRESS)",
+                        "default": "<AddressJson> Association address. (with=REQ_ASSOCIATION_ADDRESS)."
+                    },
+                    "jurisdiction": {
+                        "description": "The jurisdiction of the association. Can be a state or a country\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "default": "<GeoStateJson|GeoCountryJson> The jurisdiction of the association. Can be a state or a country. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
                     "profile": {
                         "description": "Association GF profile"
                     },
@@ -22992,7 +23038,8 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/phone"
-                        }
+                        },
+                        "default": "<PhoneJson> Phones."
                     }
                 },
                 "type": "object"
