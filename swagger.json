@@ -22770,11 +22770,13 @@
                 "properties": {
                     "id": {
                         "description": "Address ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Address ID."
                     },
                     "city": {
                         "description": "The city",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The city."
                     },
                     "state": {
                         "$ref": "#/components/schemas/state"
@@ -22784,21 +22786,30 @@
                     },
                     "street1": {
                         "description": "First line of the street address\nACL_SHARED",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> First line of the street address. ACL_SHARED."
                     },
                     "street2": {
                         "description": "Second line of the street address\nACL_SHARED",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Second line of the street address. ACL_SHARED."
                     },
                     "zip": {
                         "description": "The ZIP code\nACL_SHARED",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ZIP code. ACL_SHARED."
                     },
                     "lon": {
-                        "description": "The longitude of the address\nACL_SHARED"
+                        "description": "The longitude of the address\nACL_SHARED",
+                        "default": "<decimal> The longitude of the address. ACL_SHARED."
                     },
                     "lat": {
-                        "description": "The latitude of the address\nACL_SHARED"
+                        "description": "The latitude of the address\nACL_SHARED",
+                        "default": "<decimal> The latitude of the address. ACL_SHARED."
+                    },
+                    "proximity": {
+                        "description": "The proximity of the address in metres (see doc for api.vendors.get_vendors)",
+                        "default": "<decimal> The proximity of the address in metres (see doc for api.vendors.get_vendors)."
                     }
                 },
                 "type": "object"
@@ -22807,43 +22818,54 @@
                 "properties": {
                     "id": {
                         "description": "The Affiliation ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The Affiliation ID."
                     },
                     "experience": {
-                        "$ref": "#/components/schemas/experience"
+                        "description": "The user professional experience\n(with=REQ_EXPERIENCE_AFFILIATION)",
+                        "default": "<ExperienceJson> The user professional experience. (with=REQ_EXPERIENCE_AFFILIATION)."
                     },
                     "outfitter": {
                         "$ref": "#/components/schemas/outfitter"
                     },
                     "isAccepted": {
                         "description": "Is the affiliation accepted by the outfitter",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the affiliation accepted by the outfitter."
                     },
                     "isPending": {
                         "description": "Is the affiliation pending for outfitter answer",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the affiliation pending for outfitter answer."
                     }
                 },
                 "type": "object"
             },
             "album": {
                 "properties": {
+                    "id": {
+                        "description": "Album ID",
+                        "type": "integer",
+                        "default": "<integer> Album ID."
+                    },
                     "name": {
                         "description": "Album name (null for stories albums and avatar albums)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Album name (null for stories albums and avatar albums)."
                     },
                     "cover": {
                         "$ref": "#/components/schemas/photo"
                     },
                     "isAvatar": {
                         "description": "True if the album is the profile's system album containing all the avatars/covers he uploded",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> True if the album is the profile's system album containing all the avatars/covers he uploded."
                     },
                     "photos": {
                         "description": "The album photos, ordered by position in album",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/photo"
+                            "type": "PhotoJson"
                         }
                     }
                 },
@@ -22853,52 +22875,69 @@
                 "properties": {
                     "id": {
                         "description": "Animal ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Animal ID."
                     },
                     "type": {
                         "description": "Entity Type\nGROUP (0) / SPECIES (1) / SUBSPECIES (2)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Entity Type. GROUP (0) / SPECIES (1) / SUBSPECIES (2)."
                     },
                     "outfittingType": {
                         "description": "Outfitting Type ID (10=Hunting, 20=Fishing)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Outfitting Type ID (10=Hunting, 20=Fishing)."
                     },
                     "hash": {
                         "description": "Animal hash, a unique string to use in URLs",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Animal hash, a unique string to use in URLs."
                     },
                     "name": {
                         "description": "Animal name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Animal name."
                     },
                     "sName": {
                         "description": "Taxonomic name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Taxonomic name."
                     },
                     "alias": {
                         "description": "An array of aliases",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> An array of aliases."
                     },
                     "tags": {
                         "description": "An array of hashtags",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> An array of hashtags."
                     },
                     "parent": {
                         "description": "Name of the parent species/group",
-                        "type": "string"
+                        "default": "<AnimalJson> Name of the parent species/group."
+                    },
+                    "children": {
+                        "description": "Name of the parent species/group\n(with=REQ_ANIMAL_CHILDREN)",
+                        "type": "array",
+                        "items": {
+                            "type": "AnimalJson"
+                        },
+                        "default": "<AnimalJson> Name of the parent species/group. (with=REQ_ANIMAL_CHILDREN)."
                     },
                     "productTypes": {
                         "description": "Product types codes",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> Product types codes."
                     }
                 },
                 "type": "object"
@@ -22907,65 +22946,107 @@
                 "properties": {
                     "id": {
                         "description": "Article ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Article ID."
                     },
                     "type": {
                         "description": "Article type (1=news, 2=company news, 3=jobs, 4=landing page, 5=video, 6=giveaway)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Article type (1=news, 2=company news, 3=jobs, 4=landing page, 5=video, 6=giveaway)."
                     },
                     "title": {
                         "description": "Article Title",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article Title."
                     },
                     "summary": {
                         "description": "Article summary",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article summary."
                     },
                     "pageTitle": {
                         "description": "Article Page Title (for SEO)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article Page Title (for SEO)."
                     },
                     "description": {
                         "description": "Article description used for SEO in meta \"description\" and \"og:description\"",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article description used for SEO in meta \"description\" and \"og:description\"."
+                    },
+                    "videoUrl": {
+                        "description": "The full URL to the video hosted on VIMEO (only if article type is video)",
+                        "type": "string",
+                        "default": "<string> The full URL to the video hosted on VIMEO (only if article type is video)."
+                    },
+                    "isOutfitterSpotlight": {
+                        "description": "Is the article a 'paid' outfitter spotlight\n(with=REQ_ARTICLE_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> Is the article a 'paid' outfitter spotlight. (with=REQ_ARTICLE_DETAILS)."
                     },
                     "name": {
                         "description": "Article name used for URL",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article name used for URL."
                     },
                     "folder": {
                         "description": "Article folder",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Article folder."
+                    },
+                    "content": {
+                        "description": "The HTML content of the article. Only from route api.articles.get_article\n(with=REQ_ARTICLE_CONTENT)",
+                        "type": "string",
+                        "default": "<string> The HTML content of the article. Only from route api.articles.get_article. (with=REQ_ARTICLE_CONTENT)."
                     },
                     "authors": {
                         "description": "List of article authors",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/user"
+                            "type": "UserJson"
+                        }
+                    },
+                    "articles": {
+                        "description": "List of related articles\n(with=REQ_ARTICLE_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "ArticleJson"
+                        }
+                    },
+                    "outfitters": {
+                        "description": "List of featured outfitters\n(with=REQ_ARTICLE_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "OutfitterJson"
                         }
                     },
                     "commentCount": {
                         "description": "The number of comments on the article",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of comments on the article."
                     },
                     "tags": {
                         "description": "The hashtags for that article",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> The hashtags for that article."
                     },
                     "publishedOn": {
                         "description": "ISO date of the publication",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the publication."
                     },
                     "createdOn": {
                         "description": "ISO date of the creation date",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the creation date."
                     },
                     "updatedOn": {
                         "description": "ISO date of the last update",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the last update."
                     }
                 },
                 "type": "object"
@@ -22974,15 +23055,18 @@
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)."
                     },
                     "id": {
                         "description": "Association ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Association ID."
                     },
                     "name": {
                         "description": "Association name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Association name."
                     },
                     "description": {
                         "description": "Association description\n(with=REQ_ASSOCIATION_DETAILS)",
@@ -23011,6 +23095,12 @@
                         "format": "float",
                         "default": "<float> Annual fee of a guide membership (in US dollars). ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
                     },
+                    "feeSportsman": {
+                        "description": "Annual fee of a sportsman membership (in US dollars)\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
+                        "type": "number",
+                        "format": "float",
+                        "default": "<float> Annual fee of a sportsman membership (in US dollars). ACL_PRIVATE. (with=REQ_ASSOCIATION_DETAILS)."
+                    },
                     "feeAssociate": {
                         "description": "Annual fee of an associate membership (in US dollars)\nACL_PRIVATE\n(with=REQ_ASSOCIATION_DETAILS)",
                         "type": "number",
@@ -23031,15 +23121,14 @@
                         "default": "<GeoStateJson|GeoCountryJson> The jurisdiction of the association. Can be a state or a country. (with=REQ_ASSOCIATION_DETAILS)."
                     },
                     "profile": {
-                        "description": "Association GF profile"
+                        "$ref": "#/components/schemas/profile-vendor"
                     },
                     "phones": {
                         "description": "Phones",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/phone"
-                        },
-                        "default": "<PhoneJson> Phones."
+                            "type": "PhoneJson"
+                        }
                     }
                 },
                 "type": "object"
@@ -23060,64 +23149,152 @@
                     },
                     "type": {
                         "description": "The type of member (1=Outfitter, 2=Guide, 3=Sportsman, 4=Associate)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The type of member (1=Outfitter, 2=Guide, 3=Sportsman, 4=Associate)."
                     },
                     "outfitter": {
-                        "$ref": "#/components/schemas/outfitter"
+                        "description": "The outfitter the member is registered for (if type = outfitter)",
+                        "default": "<OutfitterJson> The outfitter the member is registered for (if type = outfitter)."
                     },
                     "number": {
                         "description": "The member registration number\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The member registration number. ACL_PRIVATE."
                     },
                     "fee": {
                         "description": "Actual $ amount of this membership. Can be different than Association annual fee (discount...etc)\nACL_PRIVATE",
                         "type": "number",
-                        "format": "float"
+                        "format": "float",
+                        "default": "<float> Actual $ amount of this membership. Can be different than Association annual fee (discount...etc). ACL_PRIVATE."
                     },
                     "dueOn": {
                         "description": "ISO date of when the membership is due\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of when the membership is due. ACL_PRIVATE."
                     },
                     "paidOn": {
                         "description": "ISO date of when the membership was paid\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "<string> ISO date of when the membership was paid. ACL_PRIVATE."
                     },
                     "method": {
                         "description": "Method of payment\nACL_PRIVATE",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Method of payment. ACL_PRIVATE."
                     },
                     "createdOn": {
                         "description": "ISO date of the membership was registered",
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "<string> ISO date of the membership was registered."
                     }
                 },
                 "type": "object"
             },
-            "insider": {},
+            "insider": {
+                "properties": {
+                    "brand": {
+                        "description": "The brand the user is an active insider of\n(with=REQ_BRAND_INSIDER_BRAND)",
+                        "default": "<BrandJson> The brand the user is an active insider of. (with=REQ_BRAND_INSIDER_BRAND)."
+                    },
+                    "user": {
+                        "description": "The activated insider\n(with=REQ_BRAND_INSIDER_USER)",
+                        "default": "<UserJson> The activated insider. (with=REQ_BRAND_INSIDER_USER)."
+                    },
+                    "createdOn": {
+                        "description": "ISO date of the membership was registered",
+                        "type": "string",
+                        "format": "date-time",
+                        "default": "<string> ISO date of the membership was registered."
+                    }
+                },
+                "type": "object"
+            },
             "brand": {
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)."
                     },
                     "id": {
                         "description": "Brand ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Brand ID."
                     },
                     "name": {
                         "description": "Business name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Business name."
                     },
                     "slogan": {
                         "description": "Brand slogan",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Brand slogan."
+                    },
+                    "address": {
+                        "description": "Brand address\n(with=REQ_BRAND_ADDRESS)",
+                        "default": "<AddressJson> Brand address. (with=REQ_BRAND_ADDRESS)."
                     },
                     "profile": {
-                        "$ref": "#/components/schemas/profile"
+                        "$ref": "#/components/schemas/profile-vendor"
+                    },
+                    "gop": {
+                        "description": "Brand Guides & Outfitters Program\n(with=REQ_BRAND_GOP or REQ_BRAND_PROGRAMS)",
+                        "default": "<GopJson> Brand Guides & Outfitters Program. (with=REQ_BRAND_GOP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "idp": {
+                        "description": "Brand Industry Program\n(with=REQ_BRAND_IDP or REQ_BRAND_PROGRAMS)",
+                        "default": "<IdpJson> Brand Industry Program. (with=REQ_BRAND_IDP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "cnp": {
+                        "description": "Brand Conservation NGOs Employees Program\n(with=REQ_BRAND_CNP or REQ_BRAND_PROGRAMS)",
+                        "default": "<CnpJson> Brand Conservation NGOs Employees Program. (with=REQ_BRAND_CNP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "oep": {
+                        "description": "Brand Outdoor Government Employees Program\n(with=REQ_BRAND_OEP or REQ_BRAND_PROGRAMS)",
+                        "default": "<OepJson> Brand Outdoor Government Employees Program. (with=REQ_BRAND_OEP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "mip": {
+                        "description": "Brand Military Program\n(with=REQ_BRAND_MIP or REQ_BRAND_PROGRAMS)",
+                        "default": "<MipJson> Brand Military Program. (with=REQ_BRAND_MIP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "frp": {
+                        "$ref": "#/components/schemas/frp"
+                    },
+                    "ecp": {
+                        "description": "Outdoor Educators Program\n(with=REQ_BRAND_ECP or REQ_BRAND_PROGRAMS)",
+                        "default": "<EcpJson> Outdoor Educators Program. (with=REQ_BRAND_ECP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "rtp": {
+                        "description": "Retail Employees Program\n(with=REQ_BRAND_RTP or REQ_BRAND_PROGRAMS)",
+                        "default": "<RtpJson> Retail Employees Program. (with=REQ_BRAND_RTP or REQ_BRAND_PROGRAMS)."
+                    },
+                    "description": {
+                        "description": "Brand description\n(with=REQ_BRAND_DESCRIPTION or with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Brand description. (with=REQ_BRAND_DESCRIPTION or with=REQ_BRAND_DETAILS)."
+                    },
+                    "joinMessage": {
+                        "description": "A short message displayed on the /join-industry/[brand] Page\n(with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> A short message displayed on the /join-industry/[brand] Page. (with=REQ_BRAND_DETAILS)."
+                    },
+                    "insiderMessage": {
+                        "description": "A short message displayed on the /insiders/[brand] Page\n(with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> A short message displayed on the /insiders/[brand] Page. (with=REQ_BRAND_DETAILS)."
+                    },
+                    "url": {
+                        "description": "An external URL to the brand website\n(with=REQ_BRAND_URL or with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> An external URL to the brand website. (with=REQ_BRAND_URL or with=REQ_BRAND_DETAILS)."
                     },
                     "email": {
                         "description": "Brand email address\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Brand email address. ACL_PRIVATE."
                     },
                     "corporateDomains": {
                         "description": "The list of the brand's corporate email addresses domains",
@@ -23125,48 +23302,95 @@
                         "items": {
                             "type": "string"
                         },
-                        "default": [
-                            "coroprate-email@email.com"
-                        ]
+                        "default": "<array><string> The list of the brand's corporate email addresses domains."
+                    },
+                    "categories": {
+                        "description": "The gear categories of the brand\n(with=REQ_BRAND_CATEGORIES or with=REQ_BRAND_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "ReferentialJson"
+                        },
+                        "default": "<ReferentialJson> The gear categories of the brand. (with=REQ_BRAND_CATEGORIES or with=REQ_BRAND_DETAILS)."
                     },
                     "isGridEnabled": {
                         "description": "If TRUE, it means brand has Programs allowed to be enabled on the grid",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, it means brand has Programs allowed to be enabled on the grid."
                     },
                     "parentBrand": {
-                        "$ref": "#/components/schemas/brand"
+                        "description": "The brand parent's. If not null user must apply to parent's program and not this brands'",
+                        "default": "<BrandJson> The brand parent's. If not null user must apply to parent's program and not this brands'."
+                    },
+                    "childBrands": {
+                        "description": "The brands that have this brand as parent\n(with=REQ_BRAND_CHILDREN or with=REQ_BRAND_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "BrandJson"
+                        },
+                        "default": "<BrandJson> The brands that have this brand as parent. (with=REQ_BRAND_CHILDREN or with=REQ_BRAND_DETAILS)."
                     },
                     "isEmailEnough": {
                         "description": "If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded."
                     },
                     "insiderCategory": {
                         "description": "The Insider Category opened by being an employee of that brand",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The Insider Category opened by being an employee of that brand."
+                    },
+                    "gridAgreement": {
+                        "description": "The file object of the Grid Agreement\nYou can then download using route api.brands.get_grid_agreement\nACL_PRIVATE\n(with=REQ_BRAND_DETAILS)",
+                        "default": "<FileJson> The file object of the Grid Agreement. You can then download using route api.brands.get_grid_agreement. ACL_PRIVATE. (with=REQ_BRAND_DETAILS)."
+                    },
+                    "anniversaryDate": {
+                        "description": "Date when the brand joined the grid (also linked to annual billing)\nACL_PRIVATE\n(with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Date when the brand joined the grid (also linked to annual billing). ACL_PRIVATE. (with=REQ_BRAND_DETAILS)."
                     },
                     "prostaffStatus": {
                         "description": "Pro Staff status (0=locked, 1=closed, 2=opened)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Pro Staff status (0=locked, 1=closed, 2=opened)."
                     },
                     "prostaffShopStatus": {
                         "description": "Pro Staff Shop status (0=none, 1=created, 2=opened)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Pro Staff Shop status (0=none, 1=created, 2=opened)."
                     },
                     "prostaffDuration": {
                         "description": "Pro Staff membership default duration (1=6 months, 2=1 year)\nACL_PRIVATE",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Pro Staff membership default duration (1=6 months, 2=1 year). ACL_PRIVATE."
+                    },
+                    "prostaffAgreement": {
+                        "description": "The file object of the Pro Staff Agreement template\nYou can then download using route api.brands.get_prostaff_agreement\n(with=REQ_BRAND_DETAILS)",
+                        "default": "<FileJson> The file object of the Pro Staff Agreement template. You can then download using route api.brands.get_prostaff_agreement. (with=REQ_BRAND_DETAILS)."
                     },
                     "aimStatus": {
                         "description": "AIM status (0=locked, 1=closed, 2=opened)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> AIM status (0=locked, 1=closed, 2=opened)."
                     },
                     "aimShopStatus": {
                         "description": "AIM Shop status (0=none, 1=created, 2=opened)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> AIM Shop status (0=none, 1=created, 2=opened)."
+                    },
+                    "priceUpdatedOn": {
+                        "description": "Date when the pricing was last updated\n(with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Date when the pricing was last updated. (with=REQ_BRAND_DETAILS)."
+                    },
+                    "inventoryUpdatedOn": {
+                        "description": "Date when the inventory was last updated\n(with=REQ_BRAND_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Date when the inventory was last updated. (with=REQ_BRAND_DETAILS)."
                     },
                     "shippingAverage": {
                         "description": "Average number of days to ship an order",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Average number of days to ship an order."
                     }
                 },
                 "type": "object"
@@ -23174,23 +23398,32 @@
             "prostaff": {
                 "properties": {
                     "user": {
-                        "$ref": "#/components/schemas/user"
+                        "description": "The prostaff user\n(with=REQ_BRAND_PROSTAFFER)",
+                        "default": "<UserJson> The prostaff user. (with=REQ_BRAND_PROSTAFFER)."
+                    },
+                    "prostaffAgreement": {
+                        "description": "The file object of the Pro Staff Agreement.\nYou can then download using route api.brands.get_prostaff_agreement\nACL_PRIVATE\n(with=REQ_PROFILE_DETAILS)",
+                        "default": "<FileJson> The file object of the Pro Staff Agreement.. You can then download using route api.brands.get_prostaff_agreement. ACL_PRIVATE. (with=REQ_PROFILE_DETAILS)."
                     },
                     "expiresOn": {
                         "description": "ISO date when the prostaff membership expires",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the prostaff membership expires."
                     },
                     "isExpired": {
                         "description": "Is this prostaff membership expired?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this prostaff membership expired?."
                     },
                     "canShop": {
                         "description": "TRUE if both Pro Staff is online and Shop is opened",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if both Pro Staff is online and Shop is opened."
                     },
                     "createdOn": {
                         "description": "ISO date of the membership was registered",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the membership was registered."
                     }
                 },
                 "type": "object"
@@ -23199,59 +23432,133 @@
                 "properties": {
                     "id": {
                         "description": "Claim ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Claim ID."
                     },
                     "claimant": {
                         "$ref": "#/components/schemas/user"
                     },
                     "outfitter": {
-                        "$ref": "#/components/schemas/outfitter"
+                        "description": "The outfitter being claimed\n(with=REQ_CLAIM_OUTFITTER)",
+                        "default": "<OutfitterJson> The outfitter being claimed. (with=REQ_CLAIM_OUTFITTER)."
                     },
                     "isAccepted": {
                         "description": "TRUE if claim was accepted (either by admin or via email validation)",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if claim was accepted (either by admin or via email validation)."
+                    },
+                    "acceptedOn": {
+                        "description": "ISO date when the claim was accepted/validated\nACL_PRIVATE",
+                        "type": "string",
+                        "default": "<string> ISO date when the claim was accepted/validated. ACL_PRIVATE."
                     },
                     "isRefused": {
                         "description": "TRUE if claim was refused by admin\nACL_PRIVATE",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if claim was refused by admin. ACL_PRIVATE."
+                    },
+                    "refusedOn": {
+                        "description": "ISO date when the claim was refused\nACL_PRIVATE",
+                        "type": "string",
+                        "default": "<string> ISO date when the claim was refused. ACL_PRIVATE."
                     },
                     "createdOn": {
                         "description": "ISO date of the claim creation",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the claim creation."
+                    },
+                    "deletedOn": {
+                        "description": "ISO date when the claim was soft-deleted by an admin\nACL_PRIVATE",
+                        "type": "string",
+                        "default": "<string> ISO date when the claim was soft-deleted by an admin. ACL_PRIVATE."
                     }
                 },
                 "type": "object"
             },
             "clientship": {
                 "properties": {
+                    "user": {
+                        "description": "The user that was client of the outfitter\n(with=REQ_CLIENTSHIP_USER)",
+                        "default": "<UserJson> The user that was client of the outfitter. (with=REQ_CLIENTSHIP_USER)."
+                    },
+                    "outfitter": {
+                        "description": "The outfitter the user was client of\n(with=REQ_CLIENTSHIP_OUTFITTER)",
+                        "default": "<OutfitterJson> The outfitter the user was client of. (with=REQ_CLIENTSHIP_OUTFITTER)."
+                    },
                     "createdOn": {
                         "description": "ISO date when the clientship was created (when the user clicked \"I've used this outfitter\")",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the clientship was created (when the user clicked \"I've used this outfitter\")."
                     }
                 },
                 "type": "object"
+            },
+            "cnp": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
+            },
+            "cnp-subscription": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/subscription"
+                    }
+                ]
             },
             "comment": {
                 "properties": {
                     "id": {
                         "description": "Comment ID",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Comment ID."
+                    },
+                    "author": {
+                        "$ref": "#/components/schemas/user"
                     },
                     "content": {
                         "description": "The content of the comment",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The content of the comment."
+                    },
+                    "replies": {
+                        "description": "All the replies to this comment, sorted by date (from old to new)\n(with=REQ_COMMENT_REPLIES)",
+                        "type": "array",
+                        "items": {
+                            "type": "CommentJson"
+                        },
+                        "default": "<CommentJson> All the replies to this comment, sorted by date (from old to new). (with=REQ_COMMENT_REPLIES)."
+                    },
+                    "parent": {
+                        "description": "The comment this comment is replying to. Reserved (do not send with=parent).\n(with=REQ_COMMENT_PARENT)",
+                        "default": "<CommentJson> The comment this comment is replying to. Reserved (do not send with=parent).. (with=REQ_COMMENT_PARENT)."
                     },
                     "likeCount": {
                         "description": "The total number of likes for that comment",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of likes for that comment."
+                    },
+                    "isLiked": {
+                        "description": "TRUE if logged in user liked the comment\n(with=REQ_COMMENT_LIKED)",
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if logged in user liked the comment. (with=REQ_COMMENT_LIKED)."
                     },
                     "createdOn": {
                         "description": "ISO date of the comment post",
-                        "type": "string"
+                        "type": "string",
+                        "format": "",
+                        "default": "<string> ISO date of the comment post."
                     },
                     "insertedOn": {
                         "description": "Timestamp is microseconds when comment was inserted in DB (use as pivot for pagination)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Timestamp is microseconds when comment was inserted in DB (use as pivot for pagination)."
+                    },
+                    "deletedOn": {
+                        "description": "ISO date of the comment deletion",
+                        "type": "string",
+                        "default": "<string> ISO date of the comment deletion."
                     }
                 },
                 "type": "object"
@@ -23260,21 +23567,25 @@
                 "properties": {
                     "id": {
                         "description": "The event ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The event ID."
                     },
                     "discountCode": {
                         "$ref": "#/components/schemas/discount-code"
                     },
                     "type": {
                         "description": "The type of event (used/checked)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The type of event (used/checked)."
                     },
                     "vendor": {
-                        "$ref": "#/components/schemas/vendor"
+                        "description": "The vendor related to the event\n(with=REQ_DISCOUNTCODE_EVENT_VENDOR)",
+                        "default": "<VendorJson> The vendor related to the event. (with=REQ_DISCOUNTCODE_EVENT_VENDOR)."
                     },
                     "createdOn": {
                         "description": "The ISO date when the event was tracked",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the event was tracked."
                     }
                 },
                 "type": "object"
@@ -23283,35 +23594,102 @@
                 "properties": {
                     "id": {
                         "description": "Discount code ID",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Discount code ID."
                     },
                     "code": {
                         "description": "The actual discount code",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The actual discount code."
                     },
                     "status": {
                         "description": "Code status: valid/used/expired",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Code status: valid/used/expired."
                     },
                     "source": {
                         "description": "Where the code comes from (guidefitter/polaris)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Where the code comes from (guidefitter/polaris)."
                     },
                     "description": {
                         "description": "A name/label describing code",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> A name/label describing code."
+                    },
+                    "user": {
+                        "description": "User assigned the code. If NULL it means the code is valid for all members of the program\n(with=REQ_DISCOUNTCODE_USER)",
+                        "default": "<UserJson> User assigned the code. If NULL it means the code is valid for all members of the program. (with=REQ_DISCOUNTCODE_USER)."
+                    },
+                    "targets": {
+                        "description": "The gear categories of the brand\n(with=REQ_DISCOUNTCODE_TARGETS)",
+                        "type": "array",
+                        "items": {
+                            "type": "DiscountCodeTargetJson"
+                        },
+                        "default": "<DiscountCodeTargetJson> The gear categories of the brand. (with=REQ_DISCOUNTCODE_TARGETS)."
                     },
                     "expiresOn": {
                         "description": "The ISO date when the code expires",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the code expires."
                     },
                     "isExpired": {
                         "description": "If TRUE, it means code is expired and not valid anymore",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, it means code is expired and not valid anymore."
                     },
                     "usedOn": {
                         "description": "The ISO date when the code was used",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the code was used."
+                    }
+                },
+                "type": "object"
+            },
+            "discount-code-targer": {
+                "properties": {
+                    "id": {
+                        "description": "The target ID (used for route api.discountcodes.delete_target)",
+                        "type": "integer",
+                        "default": "<integer> The target ID (used for route api.discountcodes.delete_target)."
+                    },
+                    "brand": {
+                        "description": "The brand offering the discount",
+                        "default": "<BrandJson> The brand offering the discount."
+                    },
+                    "idp": {
+                        "description": "Brand's Industry Program benefit of the code",
+                        "default": "<IdpJson> Brand's Industry Program benefit of the code."
+                    },
+                    "cnp": {
+                        "description": "Brand's Conservation NGOs Employees Program benefit of the code",
+                        "default": "<CnpJson> Brand's Conservation NGOs Employees Program benefit of the code."
+                    },
+                    "oep": {
+                        "description": "Brand's Outdoor Government Employees Program benefit of the code",
+                        "default": "<OepJson> Brand's Outdoor Government Employees Program benefit of the code."
+                    },
+                    "mip": {
+                        "description": "Brand's Military Program benefit of the code",
+                        "default": "<MipJson> Brand's Military Program benefit of the code."
+                    },
+                    "frp": {
+                        "description": "Brand's First Responders Program benefit of the code",
+                        "default": "<FrpJson> Brand's First Responders Program benefit of the code."
+                    },
+                    "ecp": {
+                        "description": "Brand's Outdoor Educators Program benefit of the code",
+                        "default": "<EcpJson> Brand's Outdoor Educators Program benefit of the code."
+                    },
+                    "rtp": {
+                        "description": "Brand's Retail Employees Program benefit of the code",
+                        "default": "<RtpJson> Brand's Retail Employees Program benefit of the code."
+                    },
+                    "isProstaff": {
+                        "description": "If TRUE, it means brand's prostaff benefit of the code",
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, it means brand's prostaff benefit of the code."
                     }
                 },
                 "type": "object"
@@ -23325,11 +23703,13 @@
                         "properties": {
                             "isPublic": {
                                 "description": "If TRUE that document is shown to insiders and manager. If FALSE only for admins tagging.",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "default": "<boolean> If TRUE that document is shown to insiders and manager. If FALSE only for admins tagging.."
                             },
                             "isSystem": {
                                 "description": "If TRUE that document cannot be set by anyone",
-                                "type": "boolean"
+                                "type": "boolean",
+                                "default": "<boolean> If TRUE that document cannot be set by anyone."
                             }
                         },
                         "type": "object"
@@ -23442,14 +23822,79 @@
                 },
                 "type": "object"
             },
+            "ecp": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
+            },
+            "ecp-subscription": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/subscription"
+                    }
+                ]
+            },
             "experience": {
                 "properties": {
                     "id": {
                         "description": "The Experience ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The Experience ID."
+                    },
+                    "user": {
+                        "description": "The user affiliated",
+                        "default": "<UserJson> The user affiliated."
+                    },
+                    "profession": {
+                        "description": "The profession name",
+                        "type": "string",
+                        "default": "<string> The profession name."
+                    },
+                    "affiliation": {
+                        "description": "The outfitter affiliation on that experience\n(with=REQ_AFFILIATION_EXPERIENCE)",
+                        "default": "<AffiliationJson> The outfitter affiliation on that experience. (with=REQ_AFFILIATION_EXPERIENCE)."
+                    },
+                    "description": {
+                        "description": "The description of the job experience",
+                        "type": "string",
+                        "default": "<string> The description of the job experience."
+                    },
+                    "startOn": {
+                        "description": "ISO date when the job started",
+                        "type": "string",
+                        "default": "<string> ISO date when the job started."
+                    },
+                    "endOn": {
+                        "description": "ISO date when the job ended",
+                        "type": "string",
+                        "default": "<string> ISO date when the job ended."
                     }
                 },
                 "type": "object"
+            },
+            "file": {
+                "properties": {
+                    "id": {
+                        "description": "File ID",
+                        "type": "integer",
+                        "default": "<integer> File ID."
+                    },
+                    "name": {
+                        "description": "The file name (as uploaded)",
+                        "type": "string",
+                        "default": "<string> The file name (as uploaded)."
+                    }
+                },
+                "type": "object"
+            },
+            "frp": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
             },
             "airport": {
                 "allOf": [
@@ -23469,12 +23914,14 @@
                                 "description": "The list of states of the country\n(with=REQ_COUNTRY_STATES)",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/state"
-                                }
+                                    "type": "GeoStateJson"
+                                },
+                                "default": "<GeoStateJson> The list of states of the country. (with=REQ_COUNTRY_STATES)."
                             },
                             "phone": {
                                 "description": "Phone prefix for that country\n(with=REQ_COUNTRY_PHONE)",
-                                "type": "string"
+                                "type": "string",
+                                "default": "<string> Phone prefix for that country. (with=REQ_COUNTRY_PHONE)."
                             }
                         },
                         "type": "object"
@@ -23485,15 +23932,18 @@
                 "properties": {
                     "id": {
                         "description": "Geo-entity ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Geo-entity ID."
                     },
                     "name": {
                         "description": "Geo-entity name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Geo-entity name."
                     },
                     "code": {
                         "description": "Geo-entity ISO code",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Geo-entity ISO code."
                     }
                 },
                 "type": "object"
@@ -23506,10 +23956,18 @@
                     {
                         "properties": {
                             "country": {
-                                "$ref": "#/components/schemas/country"
+                                "description": "The country the state is into\n(with=REQ_STATE_COUNTRY)",
+                                "default": "<GeoCountryJson> The country the state is into. (with=REQ_STATE_COUNTRY)."
                             }
                         },
                         "type": "object"
+                    }
+                ]
+            },
+            "gop": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
                     }
                 ]
             },
@@ -23517,10 +23975,71 @@
                 "properties": {
                     "id": {
                         "description": "The guest invitation ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The guest invitation ID."
+                    },
+                    "type": {
+                        "description": "The guest invitation type",
+                        "type": "integer",
+                        "default": "<integer> The guest invitation type."
+                    },
+                    "name": {
+                        "description": "The guest's name",
+                        "type": "string",
+                        "default": "<string> The guest's name."
+                    },
+                    "email": {
+                        "description": "The guest's email",
+                        "type": "string",
+                        "default": "<string> The guest's email."
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/user"
+                    },
+                    "host": {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    "message": {
+                        "description": "The message typed by the inviter\n(with=REQ_INVITE_MESSAGE)",
+                        "type": "string",
+                        "default": "<string> The message typed by the inviter. (with=REQ_INVITE_MESSAGE)."
+                    },
+                    "meta": {
+                        "description": "The invite meta",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": "<array><string> The invite meta."
+                    },
+                    "token": {
+                        "description": "The invite token. Only from route api.invites.get_invite\nACL_ADMIN\n(with=REQ_INVITE_TOKEN)",
+                        "type": "string",
+                        "default": "<string> The invite token. Only from route api.invites.get_invite. ACL_ADMIN. (with=REQ_INVITE_TOKEN)."
+                    },
+                    "rewardedOn": {
+                        "description": "The ISO date when the guestInvitation was rewarded by an admin",
+                        "type": "string",
+                        "default": "<string> The ISO date when the guestInvitation was rewarded by an admin."
+                    },
+                    "rewardedBy": {
+                        "description": "The admin that rewarded the invite",
+                        "default": "<UserJson> The admin that rewarded the invite."
+                    },
+                    "createdOn": {
+                        "description": "The ISO date when the guestInvitation was created",
+                        "type": "string",
+                        "default": "<string> The ISO date when the guestInvitation was created."
                     }
                 },
                 "type": "object"
+            },
+            "idp": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
             },
             "insider-competition": {
                 "properties": {
@@ -23528,48 +24047,124 @@
                         "description": "The competition ID is also the month: e.g. 202006",
                         "type": "integer"
                     },
+                    "rules": {
+                        "description": "The rules for the competition that month (HTML)\n(with=REQ_INSIDER_COMPETITION_RULES)",
+                        "type": "string",
+                        "default": "<string> The rules for the competition that month (HTML). (with=REQ_INSIDER_COMPETITION_RULES)."
+                    },
                     "participantCount": {
                         "description": "The number of participants that month",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of participants that month."
                     },
                     "inviteCount": {
                         "description": "The number of invites sent that month",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of invites sent that month."
                     },
                     "convertCount": {
                         "description": "The number of invites converted into a GF signup",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of invites converted into a GF signup."
                     },
                     "rewardCount": {
                         "description": "The number of converted invites rewarded that month",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of converted invites rewarded that month."
                     },
                     "ranks": {
                         "description": "The competition ranks\n(with=REQ_INSIDER_COMPETITION_RANKS)",
                         "type": "array",
                         "items": {
-                            "type": "object"
-                        }
+                            "type": "InsiderCompetitionRankJson"
+                        },
+                        "default": "<InsiderCompetitionRankJson> The competition ranks. (with=REQ_INSIDER_COMPETITION_RANKS)."
                     }
                 },
                 "type": "object"
+            },
+            "insider-competition-rank": {
+                "properties": {
+                    "id": {
+                        "description": "The rank ID (unique across Guidefitter)",
+                        "type": "integer",
+                        "default": "<integer> The rank ID (unique across Guidefitter)."
+                    },
+                    "rank": {
+                        "description": "The rank in that month's competition",
+                        "type": "integer",
+                        "default": "<integer> The rank in that month's competition."
+                    },
+                    "prize": {
+                        "description": "A description of the prize for winning that rank this month",
+                        "type": "string",
+                        "default": "<string> A description of the prize for winning that rank this month."
+                    },
+                    "prizePhoto": {
+                        "description": "A photo of the prize for that rank this month",
+                        "default": "<PhotoJson> A photo of the prize for that rank this month."
+                    },
+                    "winner": {
+                        "description": "The profile of the winner of that rank that month",
+                        "default": "<UserJson> The profile of the winner of that rank that month."
+                    },
+                    "inviteCount": {
+                        "description": "The number of invites sent by the winner of that rank that month",
+                        "type": "integer",
+                        "default": "<integer> The number of invites sent by the winner of that rank that month."
+                    },
+                    "convertCount": {
+                        "description": "The number of invites converted into a GF signup by the winner of that rank",
+                        "type": "integer",
+                        "default": "<integer> The number of invites converted into a GF signup by the winner of that rank."
+                    },
+                    "rewardCount": {
+                        "description": "The number of converted invites by the winner of that rank rewarded that month",
+                        "type": "integer",
+                        "default": "<integer> The number of converted invites by the winner of that rank rewarded that month."
+                    }
+                },
+                "type": "object"
+            },
+            "insider-type": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/referential"
+                    },
+                    {
+                        "properties": {
+                            "insiderCategory": {
+                                "description": "Insider Category",
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             },
             "license": {
                 "properties": {
                     "id": {
                         "description": "License ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> License ID."
                     },
                     "number": {
                         "description": "License number",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> License number."
                     },
                     "expiresOn": {
                         "description": "ISO date of license expiration",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of license expiration."
                     },
                     "state": {
                         "$ref": "#/components/schemas/state"
+                    },
+                    "licensee": {
+                        "description": "The licensee, can be a GF member or a simple name",
+                        "default": "<UserJson|string> The licensee, can be a GF member or a simple name."
                     }
                 },
                 "type": "object"
@@ -23644,52 +24239,174 @@
                 },
                 "type": "object"
             },
+            "mip": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
+            },
+            "notification": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/referential"
+                    },
+                    {
+                        "properties": {
+                            "isUserNotification": {
+                                "description": "If TRUE it's a notification setting for user profiles",
+                                "type": "boolean",
+                                "default": "<boolean> If TRUE it's a notification setting for user profiles."
+                            },
+                            "isOutfitterNotification": {
+                                "description": "If TRUE it's a notification setting for outfitter profiles",
+                                "type": "boolean",
+                                "default": "<boolean> If TRUE it's a notification setting for outfitter profiles."
+                            },
+                            "isVendorNotification": {
+                                "description": "If TRUE it's a notification setting for vendor/brand profiles",
+                                "type": "boolean",
+                                "default": "<boolean> If TRUE it's a notification setting for vendor/brand profiles."
+                            },
+                            "unsub": {
+                                "description": "Filled when coming from ProfileJson\n(with=REQ_NOTIFICATION_UNSUB)",
+                                "type": "string",
+                                "default": "<string> Filled when coming from ProfileJson. (with=REQ_NOTIFICATION_UNSUB)."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "oep": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
+            },
             "outfitter": {
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)."
                     },
                     "id": {
                         "description": "Outfitter ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Outfitter ID."
                     },
                     "name": {
                         "description": "The business name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The business name."
                     },
                     "address": {
                         "$ref": "#/components/schemas/address"
                     },
+                    "contactAddress": {
+                        "description": "Outfitter contact address\nACL_PRIVATE\n(with=REQ_OUTFITTER_ADDRESS)",
+                        "default": "<AddressJson> Outfitter contact address. ACL_PRIVATE. (with=REQ_OUTFITTER_ADDRESS)."
+                    },
                     "profile": {
-                        "description": "The Guidefitter profile"
+                        "description": "The Guidefitter profile",
+                        "default": "<ProfileBusinessJson> The Guidefitter profile."
                     },
                     "phones": {
                         "description": "Outfitter phones (outfitters can have more than 1)\nACL_PRIVATE",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/phone"
-                        }
+                            "type": "PhoneJson"
+                        },
+                        "default": "<PhoneJson> Outfitter phones (outfitters can have more than 1). ACL_PRIVATE."
+                    },
+                    "hasPhone": {
+                        "description": "Outfitter has at least 1 public phone number\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> Outfitter has at least 1 public phone number. (with=REQ_OUTFITTER_DETAILS)."
                     },
                     "assoc": {
                         "description": "Is the outfitter member of the NMCOG association?\nDeprecated, use association prop instead",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the outfitter member of the NMCOG association?. Deprecated, use association prop instead."
+                    },
+                    "associations": {
+                        "description": "The associations the outfitter is member of\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "AssociationJson"
+                        },
+                        "default": "<AssociationJson> The associations the outfitter is member of. (with=REQ_OUTFITTER_DETAILS)."
+                    },
+                    "description": {
+                        "description": "Outfitter description\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Outfitter description. (with=REQ_OUTFITTER_DETAILS)."
+                    },
+                    "outfittingType": {
+                        "description": "Outfitter category specialization\nACL_ADMIN\n(with=REQ_OUTFITTER_DETAILS)",
+                        "default": "<ReferentialJson> Outfitter category specialization. ACL_ADMIN. (with=REQ_OUTFITTER_DETAILS)."
                     },
                     "owner": {
                         "description": "Can be a Guidefitter member or a simple first/last name.\nIn the latter case we return an array(\"name\" => \"John Doe\")\n(with=REQ_OUTFITTER_OWNER)",
-                        "default": "(with=REQ_OUTFITTER_OWNER)"
+                        "default": "<UserJson|array> Can be a Guidefitter member or a simple first/last name.. In the latter case we return an array(\"name\" => \"John Doe\"). (with=REQ_OUTFITTER_OWNER)."
+                    },
+                    "activities": {
+                        "description": "The outfitting activities the outfitter declared he offers\n(with=REQ_OUTFITTER_ACTIVITIES)",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "default": "<integer> The outfitting activities the outfitter declared he offers. (with=REQ_OUTFITTER_ACTIVITIES)."
+                    },
+                    "licenses": {
+                        "description": "The outfitting licenses\n(with=REQ_OUTFITTER_LICENSES)",
+                        "type": "array",
+                        "items": {
+                            "type": "UserJson"
+                        },
+                        "default": "<UserJson> The outfitting licenses. (with=REQ_OUTFITTER_LICENSES)."
+                    },
+                    "url": {
+                        "description": "An external URL to the outfitter website.\nFor a random user, this property should only be displayed if $isUrlPublic=TRUE\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> An external URL to the outfitter website.. For a random user, this property should only be displayed if $isUrlPublic=TRUE. (with=REQ_OUTFITTER_DETAILS)."
+                    },
+                    "isUrlPublic": {
+                        "description": "Is the outfitter URL displayed on the ODP\nACL_ADMIN\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> Is the outfitter URL displayed on the ODP. ACL_ADMIN. (with=REQ_OUTFITTER_DETAILS)."
                     },
                     "email": {
                         "description": "Outfitter email address\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Outfitter email address. ACL_PRIVATE."
+                    },
+                    "emailRequest": {
+                        "description": "The new email address the outfitter wants to use. Pending verification.\nACL_PRIVATE\nwith=REQ_OUTFITTER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The new email address the outfitter wants to use. Pending verification.. ACL_PRIVATE. with=REQ_OUTFITTER_DETAILS)."
                     },
                     "isEmailVerified": {
                         "description": "Outfitter email has been verified\nACL_PRIVATE",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Outfitter email has been verified. ACL_PRIVATE."
+                    },
+                    "isOutOfBusiness": {
+                        "description": "Outfitter is not operating anymore\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> Outfitter is not operating anymore. (with=REQ_OUTFITTER_DETAILS)."
+                    },
+                    "isPricelistActive": {
+                        "description": "Is the outfitter price list active\nACL_PRIVATE\n(with=REQ_OUTFITTER_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> Is the outfitter price list active. ACL_PRIVATE. (with=REQ_OUTFITTER_DETAILS)."
                     },
                     "bookingsCount": {
                         "description": "Total of non-deleted bookings (past and future)\nACL_PRIVATE\n(with=REQ_OUTFITTER_DETAILS)\nOnly available from route 'api.outfitters.get_outfitter'",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Total of non-deleted bookings (past and future). ACL_PRIVATE. (with=REQ_OUTFITTER_DETAILS). Only available from route 'api.outfitters.get_outfitter'."
                     }
                 },
                 "type": "object"
@@ -23698,15 +24415,42 @@
                 "properties": {
                     "id": {
                         "description": "Phone ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Phone ID."
                     },
                     "numberRaw": {
                         "description": "The phone number as entered by the user (no processing)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The phone number as entered by the user (no processing)."
                     },
                     "numberProcessed": {
                         "description": "Number presented as integer (stripped from alpha characters)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Number presented as integer (stripped from alpha characters)."
+                    },
+                    "verifier": {
+                        "description": "The user who validated the phone number (with SMS code)\nACL_ADMIN",
+                        "default": "<UserJson> The user who validated the phone number (with SMS code). ACL_ADMIN."
+                    },
+                    "verifiedOn": {
+                        "description": "Date when was the phone number verified\nACL_PRIVATE",
+                        "type": "string",
+                        "default": "<string> Date when was the phone number verified. ACL_PRIVATE."
+                    },
+                    "isPublic": {
+                        "description": "Is this phone number public? (outfitters only)\nACL_PRIVATE",
+                        "type": "boolean",
+                        "default": "<boolean> Is this phone number public? (outfitters only). ACL_PRIVATE."
+                    },
+                    "isNotified": {
+                        "description": "Is the user/outfitter receiving SMS notifications on this phone\nACL_PRIVATE",
+                        "type": "boolean",
+                        "default": "<boolean> Is the user/outfitter receiving SMS notifications on this phone. ACL_PRIVATE."
+                    },
+                    "createdOn": {
+                        "description": "Date phone number was created\nACL_PRIVATE",
+                        "type": "string",
+                        "default": "<string> Date phone number was created. ACL_PRIVATE."
                     }
                 },
                 "type": "object"
@@ -23715,35 +24459,148 @@
                 "properties": {
                     "id": {
                         "description": "Photo ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Photo ID."
                     },
                     "hash": {
                         "description": "Photo MD5 hash (to build path on CDN)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Photo MD5 hash (to build path on CDN)."
+                    },
+                    "extension": {
+                        "description": "Original file extension\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Original file extension. (with=REQ_PHOTO_DETAILS)."
+                    },
+                    "caption": {
+                        "description": "Photo caption\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Photo caption. (with=REQ_PHOTO_DETAILS)."
+                    },
+                    "owner": {
+                        "description": "The profile the photo belongs to. Returns either a UserJson or OutfitterJson or BrandJson\n(with=REQ_PHOTO_OWNER)",
+                        "default": "<UserJson|OutfitterJson|BrandJson> The profile the photo belongs to. Returns either a UserJson or OutfitterJson or BrandJson. (with=REQ_PHOTO_OWNER)."
+                    },
+                    "albums": {
+                        "description": "The album the photo belongs to\n(with=REQ_PHOTO_ALBUMS)",
+                        "type": "array",
+                        "items": {
+                            "type": "AlbumJson"
+                        },
+                        "default": "<AlbumJson> The album the photo belongs to. (with=REQ_PHOTO_ALBUMS)."
                     },
                     "pro": {
                         "description": "Processed: is the photo processed and available on CDN?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Processed: is the photo processed and available on CDN?."
+                    },
+                    "w": {
+                        "description": "Width of the original image\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Width of the original image. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "h": {
+                        "description": "Height of the original image\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Height of the original image. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "lW": {
+                        "description": "Width of the large format\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Width of the large format. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "lH": {
+                        "description": "Height of the large format\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Height of the large format. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "hW": {
+                        "description": "Width of the HD format\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Width of the HD format. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "hH": {
+                        "description": "Height of the HD format\n(with=REQ_PHOTO_SIZES)",
+                        "type": "integer",
+                        "default": "<integer> Height of the HD format. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "crop": {
+                        "description": "The cropping parameters (X, Y, Width and Height). Only for brags.\n(with=REQ_PHOTO_SIZES)",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "default": "<array><integer> The cropping parameters (X, Y, Width and Height). Only for brags.. (with=REQ_PHOTO_SIZES)."
+                    },
+                    "comments": {
+                        "description": "All the photo comments\n(with=REQ_PHOTO_COMMENTS)",
+                        "type": "array",
+                        "items": {
+                            "type": "CommentJson"
+                        },
+                        "default": "<CommentJson> All the photo comments. (with=REQ_PHOTO_COMMENTS)."
                     },
                     "commentCount": {
                         "description": "The number of comments on the photo",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of comments on the photo."
                     },
                     "likeCount": {
                         "description": "LikesCount, the number of likes",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> LikesCount, the number of likes."
+                    },
+                    "like": {
+                        "description": "TRUE if logged in user liked the photo\n(with=REQ_PHOTO_LIKED)",
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if logged in user liked the photo. (with=REQ_PHOTO_LIKED)."
                     },
                     "viewCount": {
                         "description": "Total number of views\nACL_PRIVATE",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Total number of views. ACL_PRIVATE."
+                    },
+                    "location": {
+                        "description": "The location as typed by the user\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The location as typed by the user. (with=REQ_PHOTO_DETAILS)."
+                    },
+                    "takenOn": {
+                        "description": "ISO date when the photo was taken\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the photo was taken. (with=REQ_PHOTO_DETAILS)."
+                    },
+                    "createdOn": {
+                        "description": "ISO date when the photo was uploaded\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the photo was uploaded. (with=REQ_PHOTO_DETAILS)."
+                    },
+                    "updatedOn": {
+                        "description": "ISO date when the photo was last updated\n(with=REQ_PHOTO_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the photo was last updated. (with=REQ_PHOTO_DETAILS)."
                     },
                     "braggedOn": {
                         "description": "ISO date when the photo was bragged",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the photo was bragged."
                     },
                     "deletedOn": {
                         "description": "The ISO date when the photo was soft deleted",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the photo was soft deleted."
+                    },
+                    "profiles": {
+                        "description": "List of profiles tagged in the photo\n(with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_PROFILES)",
+                        "default": "<UserJson> List of profiles tagged in the photo. (with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_PROFILES)."
+                    },
+                    "animals": {
+                        "description": "List of animals tagged\n(with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_ANIMALS)",
+                        "type": "array",
+                        "items": {
+                            "type": "AnimalJson"
+                        },
+                        "default": "<AnimalJson> List of animals tagged. (with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_ANIMALS)."
                     },
                     "tags": {
                         "description": "The hashtags for that photo",
@@ -23759,75 +24616,128 @@
                 "properties": {
                     "id": {
                         "description": "The post ID.",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The post ID.."
                     },
                     "type": {
                         "description": "The Post type (10=text, 20=link, 21=link (youtube), 30=photo, 31=brag, 40=checkin, 50=Question, 60=Article, 80=Review)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The Post type (10=text, 20=link, 21=link (youtube), 30=photo, 31=brag, 40=checkin, 50=Question, 60=Article, 80=Review)."
                     },
                     "message": {
                         "description": "The post message",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The post message."
                     },
                     "url": {
                         "description": "Post URL: when a URL was recognized in the post, and then scrapped and crawled",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Post URL: when a URL was recognized in the post, and then scrapped and crawled."
                     },
                     "title": {
                         "description": "The Post title: when type is QUESTION it's the question. Otherwise it could be the Meta title of the page for a link post",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The Post title: when type is QUESTION it's the question. Otherwise it could be the Meta title of the page for a link post."
                     },
                     "name": {
                         "description": "The post \"name\" is used for the public URL. Only for Q&A posts.",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The post \"name\" is used for the public URL. Only for Q&A posts.."
                     },
                     "description": {
                         "description": "The Meta description scrapped from $url",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The Meta description scrapped from $url."
                     },
                     "image": {
                         "description": "URL to Post image scrapped from $url",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> URL to Post image scrapped from $url."
                     },
                     "youtube": {
                         "description": "Proper URL to youtube video (when $url was a youtube link)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Proper URL to youtube video (when $url was a youtube link)."
                     },
                     "author": {
-                        "description": "The profile of the author of the Post"
+                        "description": "The profile of the author of the Post",
+                        "default": "<UserJson|OutfitterJson|BrandJson|AssociationJson> The profile of the author of the Post."
                     },
                     "photo": {
-                        "$ref": "#/components/schemas/photo"
+                        "description": "The photo of the post (a Guidefitter photo)",
+                        "default": "<PhotoJson> The photo of the post (a Guidefitter photo)."
                     },
                     "album": {
-                        "$ref": "#/components/schemas/album"
+                        "description": "Virtual album containing all photos of the post",
+                        "default": "<AlbumJson> Virtual album containing all photos of the post."
+                    },
+                    "article": {
+                        "description": "The article of the post",
+                        "default": "<ArticleJson> The article of the post."
+                    },
+                    "review": {
+                        "description": "The story of the post",
+                        "default": "<ReviewJson> The story of the post."
                     },
                     "checkin": {
                         "description": "If the post is a \"checkin\" (10=hunting, 20=fishing)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> If the post is a \"checkin\" (10=hunting, 20=fishing)."
+                    },
+                    "location": {
+                        "description": "If checkin, the location chose",
+                        "type": "string",
+                        "default": "<string> If checkin, the location chose."
+                    },
+                    "coordinates": {
+                        "description": "\"lon\")",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": "<array(\"lat\",> \"lon\")."
+                    },
+                    "precision": {
+                        "description": "If checkin Post, the precision of the location (0=none/hidden, 1=country/state, 2=county, 3=exact location)",
+                        "type": "integer",
+                        "default": "<integer> If checkin Post, the precision of the location (0=none/hidden, 1=country/state, 2=county, 3=exact location)."
+                    },
+                    "isCheckedOut": {
+                        "description": "If checkin Post, TRUE if user manually checked out.",
+                        "type": "boolean",
+                        "default": "<boolean> If checkin Post, TRUE if user manually checked out.."
                     },
                     "isGvpOnly": {
                         "description": "If TRUE, this post is only visible to GVP users",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, this post is only visible to GVP users."
                     },
                     "isPinned": {
                         "description": "If TRUE, this post has been pinned at the top of the feed",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, this post has been pinned at the top of the feed."
                     },
                     "comments": {
                         "description": "The \"best\" comments for that post",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/comment"
-                        }
+                            "type": "CommentJson"
+                        },
+                        "default": "<CommentJson> The \"best\" comments for that post."
                     },
                     "commentCount": {
                         "description": "The number of comments on the post",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of comments on the post."
                     },
                     "likeCount": {
                         "description": "The total number of likes for that post",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of likes for that post."
+                    },
+                    "isLiked": {
+                        "description": "TRUE if logged in user liked the post\n(with=REQ_POST_LIKED)",
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if logged in user liked the post. (with=REQ_POST_LIKED)."
                     },
                     "tags": {
                         "description": "The hashtags for that post",
@@ -23838,15 +24748,18 @@
                     },
                     "isIndexed": {
                         "description": "If TRUE, put <meta name=\"robots\" content=\"index, follow\" />.\nIf FALSE, put <meta name=\"robots\" content=\"noindex, follow\" />",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, put <meta name=\"robots\" content=\"index, follow\" />.. If FALSE, put <meta name=\"robots\" content=\"noindex, follow\" />."
                     },
                     "createdOn": {
                         "description": "The ISO date when the post was created",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the post was created."
                     },
                     "deletedOn": {
                         "description": "The ISO date when the post was soft-deleted",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the post was soft-deleted."
                     }
                 },
                 "type": "object"
@@ -23977,6 +24890,93 @@
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/product"
+                    },
+                    {
+                        "properties": {
+                            "species": {
+                                "description": "List of species\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "array",
+                                "items": {
+                                    "type": "AnimalJson"
+                                },
+                                "default": "<AnimalJson> List of species. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "methods": {
+                                "description": "Fly fishing, angling, ...etc\n(with=REQ_PRODUCT_DETAILS)",
+                                "default": "<ReferentialJson> Fly fishing, angling, ...etc. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "waterTypes": {
+                                "description": "Lake, river, ..etc\n(with=REQ_PRODUCT_DETAILS)",
+                                "default": "<ReferentialJson> Lake, river, ..etc. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "mobilities": {
+                                "description": "Boat, Canoe, ...\n(with=REQ_PRODUCT_DETAILS)",
+                                "default": "<ReferentialJson> Boat, Canoe, .... (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "lengths": {
+                                "description": "Length of the trip (1/2 day, overnight, ...etc)\n(with=REQ_PRODUCT_DETAILS)",
+                                "default": "<ReferentialJson> Length of the trip (1/2 day, overnight, ...etc). (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "isCatchAndRelease": {
+                                "description": "Catch & release fishing\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "boolean",
+                                "default": "<boolean> Catch & release fishing. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "isFlyInOut": {
+                                "description": "Fishing trip on a remote location\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "boolean",
+                                "default": "<boolean> Fishing trip on a remote location. (with=REQ_PRODUCT_DETAILS)."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "product-hunting": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/product"
+                    },
+                    {
+                        "properties": {
+                            "species": {
+                                "description": "List of species\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "array",
+                                "items": {
+                                    "type": "AnimalJson"
+                                },
+                                "default": "<AnimalJson> List of species. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "weapons": {
+                                "description": "List of weapons\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "array",
+                                "items": {
+                                    "type": "WeaponJson"
+                                },
+                                "default": "<WeaponJson> List of weapons. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "landType": {
+                                "description": "Land Type (1=PRIVATE, 2=PUBLIC)\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "integer",
+                                "default": "<integer> Land Type (1=PRIVATE, 2=PUBLIC). (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "dogAllowed": {
+                                "description": "Dogs allowed\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "boolean",
+                                "default": "<boolean> Dogs allowed. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "dogProvided": {
+                                "description": "Dogs provided\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "boolean",
+                                "default": "<boolean> Dogs provided. (with=REQ_PRODUCT_DETAILS)."
+                            },
+                            "processing": {
+                                "description": "Meat processing provided\n(with=REQ_PRODUCT_DETAILS)",
+                                "type": "boolean",
+                                "default": "<boolean> Meat processing provided. (with=REQ_PRODUCT_DETAILS)."
+                            }
+                        },
+                        "type": "object"
                     }
                 ]
             },
@@ -23984,119 +24984,268 @@
                 "properties": {
                     "id": {
                         "description": "Product ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Product ID."
                     },
                     "name": {
                         "description": "Product name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Product name."
                     },
                     "hash": {
                         "description": "Product hash, a unique URL-friendly name we use to compound a unique SEO rich URL for the product",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Product hash, a unique URL-friendly name we use to compound a unique SEO rich URL for the product."
                     },
                     "outfittingType": {
                         "description": "Outfitting Type ID (10=Hunting, 20=Fishing, 30=Other)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Outfitting Type ID (10=Hunting, 20=Fishing, 30=Other)."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/referential"
+                        "description": "Type of the product (Big Game, Waterfowl,...)",
+                        "default": "<ReferentialJson> Type of the product (Big Game, Waterfowl,...)."
+                    },
+                    "description": {
+                        "description": "Product description\n(with=REQ_PRODUCT_DESCRIPTION OR with=REQ_PRODUCT_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Product description. (with=REQ_PRODUCT_DESCRIPTION OR with=REQ_PRODUCT_DETAILS)."
                     },
                     "startOn": {
                         "description": "ISO date of the start of the availibity window",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the start of the availibity window."
                     },
                     "endOn": {
                         "description": "ISO date of the end of the availibity window",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the end of the availibity window."
                     },
                     "minPrice": {
                         "description": "Minimum price of the product",
                         "type": "number",
-                        "format": "float"
+                        "format": "float",
+                        "default": "<float> Minimum price of the product."
                     },
                     "maxPrice": {
                         "description": "Minimum price of the product",
                         "type": "number",
-                        "format": "float"
+                        "format": "float",
+                        "default": "<float> Minimum price of the product."
+                    },
+                    "pricing": {
+                        "description": "Description of the pricing conditions (Markdown)\n(with=REQ_PRODUCT_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Description of the pricing conditions (Markdown). (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "terms": {
+                        "description": "Description of the terms (Markdown)\n(with=REQ_PRODUCT_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Description of the terms (Markdown). (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "country": {
+                        "description": "Product country\n(with=REQ_PRODUCT_LOCATION)",
+                        "default": "<GeoCountryJson> Product country. (with=REQ_PRODUCT_LOCATION)."
+                    },
+                    "state": {
+                        "description": "Product state\n(with=REQ_PRODUCT_LOCATION)",
+                        "default": "<GeoStateJson> Product state. (with=REQ_PRODUCT_LOCATION)."
+                    },
+                    "coordinates": {
+                        "description": "\"lon\")",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "default": "<array(\"lat\",> \"lon\")."
+                    },
+                    "location": {
+                        "description": "Reverse geocoded coordinates to get a location name\n(with=REQ_PRODUCT_LOCATION)",
+                        "type": "string",
+                        "default": "<string> Reverse geocoded coordinates to get a location name. (with=REQ_PRODUCT_LOCATION)."
+                    },
+                    "airport": {
+                        "description": "Nearest airport name\n(with=REQ_PRODUCT_DETAILS)",
+                        "default": "<ReferentialJson> Nearest airport name. (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "lodging": {
+                        "description": "The type of accommodation\n(with=REQ_PRODUCT_DETAILS)",
+                        "default": "<ReferentialJson> The type of accommodation. (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "isAccessible": {
+                        "description": "If the product is suited for disabled hunters/fishermen\n(with=REQ_PRODUCT_DETAILS)",
+                        "type": "boolean",
+                        "default": "<boolean> If the product is suited for disabled hunters/fishermen. (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "outfitter": {
+                        "description": "Product owner\n(with=REQ_PRODUCT_OUTFITTER)",
+                        "default": "<OutfitterJson> Product owner. (with=REQ_PRODUCT_OUTFITTER)."
                     },
                     "isActive": {
                         "description": "Is product active (displayed to the public and counted in search)\nACL_PRIVATE",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is product active (displayed to the public and counted in search). ACL_PRIVATE."
+                    },
+                    "scoreLevel": {
+                        "description": "The score of the product (1=bad, 2=pretty good, 3=excellent)\n(with=REQ_PRODUCT_DETAILS)\nACL_PRIVATE",
+                        "type": "integer",
+                        "default": "<integer> The score of the product (1=bad, 2=pretty good, 3=excellent). (with=REQ_PRODUCT_DETAILS). ACL_PRIVATE."
+                    },
+                    "updatedOn": {
+                        "description": "Last update ISO date\nACL_PRIVATE\n(with=REQ_PRODUCT_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Last update ISO date. ACL_PRIVATE. (with=REQ_PRODUCT_DETAILS)."
+                    },
+                    "updater": {
+                        "description": "Last updater\nACL_PRIVATE\n(with=REQ_PRODUCT_DETAILS)",
+                        "default": "<UserJson> Last updater. ACL_PRIVATE. (with=REQ_PRODUCT_DETAILS)."
                     }
                 },
                 "type": "object"
+            },
+            "profile-business": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    {
+                        "properties": {
+                            "isManaged": {
+                                "description": "TRUE if the business profile is managed",
+                                "type": "boolean",
+                                "default": "<boolean> TRUE if the business profile is managed."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             },
             "profile": {
                 "properties": {
                     "id": {
                         "description": "Profile ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Profile ID."
                     },
                     "isActive": {
                         "description": "Profile is online/offline",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Profile is online/offline."
                     },
                     "type": {
                         "description": "Profile Type (1=ProfileStandard, 2=ProfileBusiness, 3=ProfileVendor)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Profile Type (1=ProfileStandard, 2=ProfileBusiness, 3=ProfileVendor)."
                     },
                     "name": {
                         "description": "Profile name (the Guidefitter URL of the profile)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Profile name (the Guidefitter URL of the profile)."
                     },
                     "canRename": {
                         "description": "Can that profile name be changed still?\nAdmin can rename as much as they want though.\nACL_PRIVATE",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Can that profile name be changed still?. Admin can rename as much as they want though.. ACL_PRIVATE."
                     },
                     "avatar": {
                         "$ref": "#/components/schemas/photo"
                     },
+                    "cover": {
+                        "description": "Photo of the profile cover\n(with=REQ_PROFILE_COVER)",
+                        "default": "<PhotoJson> Photo of the profile cover. (with=REQ_PROFILE_COVER)."
+                    },
+                    "referralCode": {
+                        "description": "Profile unique referral code\n(with=REQ_PROFILE_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Profile unique referral code. (with=REQ_PROFILE_DETAILS)."
+                    },
                     "updatedOn": {
                         "description": "ISO date of the last profile update",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date of the last profile update."
+                    },
+                    "updater": {
+                        "description": "Guidefitter member that last updated the association\nACL_RPIVATE\n(with=REQ_PROFILE_UPDATER)",
+                        "default": "<UserJson> Guidefitter member that last updated the association. ACL_RPIVATE. (with=REQ_PROFILE_UPDATER)."
                     },
                     "createdOn": {
                         "description": "ISO date when the profile was created",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the profile was created."
+                    },
+                    "isFavorite": {
+                        "description": "TRUE if $accessor is set and has favorited that profile. Must be authenticated.\n(with=REQ_PROFILE_FAVORITE)",
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if $accessor is set and has favorited that profile. Must be authenticated.. (with=REQ_PROFILE_FAVORITE)."
+                    },
+                    "favoritedCount": {
+                        "description": "The number of users following that profile",
+                        "type": "integer",
+                        "default": "<integer> The number of users following that profile."
                     },
                     "notifications": {
-                        "title": "notifications",
                         "description": "The list of notifications the profile is subscribed to\nACL_PRIVATE\n(with=REQ_PROFILE_NOTIFICATIONS)",
                         "type": "array",
                         "items": {
-                            "type": "object"
+                            "type": "ReferentialJson"
                         },
-                        "default": []
+                        "default": "<ReferentialJson> The list of notifications the profile is subscribed to. ACL_PRIVATE. (with=REQ_PROFILE_NOTIFICATIONS)."
                     },
                     "unreadCount": {
                         "description": "Get the number of thread messages (conversations) not read. Must be authenticated.",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Get the number of thread messages (conversations) not read. Must be authenticated.."
                     },
                     "deletedOn": {
                         "description": "ISO date when the profile was soft-deleted\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the profile was soft-deleted. ACL_PRIVATE."
                     }
                 },
                 "type": "object"
+            },
+            "profile-vendor": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/profile"
+                    },
+                    {
+                        "properties": {
+                            "isManaged": {
+                                "description": "TRUE if the business profile is managed",
+                                "type": "boolean",
+                                "default": "<boolean> TRUE if the business profile is managed."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
             },
             "verification-document": {
                 "properties": {
                     "id": {
                         "description": "The ProfileVerification ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The ProfileVerification ID."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/document-type"
+                        "description": "The type of the document",
+                        "default": "<DocumentTypeJson> The type of the document."
+                    },
+                    "verifiedOn": {
+                        "description": "ISO date when the document was verified by an admin.",
+                        "type": "string",
+                        "default": "<string> ISO date when the document was verified by an admin.."
                     },
                     "isReusable": {
                         "description": "If TRUE this document can be reused for the renewal",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE this document can be reused for the renewal."
                     },
                     "files": {
                         "description": "An array of files (name and ID) you can then download using route api.verifications.get_document_file",
                         "type": "array",
                         "items": {
-                            "type": "object"
+                            "type": "FileJson"
                         }
                     }
                 },
@@ -24106,90 +25255,209 @@
                 "properties": {
                     "id": {
                         "description": "The ProfileVerification ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The ProfileVerification ID."
                     },
                     "insiderCategory": {
                         "description": "The type of Insider: 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The type of Insider: 1=PRO, 2=INDUSTRY, 3=MILITARY, 4=FIRST RESPONDER, 5=GOVERNMENT, 6=NGO."
                     },
                     "insiderTypes": {
                         "description": "List of insider-types the user is flagged/verified for",
-                        "type": "object"
+                        "type": "array",
+                        "items": {
+                            "type": "InsiderTypeJson"
+                        }
                     },
                     "isActive": {
                         "description": "If TRUE this is the current ProfileVerification of the user.\nIf FALSE it's either a pending renewal or an archived ProfileVerification",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE this is the current ProfileVerification of the user.. If FALSE it's either a pending renewal or an archived ProfileVerification."
                     },
                     "isRenewal": {
                         "description": "TRUE when this verification is a renewal (it's not the first time the user verify his pro-status)",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE when this verification is a renewal (it's not the first time the user verify his pro-status)."
+                    },
+                    "dispatchedOn": {
+                        "description": "ISO date when the verification was complete and dispatched to GF admins\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification was complete and dispatched to GF admins. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     },
                     "isDispatched": {
                         "description": "Is the profile verification dispatched to admins.",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the profile verification dispatched to admins.."
+                    },
+                    "acceptedOn": {
+                        "description": "ISO date when the verification was accepted by an admin\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification was accepted by an admin. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     },
                     "isAccepted": {
                         "description": "Is this GVP verification accepted?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this GVP verification accepted?."
+                    },
+                    "refusedOn": {
+                        "description": "ISO date when the verification was accepted by an admin.\nIf $acceptedOn is not null, it means it got accepted and THEN refused (i.e. \"revoked\")\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification was accepted by an admin.. If $acceptedOn is not null, it means it got accepted and THEN refused (i.e. \"revoked\"). ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     },
                     "isRefused": {
                         "description": "Is this GVP verification refused?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this GVP verification refused?."
+                    },
+                    "verifier": {
+                        "description": "The admin that accepted or refused the verification\nACL_ADMIN\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "default": "<UserJson> The admin that accepted or refused the verification. ACL_ADMIN. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     },
                     "isIncomplete": {
                         "description": "Is the profile verification flagged incomplete by an admin\nACL_SHARED",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the profile verification flagged incomplete by an admin. ACL_SHARED."
                     },
                     "isInProgress": {
                         "description": "Is the profile verification underway\nACL_ADMIN",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the profile verification underway. ACL_ADMIN."
                     },
                     "isInLimbo": {
                         "description": "Is the profile verification blocked in a limbo?\nACL_ADMIN",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is the profile verification blocked in a limbo?. ACL_ADMIN."
+                    },
+                    "documents": {
+                        "description": "List of proof documents uploaded by trhe Pro\n(with=REQ_PROFILE_VERIFICATION_DOCUMENTS)\nACL_SHARED",
+                        "type": "array",
+                        "items": {
+                            "type": "ProfileVerificationDocumentJson"
+                        },
+                        "default": "<ProfileVerificationDocumentJson> List of proof documents uploaded by trhe Pro. (with=REQ_PROFILE_VERIFICATION_DOCUMENTS). ACL_SHARED."
+                    },
+                    "message": {
+                        "description": "The message typed by the user\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The message typed by the user. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
+                    },
+                    "refusalMessage": {
+                        "description": "The message typed by the admin when refusing user's pro-status verification\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The message typed by the admin when refusing user's pro-status verification. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
+                    },
+                    "brandMessage": {
+                        "description": "The message typed by the admin for the brand managers\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The message typed by the admin for the brand managers. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
+                    },
+                    "adminMessage": {
+                        "description": "The message typed by the admin for the other admins\n(with=REQ_PROFILE_VERIFICATION_DETAILS)\nACL_ADMIN",
+                        "type": "string",
+                        "default": "<string> The message typed by the admin for the other admins. (with=REQ_PROFILE_VERIFICATION_DETAILS). ACL_ADMIN."
+                    },
+                    "incompleteMessage": {
+                        "description": "The message typed by the admin to notify user verification is incomplete\n(with=REQ_PROFILE_VERIFICATION_DETAILS)\nACL_ADMIN",
+                        "type": "string",
+                        "default": "<string> The message typed by the admin to notify user verification is incomplete. (with=REQ_PROFILE_VERIFICATION_DETAILS). ACL_ADMIN."
+                    },
+                    "limboMessage": {
+                        "description": "The message typed by the admin to notify user verification is in limbo\n(with=REQ_PROFILE_VERIFICATION_DETAILS)\nACL_ADMIN",
+                        "type": "string",
+                        "default": "<string> The message typed by the admin to notify user verification is in limbo. (with=REQ_PROFILE_VERIFICATION_DETAILS). ACL_ADMIN."
                     },
                     "vendor": {
-                        "description": "The vendor (brand, association, etc..) the insider is affiliated with. You'll either get:\nan AssociationJson, a BrandJson, a VendorJson)"
+                        "description": "The vendor (brand, association, etc..) the insider is affiliated with. You'll either get:\nan AssociationJson, a BrandJson, a VendorJson)",
+                        "default": "<BrandJson|AssociationJson|VendorJson> The vendor (brand, association, etc..) the insider is affiliated with. You'll either get:. an AssociationJson, a BrandJson, a VendorJson)."
                     },
                     "otherVendor": {
                         "description": "If $vendor is NULL, the name of the brand, association, ...etc the insider is affiliated with.",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If $vendor is NULL, the name of the brand, association, ...etc the insider is affiliated with.."
                     },
                     "jobTitle": {
                         "description": "The job title of the employee in $vendor (e.g. Salesman, CEO, ...)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The job title of the employee in $vendor (e.g. Salesman, CEO, ...)."
                     },
                     "firstName": {
                         "description": "The verified first name of the insider",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The verified first name of the insider."
                     },
                     "lastName": {
                         "description": "The verified last name of the insider",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The verified last name of the insider."
+                    },
+                    "birthDate": {
+                        "description": "The birth date of the insider used to contact the DoD API\nACL_SHARED",
+                        "type": "integer",
+                        "default": "<integer> The birth date of the insider used to contact the DoD API. ACL_SHARED."
                     },
                     "email": {
                         "description": "The email used to verify the Insider is legit\nIf this matches the corporate domain of a vendor, no documents needed\nACL_SHARED",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The email used to verify the Insider is legit. If this matches the corporate domain of a vendor, no documents needed. ACL_SHARED."
                     },
                     "isEmailVerified": {
                         "description": "TRUE if the insider verified $email is his\nACL_SHARED",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if the insider verified $email is his. ACL_SHARED."
                     },
                     "emailVerifiedOn": {
                         "description": "ISO date when the work email was verified (if NULL it's not verified)\nACL_SHARED",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the work email was verified (if NULL it's not verified). ACL_SHARED."
+                    },
+                    "apiSearch": {
+                        "description": "Meta date related to the Militay API search service.\n\"search\" is a boolean always TRUE if a search was performed.\n\"result\" contains the results received from Quandis API.\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "default": "<array><integer> Meta date related to the Militay API search service.. \"search\" is a boolean always TRUE if a search was performed.. \"result\" contains the results received from Quandis API.. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
+                    },
+                    "expiresOn": {
+                        "description": "ISO date when the verification will be expired\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification will be expired. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     },
                     "isExpiring": {
                         "description": "Is this verification soon expiring (1 month before expiration)\nOnly get this attribute when isAccepted=TRUE (note: isExpiring will be FALSE if isExpired is TRUE)\nACL_SHARED",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this verification soon expiring (1 month before expiration). Only get this attribute when isAccepted=TRUE (note: isExpiring will be FALSE if isExpired is TRUE). ACL_SHARED."
+                    },
+                    "isExpired": {
+                        "description": "Is this GVP verification expired?",
+                        "type": "boolean",
+                        "default": "<boolean> Is this GVP verification expired?."
+                    },
+                    "isInGracePeriod": {
+                        "description": "Is this GVP verification expired and in grace period (90 days after expiration)\nOnly get this attribute when isExpired=TRUE\nACL_SHARED",
+                        "type": "boolean",
+                        "default": "<boolean> Is this GVP verification expired and in grace period (90 days after expiration). Only get this attribute when isExpired=TRUE. ACL_SHARED."
                     },
                     "isWizardDone": {
                         "description": "TRUE if the user reached the end of the wizard\nACL_SHARED",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if the user reached the end of the wizard. ACL_SHARED."
                     },
                     "isFired": {
                         "description": "Flag when the verification was expired after the employee was fired from his employer\nACL_ADMIN",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Flag when the verification was expired after the employee was fired from his employer. ACL_ADMIN."
+                    },
+                    "createdOn": {
+                        "description": "ISO date when the verification was created\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification was created. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
+                    },
+                    "updatedOn": {
+                        "description": "ISO date when the verification was last updated\nACL_SHARED\n(with=REQ_PROFILE_VERIFICATION_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date when the verification was last updated. ACL_SHARED. (with=REQ_PROFILE_VERIFICATION_DETAILS)."
                     }
                 },
                 "type": "object"
@@ -24198,34 +25466,115 @@
                 "properties": {
                     "id": {
                         "description": "The program ID (GOP/IDP/...)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The program ID (GOP/IDP/...)."
                     },
                     "brand": {
-                        "$ref": "#/components/schemas/brand"
+                        "description": "The brand owning the program\n(not included if with=REQ_BRAND_PROGRAMS)",
+                        "default": "<BrandJson> The brand owning the program. (not included if with=REQ_BRAND_PROGRAMS)."
                     },
                     "moto": {
                         "description": "A short catchy hook for the GOP (E.g. \"Up to 50% discount!\")",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> A short catchy hook for the GOP (E.g. \"Up to 50% discount!\")."
+                    },
+                    "description": {
+                        "description": "The description of the program, displayed when the pro is not yet enrolled\n(with=REQ_PROGRAM_DESCRIPTION or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The description of the program, displayed when the pro is not yet enrolled. (with=REQ_PROGRAM_DESCRIPTION or with=REQ_PROGRAM_DETAILS)."
+                    },
+                    "guidelines": {
+                        "description": "The ordering guidelines, returned only if the insider is enrolled\nACL_PRIVATE\n(with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The ordering guidelines, returned only if the insider is enrolled. ACL_PRIVATE. (with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)."
+                    },
+                    "url": {
+                        "description": "An external URL (to e.g. a PDF on the brand website, or an order form on their site).\nOnly displayed to accepted members. Append utm_source=guidefitter query string.\nACL_PRIVATE\n(with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> An external URL (to e.g. a PDF on the brand website, or an order form on their site).. Only displayed to accepted members. Append utm_source=guidefitter query string.. ACL_PRIVATE. (with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)."
+                    },
+                    "returnPolicy": {
+                        "description": "The program return policy, returned only if the insider is enrolled\nACL_PRIVATE\n(with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The program return policy, returned only if the insider is enrolled. ACL_PRIVATE. (with=REQ_PROGRAM_ORDERING or with=REQ_PROGRAM_DETAILS)."
+                    },
+                    "legalNotice": {
+                        "description": "The program legal notice that must be acknowledged and accepted by the subscriber\n(with=REQ_PROGRAM_LEGAL or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The program legal notice that must be acknowledged and accepted by the subscriber. (with=REQ_PROGRAM_LEGAL or with=REQ_PROGRAM_DETAILS)."
+                    },
+                    "legalNoticeAgree": {
+                        "description": "The program legal notice agreement that the user must click to sign (put inside a checkbox)\n(with=REQ_PROGRAM_LEGAL or with=REQ_PROGRAM_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The program legal notice agreement that the user must click to sign (put inside a checkbox). (with=REQ_PROGRAM_LEGAL or with=REQ_PROGRAM_DETAILS)."
                     },
                     "isPublished": {
                         "description": "If the GOP is published",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the GOP is published."
                     },
                     "isComingSoon": {
                         "description": "If the GOP is not published, but coming soon",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the GOP is not published, but coming soon."
+                    },
+                    "isAutoDispatched": {
+                        "description": "If FALSE a subscription to the program will be on hold until an admin takes a look at it and dispatch it manually\nACL_ADMIN",
+                        "type": "boolean",
+                        "default": "<boolean> If FALSE a subscription to the program will be on hold until an admin takes a look at it and dispatch it manually. ACL_ADMIN."
+                    },
+                    "isAutoAccept": {
+                        "description": "If TRUE any verified application to this GOP will be automatically accepted\nACL_PRIVATE",
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE any verified application to this GOP will be automatically accepted. ACL_PRIVATE."
                     },
                     "channel": {
                         "description": "The distribution channel of the program (shop/code/dealer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The distribution channel of the program (shop/code/dealer)."
                     },
                     "shopStatus": {
                         "description": "Program Shop status (0=none, 1=created, 2=opened). Only returned if channel is 'shop'.",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Program Shop status (0=none, 1=created, 2=opened). Only returned if channel is 'shop'.."
                     },
                     "isFeatured": {
                         "description": "If the GOP was featured by an admin",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the GOP was featured by an admin."
+                    },
+                    "canApply": {
+                        "description": "If the current user is eligible to apply GOP\n(with=REQ_PROGRAM_MYSTATUS)",
+                        "type": "boolean",
+                        "default": "<boolean> If the current user is eligible to apply GOP. (with=REQ_PROGRAM_MYSTATUS)."
+                    },
+                    "canDispatch": {
+                        "description": "If the current user application is verified and dispatchable to the brand manager for decision\n(with=REQ_PROGRAM_MYSTATUS)",
+                        "type": "boolean",
+                        "default": "<boolean> If the current user application is verified and dispatchable to the brand manager for decision. (with=REQ_PROGRAM_MYSTATUS)."
+                    },
+                    "canShop": {
+                        "description": "True if the user is a verified insider, is currently accepted into the program, the program is opened and the shop is opened.\nFor child brands it considers parent's program/shop\n(with=REQ_PROGRAM_MYSTATUS)",
+                        "type": "boolean",
+                        "default": "<boolean> True if the user is a verified insider, is currently accepted into the program, the program is opened and the shop is opened.. For child brands it considers parent's program/shop. (with=REQ_PROGRAM_MYSTATUS)."
+                    },
+                    "subscription": {
+                        "description": "The subscription of the current logged in user\n(with=REQ_PROGRAM_MYSTATUS)",
+                        "default": "<GopSubscriptionJson> The subscription of the current logged in user. (with=REQ_PROGRAM_MYSTATUS)."
+                    },
+                    "enrolledCount": {
+                        "description": "The total number of accepted members in the program\n(with=REQ_PROGRAM_STATS)\nACL_PRIVATE",
+                        "type": "integer",
+                        "default": "<integer> The total number of accepted members in the program. (with=REQ_PROGRAM_STATS). ACL_PRIVATE."
+                    },
+                    "pendingCount": {
+                        "description": "The number of applications not accepted or refused by the brand manager\n(with=REQ_PROGRAM_STATS)\nACL_PRIVATE",
+                        "type": "integer",
+                        "default": "<integer> The number of applications not accepted or refused by the brand manager. (with=REQ_PROGRAM_STATS). ACL_PRIVATE."
+                    },
+                    "restrictions": {
+                        "description": "The restrictions settings for this program\nACL_SHARED\n(with=REQ_PROGRAM_RESTRICTIONS or with=REQ_PROGRAM_DETAILS)",
+                        "default": "<ProgramRestrictionsJson> The restrictions settings for this program. ACL_SHARED. (with=REQ_PROGRAM_RESTRICTIONS or with=REQ_PROGRAM_DETAILS)."
                     }
                 },
                 "type": "object"
@@ -24234,39 +25583,65 @@
                 "properties": {
                     "id": {
                         "description": "Program Subscription ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Program Subscription ID."
+                    },
+                    "program": {
+                        "description": "The program the subscription belongs to\n(with=REQ_PROGRAM_SUBSCRIPTION_PROGRAM)",
+                        "default": "<ProgramJson> The program the subscription belongs to. (with=REQ_PROGRAM_SUBSCRIPTION_PROGRAM)."
+                    },
+                    "subscriber": {
+                        "description": "The GF member subscribed to the program\n(with=REQ_PROGRAM_SUBSCRIPTION_SUBSCRIBER)",
+                        "default": "<UserJson> The GF member subscribed to the program. (with=REQ_PROGRAM_SUBSCRIPTION_SUBSCRIBER)."
+                    },
+                    "vendor": {
+                        "description": "The vendor the insider selected (the dealer his orders will be shipped to)\n(with=REQ_PROGRAM_SUBSCRIPTION_VENDOR)",
+                        "default": "<UserJson> The vendor the insider selected (the dealer his orders will be shipped to). (with=REQ_PROGRAM_SUBSCRIPTION_VENDOR)."
                     },
                     "isVerified": {
                         "description": "If the subscription is verified by an admin",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the subscription is verified by an admin."
                     },
                     "isDispatched": {
                         "description": "If the subscription is dispatched (sent to the brand)",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the subscription is dispatched (sent to the brand)."
                     },
                     "isAccepted": {
                         "description": "If the subscription is accepted by the brand",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the subscription is accepted by the brand."
                     },
                     "acceptedOn": {
                         "description": "Date (UTC) when subscription was accepted by the brand manager",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Date (UTC) when subscription was accepted by the brand manager."
                     },
                     "isRefused": {
                         "description": "If the subscription is refused by the brand",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the subscription is refused by the brand."
                     },
                     "refusedOn": {
                         "description": "Date (UTC) when subscription was refused (or revoked) by the brand manager",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Date (UTC) when subscription was refused (or revoked) by the brand manager."
+                    },
+                    "refusalMessage": {
+                        "description": "The message from the brand manager refusing the application",
+                        "type": "string",
+                        "default": "<string> The message from the brand manager refusing the application."
                     },
                     "isRevoked": {
                         "description": "If the subscription was accepted by the brand, but then got revoked",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If the subscription was accepted by the brand, but then got revoked."
                     },
                     "createdOn": {
                         "description": "ISO date when the subscription was created",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> ISO date when the subscription was created."
                     }
                 },
                 "type": "object"
@@ -24275,19 +25650,23 @@
                 "properties": {
                     "id": {
                         "description": "Entity ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Entity ID."
                     },
                     "name": {
                         "description": "The name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The name."
                     },
                     "code": {
                         "description": "A code",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> A code."
                     },
                     "description": {
                         "description": "A description",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> A description."
                     }
                 },
                 "type": "object"
@@ -24296,31 +25675,38 @@
                 "properties": {
                     "id": {
                         "description": "Report ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Report ID."
                     },
                     "type": {
                         "description": "Report type",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Report type."
                     },
                     "resource": {
                         "description": "Resource Id",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Resource Id."
                     },
                     "status": {
                         "description": "Report status",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Report status."
                     },
                     "message": {
                         "description": "Report message",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Report message."
                     },
                     "sender": {
                         "description": "Message",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Message."
                     },
                     "createdOn": {
                         "type": "string",
-                        "format": "date-time"
+                        "format": "date-time",
+                        "default": "<\\DateTime> @OA\\UNDEFINED🙈."
                     }
                 },
                 "type": "object"
@@ -24329,15 +25715,31 @@
                 "properties": {
                     "id": {
                         "description": "The review ID. Used for the URL in combination with \"name\"",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The review ID. Used for the URL in combination with \"name\"."
                     },
                     "name": {
                         "description": "The review \"name\" is used for the public URL",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The review \"name\" is used for the public URL."
                     },
                     "title": {
                         "description": "Review title",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Review title."
+                    },
+                    "description": {
+                        "description": "The review itself\n(with=REQ_REVIEW_DESCRIPTION)",
+                        "type": "string",
+                        "default": "<string> The review itself. (with=REQ_REVIEW_DESCRIPTION)."
+                    },
+                    "author": {
+                        "description": "The GF member who created the review\n(with=REQ_REVIEW_AUTHOR)",
+                        "default": "<UserJson> The GF member who created the review. (with=REQ_REVIEW_AUTHOR)."
+                    },
+                    "item": {
+                        "description": "The item reviewed\n(with=REQ_REVIEW_ITEM)",
+                        "default": "<ItemJson> The item reviewed. (with=REQ_REVIEW_ITEM)."
                     },
                     "album": {
                         "$ref": "#/components/schemas/album"
@@ -24352,95 +25754,123 @@
                     },
                     "rating": {
                         "description": "The 5 stars rating of the author",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The 5 stars rating of the author."
                     },
                     "viewCount": {
                         "description": "The total number of views tracked for that review\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of views tracked for that review. (ACL_PRIVATE)."
                     },
                     "scrollCount": {
                         "description": "The total number of scrolls below the fold tracked for that review\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of scrolls below the fold tracked for that review. (ACL_PRIVATE)."
                     },
                     "commentCount": {
                         "description": "The number of comments on the story",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The number of comments on the story."
                     },
                     "likeCount": {
                         "description": "The total number of likes for that review",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of likes for that review."
                     },
                     "likeProCount": {
                         "description": "The total number of likes by verified pros for that review",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of likes by verified pros for that review."
                     },
                     "isLiked": {
                         "description": "TRUE if logged in user liked the review",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> TRUE if logged in user liked the review."
                     },
                     "sharesCount": {
                         "description": "The total number of shares tracked for that review\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of shares tracked for that review. (ACL_PRIVATE)."
                     },
                     "baitCount": {
                         "description": "The total number of baits tracked for that review. A bait is when the user clicked the review CTA.\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of baits tracked for that review. A bait is when the user clicked the review CTA.. (ACL_PRIVATE)."
                     },
                     "hookCount": {
                         "description": "The total number of hooks tracked for that review. A hook is when the user added the reviewed product in cart.\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of hooks tracked for that review. A hook is when the user added the reviewed product in cart.. (ACL_PRIVATE)."
                     },
                     "buyCount": {
                         "description": "The total number of orders tracked for that review.\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of orders tracked for that review.. (ACL_PRIVATE)."
                     },
                     "orderCount": {
                         "description": "The total number of orders for that review imported from Magento\n(ACL_PRIVATE)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of orders for that review imported from Magento. (ACL_PRIVATE)."
                     },
                     "tags": {
                         "description": "The hashtags for that story",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> The hashtags for that story."
                     },
                     "createdOn": {
                         "description": "The ISO date when the review was created",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was created."
                     },
                     "updatedOn": {
                         "description": "The ISO date when the review was last updated",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was last updated."
                     },
                     "dispatchedOn": {
                         "description": "The ISO date when the review was dispatched",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was dispatched."
                     },
                     "correctedOn": {
                         "description": "The ISO date when the review was corrected by an admin (reset after each author edit)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was corrected by an admin (reset after each author edit)."
                     },
                     "publishedOn": {
                         "description": "The ISO date when the review was published",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was published."
                     },
                     "deletedOn": {
                         "description": "The ISO date when the review was soft deleted",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the review was soft deleted."
                     }
                 },
                 "type": "object"
+            },
+            "rtp": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/program"
+                    }
+                ]
             },
             "tag": {
                 "properties": {
                     "tag": {
                         "description": "The tag",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The tag."
                     },
                     "tagCount": {
                         "description": "How much time this tag has been used",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> How much time this tag has been used."
                     }
                 },
                 "type": "object"
@@ -24449,29 +25879,43 @@
                 "properties": {
                     "id": {
                         "description": "The thread ID",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The thread ID."
                     },
                     "type": {
                         "description": "The type of thread: 1=REGULAR, 10=LEAD, 20=SYSTEM",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The type of thread: 1=REGULAR, 10=LEAD, 20=SYSTEM."
                     },
                     "participants": {
                         "description": "An array mixing OutfitterJson and UserJson of all the people in the conversation",
                         "type": "array",
                         "items": {
-                            "type": "object"
-                        }
+                            "type": "OutfitterJson|UserJson"
+                        },
+                        "default": "<array><OutfitterJson|UserJson> An array mixing OutfitterJson and UserJson of all the people in the conversation."
                     },
                     "messages": {
                         "description": "The last 8 messages of the thread. To get older messages, use route 'api.threads.get_thread_messages' starting at page=2",
                         "type": "array",
                         "items": {
-                            "type": "object"
-                        }
+                            "type": "TheadMessageJson"
+                        },
+                        "default": "<TheadMessageJson> The last 8 messages of the thread. To get older messages, use route 'api.threads.get_thread_messages' starting at page=2."
                     },
                     "messageCount": {
                         "description": "The total number of messages in the thread (so you know if you need to use pagination or not)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The total number of messages in the thread (so you know if you need to use pagination or not)."
+                    },
+                    "isRead": {
+                        "description": "Is the message read by the accessor\n(with=REQ_THREAD_STATUS)",
+                        "type": "boolean",
+                        "default": "<boolean> Is the message read by the accessor. (with=REQ_THREAD_STATUS)."
+                    },
+                    "lead": {
+                        "description": "A Meta object containing lead-related properties. Only for lead thread (type=10)\nACL_ADMIN",
+                        "default": "<mixed> A Meta object containing lead-related properties. Only for lead thread (type=10). ACL_ADMIN."
                     }
                 },
                 "type": "object"
@@ -24480,50 +25924,131 @@
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)."
                     },
                     "id": {
                         "description": "User ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> User ID."
                     },
                     "isGhost": {
                         "description": "Ghost user (not registered to GF)",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Ghost user (not registered to GF)."
                     },
                     "firstName": {
                         "description": "First Name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> First Name."
                     },
                     "lastName": {
                         "description": "Last Name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Last Name."
+                    },
+                    "description": {
+                        "description": "User biography\n(with=REQ_USER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> User biography. (with=REQ_USER_DETAILS)."
+                    },
+                    "address": {
+                        "description": "User Address\n(with=REQ_USER_ADDRESS)",
+                        "default": "<AddressJson> User Address. (with=REQ_USER_ADDRESS)."
                     },
                     "profile": {
-                        "$ref": "#/components/schemas/profile"
+                        "description": "User profile"
+                    },
+                    "profiles": {
+                        "description": "The profiles the user is manager of. Could be outfitters or brands\nACL_PRIVATE\n(with=REQ_USER_PROFILES)",
+                        "type": "array",
+                        "items": {
+                            "type": "OutfitterJson"
+                        },
+                        "default": "<OutfitterJson> The profiles the user is manager of. Could be outfitters or brands. ACL_PRIVATE. (with=REQ_USER_PROFILES)."
                     },
                     "unreadCount": {
                         "description": "Get the number of thread messages (conversations) not read. Must be authenticated.",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Get the number of thread messages (conversations) not read. Must be authenticated.."
+                    },
+                    "businesses": {
+                        "description": "The outfitters he's owner of\n(with=REQ_USER_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "OutfitterJson"
+                        },
+                        "default": "<OutfitterJson> The outfitters he's owner of. (with=REQ_USER_DETAILS)."
+                    },
+                    "associations": {
+                        "description": "The associations the user is member of\n(with=REQ_USER_DETAILS)",
+                        "type": "array",
+                        "items": {
+                            "type": "AssociationJson"
+                        },
+                        "default": "<AssociationJson> The associations the user is member of. (with=REQ_USER_DETAILS)."
                     },
                     "email": {
                         "description": "User email\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> User email. ACL_PRIVATE."
+                    },
+                    "emailRequest": {
+                        "description": "The new email address the user wants to use. Pending verification.\nACL_PRIVATE\n(with=REQ_USER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> The new email address the user wants to use. Pending verification.. ACL_PRIVATE. (with=REQ_USER_DETAILS)."
+                    },
+                    "hasEmail": {
+                        "description": "Only when isGhost, this will tell you if the user has an email address",
+                        "type": "boolean",
+                        "default": "<boolean> Only when isGhost, this will tell you if the user has an email address."
                     },
                     "isEmailVerified": {
                         "description": "User email has been verified\nACL_PRIVATE",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> User email has been verified. ACL_PRIVATE."
+                    },
+                    "gender": {
+                        "description": "User gender\nACL_PRIVATE\n(with=REQ_USER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> User gender. ACL_PRIVATE. (with=REQ_USER_DETAILS)."
+                    },
+                    "birthdate": {
+                        "description": "ISO date of the user birthday\nACL_PRIVATE\n(with=REQ_USER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> ISO date of the user birthday. ACL_PRIVATE. (with=REQ_USER_DETAILS)."
+                    },
+                    "phone": {
+                        "description": "User phone number\nACL_PRIVATE\n(with=REQ_USER_DETAILS)",
+                        "default": "<PhoneJson> User phone number. ACL_PRIVATE. (with=REQ_USER_DETAILS)."
                     },
                     "createdOn": {
                         "description": "Account creation date",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Account creation date."
                     },
                     "magentoId": {
                         "description": "The magento ID of that user\nACL_PRIVATE",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The magento ID of that user. ACL_PRIVATE."
+                    },
+                    "facebookId": {
+                        "description": "Facebook ID of the user if his GF account is connected to his Facebook account\nACL_PRIVATE\n(with=REQ_USER_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Facebook ID of the user if his GF account is connected to his Facebook account. ACL_PRIVATE. (with=REQ_USER_DETAILS)."
                     },
                     "zendeskId": {
                         "description": "The Zendesk ID of that user\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The Zendesk ID of that user. ACL_PRIVATE."
+                    },
+                    "sessions": {
+                        "description": "The sessions the user\nACL_PRIVATE\n(with=REQ_USER_SESSIONS)",
+                        "type": "array",
+                        "items": {
+                            "type": "UserSessionJson"
+                        },
+                        "default": "<UserSessionJson> The sessions the user. ACL_PRIVATE. (with=REQ_USER_SESSIONS)."
                     }
                 },
                 "type": "object"
@@ -24532,43 +26057,54 @@
                 "properties": {
                     "id": {
                         "description": "The validation ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The validation ID."
                     },
                     "type": {
                         "description": "The validation type (2=password, 4=outfitter claim, 5=outfitter affiliation, 6=email)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The validation type (2=password, 4=outfitter claim, 5=outfitter affiliation, 6=email)."
                     },
                     "code": {
                         "description": "The unique code to build route 'request.verify'\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The unique code to build route 'request.verify'. ACL_PRIVATE."
                     },
                     "email": {
                         "description": "The email to validate (null if $type != 6)\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The email to validate (null if $type != 6). ACL_PRIVATE."
                     },
                     "user": {
-                        "$ref": "#/components/schemas/user"
+                        "description": "The user concerned by the validation:<br>\n- if type 6 it's the user the email belongs to<br>\n- if type 2 it's the user changing his password",
+                        "default": "<UserJson> The user concerned by the validation:<br>. - if type 6 it's the user the email belongs to<br>. - if type 2 it's the user changing his password."
                     },
                     "outfitter": {
-                        "$ref": "#/components/schemas/outfitter"
+                        "description": "The outfitter concerned by the validation:<br>\n- if type 6 it's the outfitter the email belongs to<br>",
+                        "default": "<OutfitterJson> The outfitter concerned by the validation:<br>. - if type 6 it's the outfitter the email belongs to<br>."
                     },
                     "claim": {
-                        "$ref": "#/components/schemas/claim"
+                        "description": "When type 4 it's the outfitter claim to validate",
+                        "default": "<ClaimJson> When type 4 it's the outfitter claim to validate."
                     },
                     "affiliation": {
-                        "$ref": "#/components/schemas/affiliation"
+                        "description": "When type 5 it's the outfitter affiliation to validate",
+                        "default": "<AffiliationJson> When type 5 it's the outfitter affiliation to validate."
                     },
                     "isExpired": {
                         "description": "Is this validation expired?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this validation expired?."
                     },
                     "isDeleted": {
                         "description": "Is this validation soft-deleted?",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> Is this validation soft-deleted?."
                     },
                     "createdOn": {
                         "description": "The ISO date when the validation was created",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> The ISO date when the validation was created."
                     }
                 },
                 "type": "object"
@@ -24577,66 +26113,120 @@
                 "properties": {
                     "type": {
                         "description": "Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Descriminator: the type of entity (u: user, o: outfitter, b: brand, a: association, v: vendor, c: customer)."
                     },
                     "id": {
                         "description": "Vendor ID",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> Vendor ID."
                     },
                     "vendorType": {
                         "description": "The vendor type (e.g. 60 for Conservation Groups)",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The vendor type (e.g. 60 for Conservation Groups)."
                     },
                     "name": {
                         "description": "Business name",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Business name."
+                    },
+                    "address": {
+                        "description": "Vendor address\n(with=REQ_VENDOR_ADDRESS)",
+                        "default": "<AddressJson> Vendor address. (with=REQ_VENDOR_ADDRESS)."
                     },
                     "profile": {
-                        "description": "Vendor GF profile"
+                        "description": "Vendor GF profile",
+                        "default": "<ProfileVendorJson> Vendor GF profile."
+                    },
+                    "description": {
+                        "description": "Vendor description\n(with=REQ_VENDOR_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Vendor description. (with=REQ_VENDOR_DETAILS)."
+                    },
+                    "joinMessage": {
+                        "description": "A short message displayed on the landing page for the insider of the category for that vendor\n(with=REQ_VENDOR_DETAILS)",
+                        "type": "string",
+                        "default": "<string> A short message displayed on the landing page for the insider of the category for that vendor. (with=REQ_VENDOR_DETAILS)."
+                    },
+                    "url": {
+                        "description": "An external URL to the vendor website\n(with=REQ_VENDOR_DETAILS)",
+                        "type": "string",
+                        "default": "<string> An external URL to the vendor website. (with=REQ_VENDOR_DETAILS)."
                     },
                     "email": {
                         "description": "Vendor email address\nACL_PRIVATE",
-                        "type": "string"
+                        "type": "string",
+                        "default": "<string> Vendor email address. ACL_PRIVATE."
                     },
                     "corporateDomains": {
                         "description": "The list of the vendor's corporate email addresses domains",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> The list of the vendor's corporate email addresses domains."
                     },
                     "corporateDomainsRegex": {
                         "description": "The regular expression matching the vendor's corporate email addresses domains",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> The regular expression matching the vendor's corporate email addresses domains."
                     },
                     "isEmailEnough": {
                         "description": "If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded",
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": "<boolean> If TRUE, it means the corporate domains are not enough to prove insider status, and documents must be also uploaded."
                     },
                     "insiderCategory": {
                         "description": "The Insider Category that vendor opens to his employees.\nI.e. by being an employee of that vendor you're at least flagged with that insider category",
-                        "type": "integer"
+                        "type": "integer",
+                        "default": "<integer> The Insider Category that vendor opens to his employees.. I.e. by being an employee of that vendor you're at least flagged with that insider category."
                     },
                     "insiderTypes": {
                         "description": "The insider types valid for this vendor (could be empty for some categories)",
                         "type": "array",
                         "items": {
                             "type": "string"
-                        }
+                        },
+                        "default": "<array><string> The insider types valid for this vendor (could be empty for some categories)."
                     },
                     "phones": {
                         "description": "Vendor phones\n(with=REQ_VENDOR_DETAILS)",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/phone"
-                        }
+                            "type": "PhoneJson"
+                        },
+                        "default": "<PhoneJson> Vendor phones. (with=REQ_VENDOR_DETAILS)."
+                    },
+                    "fflNumber": {
+                        "description": "Only for an FFL dealer vendor (type=22), the FFL license number\n(with=REQ_VENDOR_DETAILS)",
+                        "type": "string",
+                        "default": "<string> Only for an FFL dealer vendor (type=22), the FFL license number. (with=REQ_VENDOR_DETAILS)."
+                    },
+                    "fflFile": {
+                        "description": "The file object (name and ID) of the FFL. Only for FFL dealers (type=22).\nYou can then download using route api.vendors.get_file\n(with=REQ_VENDOR_DETAILS)",
+                        "default": "<FileJson> The file object (name and ID) of the FFL. Only for FFL dealers (type=22).. You can then download using route api.vendors.get_file. (with=REQ_VENDOR_DETAILS)."
+                    },
+                    "expiresOn": {
+                        "description": "ISO date of FFL expiration",
+                        "type": "string",
+                        "default": "<string> ISO date of FFL expiration."
+                    },
+                    "dealerships": {
+                        "description": "The brands the vendor is selling. Only for Dealers (type=21,22)\n(with=REQ_VENDOR_DEALERSHIPS)",
+                        "type": "array",
+                        "items": {
+                            "type": "BrandJson"
+                        },
+                        "default": "<BrandJson> The brands the vendor is selling. Only for Dealers (type=21,22). (with=REQ_VENDOR_DEALERSHIPS)."
                     }
                 },
                 "type": "object"
-            }
+            },
+            "weapon": {}
         },
         "parameters": {
             "type": {
@@ -24660,9 +26250,8 @@
                     "type": "integer"
                 }
             },
-            "/articles": {
+            "with-unpublished": {
                 "name": "with-unpublished",
-                "tag": "articles",
                 "in": "query",
                 "description": "Do no filter out unpublished articles (admins only)",
                 "required": false,
