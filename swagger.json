@@ -22865,7 +22865,7 @@
                         "description": "The album photos, ordered by position in album",
                         "type": "array",
                         "items": {
-                            "type": "PhotoJson"
+                            "$ref": "#/components/schemas/photo"
                         }
                     }
                 },
@@ -22927,7 +22927,7 @@
                         "description": "Name of the parent species/group\n(with=REQ_ANIMAL_CHILDREN)",
                         "type": "array",
                         "items": {
-                            "type": "AnimalJson"
+                            "$ref": "#/components/schemas/animal"
                         },
                         "default": "<AnimalJson> Name of the parent species/group. (with=REQ_ANIMAL_CHILDREN)."
                     },
@@ -23003,21 +23003,21 @@
                         "description": "List of article authors",
                         "type": "array",
                         "items": {
-                            "type": "UserJson"
+                            "$ref": "#/components/schemas/user"
                         }
                     },
                     "articles": {
                         "description": "List of related articles\n(with=REQ_ARTICLE_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "ArticleJson"
+                            "$ref": "#/components/schemas/article"
                         }
                     },
                     "outfitters": {
                         "description": "List of featured outfitters\n(with=REQ_ARTICLE_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "OutfitterJson"
+                            "$ref": "#/components/schemas/outfitter"
                         }
                     },
                     "commentCount": {
@@ -23127,7 +23127,7 @@
                         "description": "Phones",
                         "type": "array",
                         "items": {
-                            "type": "PhoneJson"
+                            "$ref": "#/components/schemas/phone"
                         }
                     }
                 },
@@ -23308,7 +23308,7 @@
                         "description": "The gear categories of the brand\n(with=REQ_BRAND_CATEGORIES or with=REQ_BRAND_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "ReferentialJson"
+                            "$ref": "#/components/schemas/referential"
                         },
                         "default": "<ReferentialJson> The gear categories of the brand. (with=REQ_BRAND_CATEGORIES or with=REQ_BRAND_DETAILS)."
                     },
@@ -23325,7 +23325,7 @@
                         "description": "The brands that have this brand as parent\n(with=REQ_BRAND_CHILDREN or with=REQ_BRAND_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "BrandJson"
+                            "$ref": "#/components/schemas/brand"
                         },
                         "default": "<BrandJson> The brands that have this brand as parent. (with=REQ_BRAND_CHILDREN or with=REQ_BRAND_DETAILS)."
                     },
@@ -23526,7 +23526,7 @@
                         "description": "All the replies to this comment, sorted by date (from old to new)\n(with=REQ_COMMENT_REPLIES)",
                         "type": "array",
                         "items": {
-                            "type": "CommentJson"
+                            "$ref": "#/components/schemas/comment"
                         },
                         "default": "<CommentJson> All the replies to this comment, sorted by date (from old to new). (with=REQ_COMMENT_REPLIES)."
                     },
@@ -23625,7 +23625,7 @@
                         "description": "The gear categories of the brand\n(with=REQ_DISCOUNTCODE_TARGETS)",
                         "type": "array",
                         "items": {
-                            "type": "DiscountCodeTargetJson"
+                            "$ref": "#/components/schemas/discount-code-targer"
                         },
                         "default": "<DiscountCodeTargetJson> The gear categories of the brand. (with=REQ_DISCOUNTCODE_TARGETS)."
                     },
@@ -23914,7 +23914,7 @@
                                 "description": "The list of states of the country\n(with=REQ_COUNTRY_STATES)",
                                 "type": "array",
                                 "items": {
-                                    "type": "GeoStateJson"
+                                    "$ref": "#/components/schemas/state"
                                 },
                                 "default": "<GeoStateJson> The list of states of the country. (with=REQ_COUNTRY_STATES)."
                             },
@@ -24076,7 +24076,7 @@
                         "description": "The competition ranks\n(with=REQ_INSIDER_COMPETITION_RANKS)",
                         "type": "array",
                         "items": {
-                            "type": "InsiderCompetitionRankJson"
+                            "$ref": "#/components/schemas/insider-competition-rank"
                         },
                         "default": "<InsiderCompetitionRankJson> The competition ranks. (with=REQ_INSIDER_COMPETITION_RANKS)."
                     }
@@ -24317,7 +24317,7 @@
                         "description": "Outfitter phones (outfitters can have more than 1)\nACL_PRIVATE",
                         "type": "array",
                         "items": {
-                            "type": "PhoneJson"
+                            "$ref": "#/components/schemas/phone"
                         },
                         "default": "<PhoneJson> Outfitter phones (outfitters can have more than 1). ACL_PRIVATE."
                     },
@@ -24335,7 +24335,7 @@
                         "description": "The associations the outfitter is member of\n(with=REQ_OUTFITTER_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "AssociationJson"
+                            "$ref": "#/components/schemas/association"
                         },
                         "default": "<AssociationJson> The associations the outfitter is member of. (with=REQ_OUTFITTER_DETAILS)."
                     },
@@ -24364,7 +24364,7 @@
                         "description": "The outfitting licenses\n(with=REQ_OUTFITTER_LICENSES)",
                         "type": "array",
                         "items": {
-                            "type": "UserJson"
+                            "$ref": "#/components/schemas/user"
                         },
                         "default": "<UserJson> The outfitting licenses. (with=REQ_OUTFITTER_LICENSES)."
                     },
@@ -24485,7 +24485,7 @@
                         "description": "The album the photo belongs to\n(with=REQ_PHOTO_ALBUMS)",
                         "type": "array",
                         "items": {
-                            "type": "AlbumJson"
+                            "$ref": "#/components/schemas/album"
                         },
                         "default": "<AlbumJson> The album the photo belongs to. (with=REQ_PHOTO_ALBUMS)."
                     },
@@ -24536,7 +24536,7 @@
                         "description": "All the photo comments\n(with=REQ_PHOTO_COMMENTS)",
                         "type": "array",
                         "items": {
-                            "type": "CommentJson"
+                            "$ref": "#/components/schemas/comment"
                         },
                         "default": "<CommentJson> All the photo comments. (with=REQ_PHOTO_COMMENTS)."
                     },
@@ -24598,7 +24598,7 @@
                         "description": "List of animals tagged\n(with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_ANIMALS)",
                         "type": "array",
                         "items": {
-                            "type": "AnimalJson"
+                            "$ref": "#/components/schemas/animal"
                         },
                         "default": "<AnimalJson> List of animals tagged. (with=REQ_PHOTO_TAGS or with=REQ_PHOTO_TAGS_ANIMALS)."
                     },
@@ -24720,7 +24720,7 @@
                         "description": "The \"best\" comments for that post",
                         "type": "array",
                         "items": {
-                            "type": "CommentJson"
+                            "$ref": "#/components/schemas/comment"
                         },
                         "default": "<CommentJson> The \"best\" comments for that post."
                     },
@@ -24897,7 +24897,7 @@
                                 "description": "List of species\n(with=REQ_PRODUCT_DETAILS)",
                                 "type": "array",
                                 "items": {
-                                    "type": "AnimalJson"
+                                    "$ref": "#/components/schemas/animal"
                                 },
                                 "default": "<AnimalJson> List of species. (with=REQ_PRODUCT_DETAILS)."
                             },
@@ -24943,7 +24943,7 @@
                                 "description": "List of species\n(with=REQ_PRODUCT_DETAILS)",
                                 "type": "array",
                                 "items": {
-                                    "type": "AnimalJson"
+                                    "$ref": "#/components/schemas/animal"
                                 },
                                 "default": "<AnimalJson> List of species. (with=REQ_PRODUCT_DETAILS)."
                             },
@@ -24951,7 +24951,7 @@
                                 "description": "List of weapons\n(with=REQ_PRODUCT_DETAILS)",
                                 "type": "array",
                                 "items": {
-                                    "type": "WeaponJson"
+                                    "$ref": "#/components/schemas/weapon"
                                 },
                                 "default": "<WeaponJson> List of weapons. (with=REQ_PRODUCT_DETAILS)."
                             },
@@ -25186,7 +25186,7 @@
                         "description": "The list of notifications the profile is subscribed to\nACL_PRIVATE\n(with=REQ_PROFILE_NOTIFICATIONS)",
                         "type": "array",
                         "items": {
-                            "type": "ReferentialJson"
+                            "$ref": "#/components/schemas/referential"
                         },
                         "default": "<ReferentialJson> The list of notifications the profile is subscribed to. ACL_PRIVATE. (with=REQ_PROFILE_NOTIFICATIONS)."
                     },
@@ -25245,7 +25245,7 @@
                         "description": "An array of files (name and ID) you can then download using route api.verifications.get_document_file",
                         "type": "array",
                         "items": {
-                            "type": "FileJson"
+                            "$ref": "#/components/schemas/file"
                         }
                     }
                 },
@@ -25267,7 +25267,7 @@
                         "description": "List of insider-types the user is flagged/verified for",
                         "type": "array",
                         "items": {
-                            "type": "InsiderTypeJson"
+                            "$ref": "#/components/schemas/insider-type"
                         }
                     },
                     "isActive": {
@@ -25333,7 +25333,7 @@
                         "description": "List of proof documents uploaded by trhe Pro\n(with=REQ_PROFILE_VERIFICATION_DOCUMENTS)\nACL_SHARED",
                         "type": "array",
                         "items": {
-                            "type": "ProfileVerificationDocumentJson"
+                            "$ref": "#/components/schemas/verification-document"
                         },
                         "default": "<ProfileVerificationDocumentJson> List of proof documents uploaded by trhe Pro. (with=REQ_PROFILE_VERIFICATION_DOCUMENTS). ACL_SHARED."
                     },
@@ -25899,9 +25899,9 @@
                         "description": "The last 8 messages of the thread. To get older messages, use route 'api.threads.get_thread_messages' starting at page=2",
                         "type": "array",
                         "items": {
-                            "type": "TheadMessageJson"
+                            "$ref": "#/components/schemas/thread-message"
                         },
-                        "default": "<TheadMessageJson> The last 8 messages of the thread. To get older messages, use route 'api.threads.get_thread_messages' starting at page=2."
+                        "default": "<ThreadMessageJson> The last 8 messages of the thread. To get older messages, use route 'api.threads.get_thread_messages' starting at page=2."
                     },
                     "messageCount": {
                         "description": "The total number of messages in the thread (so you know if you need to use pagination or not)",
@@ -25916,6 +25916,15 @@
                     "lead": {
                         "description": "A Meta object containing lead-related properties. Only for lead thread (type=10)\nACL_ADMIN",
                         "default": "<mixed> A Meta object containing lead-related properties. Only for lead thread (type=10). ACL_ADMIN."
+                    }
+                },
+                "type": "object"
+            },
+            "thread-message": {
+                "properties": {
+                    "id": {
+                        "description": "The thread message ID",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -25963,7 +25972,7 @@
                         "description": "The profiles the user is manager of. Could be outfitters or brands\nACL_PRIVATE\n(with=REQ_USER_PROFILES)",
                         "type": "array",
                         "items": {
-                            "type": "OutfitterJson"
+                            "$ref": "#/components/schemas/outfitter"
                         },
                         "default": "<OutfitterJson> The profiles the user is manager of. Could be outfitters or brands. ACL_PRIVATE. (with=REQ_USER_PROFILES)."
                     },
@@ -25976,7 +25985,7 @@
                         "description": "The outfitters he's owner of\n(with=REQ_USER_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "OutfitterJson"
+                            "$ref": "#/components/schemas/outfitter"
                         },
                         "default": "<OutfitterJson> The outfitters he's owner of. (with=REQ_USER_DETAILS)."
                     },
@@ -25984,7 +25993,7 @@
                         "description": "The associations the user is member of\n(with=REQ_USER_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "AssociationJson"
+                            "$ref": "#/components/schemas/association"
                         },
                         "default": "<AssociationJson> The associations the user is member of. (with=REQ_USER_DETAILS)."
                     },
@@ -26046,9 +26055,18 @@
                         "description": "The sessions the user\nACL_PRIVATE\n(with=REQ_USER_SESSIONS)",
                         "type": "array",
                         "items": {
-                            "type": "UserSessionJson"
+                            "$ref": "#/components/schemas/user-session"
                         },
                         "default": "<UserSessionJson> The sessions the user. ACL_PRIVATE. (with=REQ_USER_SESSIONS)."
+                    }
+                },
+                "type": "object"
+            },
+            "user-session": {
+                "properties": {
+                    "id": {
+                        "description": "Entity ID",
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -26197,7 +26215,7 @@
                         "description": "Vendor phones\n(with=REQ_VENDOR_DETAILS)",
                         "type": "array",
                         "items": {
-                            "type": "PhoneJson"
+                            "$ref": "#/components/schemas/phone"
                         },
                         "default": "<PhoneJson> Vendor phones. (with=REQ_VENDOR_DETAILS)."
                     },
@@ -26219,7 +26237,7 @@
                         "description": "The brands the vendor is selling. Only for Dealers (type=21,22)\n(with=REQ_VENDOR_DEALERSHIPS)",
                         "type": "array",
                         "items": {
-                            "type": "BrandJson"
+                            "$ref": "#/components/schemas/brand"
                         },
                         "default": "<BrandJson> The brands the vendor is selling. Only for Dealers (type=21,22). (with=REQ_VENDOR_DEALERSHIPS)."
                     }
